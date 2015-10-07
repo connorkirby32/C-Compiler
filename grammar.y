@@ -488,7 +488,7 @@ int main(void)
  
 void yyerror(char * msg)
 {
-        printf("%s\n",msg);
+        printf("%s \n",msg);
 }
 
 
