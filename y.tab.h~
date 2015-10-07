@@ -183,7 +183,7 @@ union YYSTYPE
 	int iVal;
 	double fVal;
 	char * sVal;
-    char * token;
+    char *tokenValue; 
 	
 
 #line 190 "y.tab.h" /* yacc.c:1909  */

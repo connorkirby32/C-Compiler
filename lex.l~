@@ -99,7 +99,6 @@ null[\0]
                          printf( "%s is not a valid token. \n", yytext);
                          printf("Error at Row #:%i\n",rowNum);
                          printf("Error at Column #:%i\n",column); 
-                         return -1;
                         } 
 
 

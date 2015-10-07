@@ -474,7 +474,7 @@ int main(void)
  
  while (yylex() > 0){
      fprintf(f,"//%s\n",yyget_text());
-     fprintf(f,"%s\n",yylval.token);
+     fprintf(f,"//%s\n",yylval.token);
   }
    
   fclose(f);   

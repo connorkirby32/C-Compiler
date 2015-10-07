@@ -1,0 +1,10 @@
+//int
+INT
+//main
+IDENTIFIER
+//(
+(
+//)
+)
+//;
+;
