@@ -489,7 +489,8 @@ main() {
 	do {
 	     fprintf(debugFile,"//%s\n", yyget_text());
          fprintf(debugFile,"%s\n", yylval.token);
-     
+         yyparse();
+		 
 	} while (yylex() > 0); 
 	
 

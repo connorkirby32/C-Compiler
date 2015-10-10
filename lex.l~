@@ -29,7 +29,7 @@ null[\0]
 
 
 
-<<EOF>>     return 0;
+<<EOF>>     return END_OF_FILE;
 "auto"                  {column += yyleng; yylval.token = "AUTO";  return AUTO;}
 "break"                 {column += yyleng; yylval.token = "BREAK"; return BREAK;}
 "case"                  {column += yyleng; yylval.token = "CASE"; return CASE;}

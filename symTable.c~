@@ -242,7 +242,7 @@ treeNode* shadows(int id){
 
     int i = 0;
     
-    cursor = top->ptr;
+    cursor = top->next;
      
     
     if(cursor == NULL)
@@ -275,7 +275,7 @@ int main(){
     //Simulate First Level
 
 
-    int id = 16;
+    int id = 100;
     
     push(0); 
     top->treePtr = Insert(top->treePtr, 11);
