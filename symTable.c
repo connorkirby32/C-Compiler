@@ -1,44 +1,21 @@
-
-#include <stdio.h>
+#include "driver.h"
 #include <stdlib.h>
 
-//BST Tree Structure
-typedef struct treeNode
-{
-    int data;
-    int declerationLineNumber; 
-    char * id; 
-    struct treeNode *left;
-    struct treeNode *right;
-}treeNode;
-
-
-//Linked List Stack Structure 
-struct node
-{
-    int level;
-    struct treeNode *treePtr;
-    struct node *ptr;
-}*top,*cursor,*temp;
-
-
-
- 
-int count = 0;
- 
-void init()
+void createTable()
 {
     top = NULL;
+  
     
 }
- 
-void push(int data)
+
+void pushLevel(int data)
 {
     if (top == NULL)
     {
         top =(struct node *)malloc(1*sizeof(struct node));
         top->ptr = NULL;
         top->level = data;
+        top->treePtr = NULL;
     }
     else
     {
@@ -51,10 +28,8 @@ void push(int data)
     
     
 }
- 
 
-
-void pop()
+void popLevel()
 {
     cursor = top;
  
@@ -71,28 +46,11 @@ void pop()
     
     }
 }
- 
 
-int topelement()
-{
-    return(top->level);
-}
- 
-int isEmpty()
-{
-    if (top == NULL)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
  
 void destroy()
 {
-    if(!isEmpty())
+    if(top != NULL)
     {
         
         cursor = top;
@@ -109,61 +67,58 @@ void destroy()
         count = 0;
     }
 }
+/***************************************/
 
-
-/*-----------------------------------------------------------------------------------*/
-
-
-
-void PrintInorder(treeNode *leaf)
+void printIdentifiers(treeNode *leaf)
 {
         if(leaf==NULL)
         {
                 return;
         }
-        PrintInorder(leaf->left);
-        printf("%d ",leaf->data);
-        PrintInorder(leaf->right);
+        printIdentifiers(leaf->left);
+        fprintf(symbolTableFile,"%d ",leaf->id);
+        fprintf(symbolTableFile,"%d ",leaf->id);
+        printIdentifiers(leaf->right);
 }
 
-treeNode * Insert(treeNode *leaf,int data)
+treeNode * insertIdentifier(treeNode *leaf,int data)
 {
         if(leaf==NULL)
         {
                 treeNode *temp;
                 temp = (treeNode *)malloc(sizeof(treeNode));
-                temp -> data = data;
+                temp -> id = data;
                 temp -> left = temp -> right = NULL;
                 return temp;
         }
 
-        if(data >(leaf->data))
+        if(data >(leaf->id))
         {
-                leaf->right = Insert(leaf->right,data);
+                leaf->right = insertIdentifier(leaf->right,data);
         }
-        else if(data < (leaf->data))
+        else if(data < (leaf->id))
         {
-                leaf->left = Insert(leaf->left,data);
+                leaf->left = insertIdentifier(leaf->left,data);
         }
 
         return leaf;
 
 }
 
-treeNode * Delete(treeNode *leaf, int data)
+treeNode * deleteIdentifier(treeNode *leaf, int data)
 {
         treeNode *temp;
         if(leaf==NULL)
         {
                 printf("Element Not Found");
         }
-        else if(data < leaf->data)
+        else if(data < leaf->id)
         {
-                leaf->left = Delete(leaf->left, data);
+                leaf->left = deleteIdentifier(leaf->left, data);
         }
-        else if(data > leaf->data)
+        else if(data > leaf->id)
         {
-                leaf->right = Delete(leaf->right, data);
+                leaf->right = deleteIdentifier(leaf->right, data);
         }
         else
         {
@@ -174,8 +129,8 @@ treeNode * Delete(treeNode *leaf, int data)
                             temp = leaf->left;
                         }
 
-                        leaf -> data = temp->data; 
-                        leaf -> right = Delete(leaf->right,temp->data);
+                        leaf -> id = temp->id; 
+                        leaf -> right = deleteIdentifier(leaf->right,temp->id);
                 }
                 else
                 {
@@ -191,20 +146,20 @@ treeNode * Delete(treeNode *leaf, int data)
 
 }
 
-treeNode * Find(treeNode *leaf, int data)
+treeNode * findIdentifier(treeNode *leaf, int data)
 {
         if(leaf==NULL)
         {
                 return NULL;
         }
-        if(data > leaf->data)
+        if(data > leaf->id)
         {
-                return Find(leaf->right,data);
+                return findIdentifier(leaf->right,data);
         }
-        else if(data < leaf->data)
+        else if(data < leaf->id)
         {
             
-                return Find(leaf->left,data);
+                return findIdentifier(leaf->left,data);
         }
         else
         {
@@ -214,7 +169,7 @@ treeNode * Find(treeNode *leaf, int data)
 }
 
 
-void display()
+void printTable()
 {
     cursor = top;
  
@@ -226,11 +181,10 @@ void display()
  
     while (cursor != NULL)
     {
-        printf("%s\n", "Level:");
-        printf("%d\n", cursor->level);
-        printf("%s\n", "IDS at that Level:");
-        PrintInorder(cursor->treePtr);
-        printf("\n");
+        fprintf(symbolTableFile,"%s\n", "Level:");
+        fprintf(symbolTableFile,"%d\n", cursor->level);
+        fprintf(symbolTableFile,"%s\n", "IDS at that Level:");
+        printIdentifiers(cursor->treePtr);
         cursor = cursor->ptr;
     }
     
@@ -255,9 +209,9 @@ treeNode* shadows(int id){
      while (cursor != NULL)
     {
     
-        if( Find(cursor->treePtr, id ) != NULL)
+        if( findIdentifier(cursor->treePtr, id ) != NULL)
         {
-            printf("but... it shadows a variable in level %d , nice programming asshole \n", cursor->level );
+            printf("but... it shadows a variable in level %d\n", cursor->level );
             return cursor->treePtr;
         }
         cursor = cursor->ptr;
@@ -268,64 +222,3 @@ treeNode* shadows(int id){
 
 
 }
- 
-int main(){
-
-
-    //Simulate First Level
-
-
-    int id = 16;
-    
-    push(0); 
-    top->treePtr = Insert(top->treePtr, 11);
-    top->treePtr = Insert(top->treePtr, 12);
-    top->treePtr = Insert(top->treePtr, 13);
-    top->treePtr = Insert(top->treePtr, 14);
-    top->treePtr = Insert(top->treePtr, 15);
-    top->treePtr = Insert(top->treePtr, 16);
-
-
-    push(1); 
-    top->treePtr = Insert(top->treePtr, 21);
-    top->treePtr = Insert(top->treePtr, 22);
-    top->treePtr = Insert(top->treePtr, 23);
-    top->treePtr = Insert(top->treePtr, 24);
-    top->treePtr = Insert(top->treePtr, 25);
-    top->treePtr = Insert(top->treePtr, 100);
-
-    push(2); 
-    top->treePtr = Insert(top->treePtr, 31);
-    top->treePtr = Insert(top->treePtr, 32);
-    top->treePtr = Insert(top->treePtr, 33);
-    top->treePtr = Insert(top->treePtr, 34);
-    top->treePtr = Insert(top->treePtr, 35);
-    top->treePtr = Insert(top->treePtr, 16);
-
-
-
-    display();
-
-    if(Find(top->treePtr, id) != NULL){
-    
-            printf("Found ID: 100 \n");
-            if(shadows(id) != NULL){
-            
-
-            
-            }
-
-    
-    }
-
-
-
-
-return 0; 
-
-
-
-
-}
-
-

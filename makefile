@@ -1,8 +1,8 @@
 YFLAGS = -dv -t
 CFLAGS = -g
 a.out: grammar.o lex.o
-	gcc -o a.out grammar.o lex.o -lfl
-
+	gcc -o a.out grammar.o lex.o driver.c -lfl
+	rm -f *.o *~ y.output
 
 grammar.o: grammar.y
 lex.o: lex.l
