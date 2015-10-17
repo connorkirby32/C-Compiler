@@ -149,30 +149,107 @@ declaration_specifiers
 
 storage_class_specifier
 	: AUTO
+		{if(parseDebug){
+			fprintf(parseFile,"storage_class_specifier <- AUTO \n\n");
+			}
+		}	
 	| REGISTER
+		{if(parseDebug){
+			fprintf(parseFile,"storage_class_specifier <- REGISTER  \n\n");
+			}
+		}
 	| STATIC
+		{if(parseDebug){
+			fprintf(parseFile,"storage_class_specifier <- STATIC \n\n");
+			}
+		}
 	| EXTERN
+		{if(parseDebug){
+			fprintf(parseFile,"storage_class_specifier <- EXTERN \n\n");
+			}
+		}
 	| TYPEDEF
+		{if(parseDebug){
+			fprintf(parseFile,"storage_class_specifier <- TYPEDEF \n\n");
+			}
+		}
 	;
 
 type_specifier
 	: VOID
+		{if(parseDebug){
+			fprintf(parseFile,"type_specifier <- VOID \n\n");
+			}
+		}
 	| CHAR
+		{if(parseDebug){
+			fprintf(parseFile,"type_specifier <- CHAR \n\n");
+			}
+		}
 	| SHORT
+		{if(parseDebug){
+			fprintf(parseFile,"storage_class_specifier <- SHORT \n\n");
+			}
+		}
 	| INT
+		{if(parseDebug){
+			fprintf(parseFile,"storage_class_specifier <- INT \n\n");
+			}
+		}
 	| LONG
+		{if(parseDebug){
+			fprintf(parseFile,"storage_class_specifier <- LONG \n\n");
+			}
+		}
 	| FLOAT 
+		{if(parseDebug){
+			fprintf(parseFile,"storage_class_specifier <- FLOAT \n\n");
+			}
+		}
 	| DOUBLE
+		{if(parseDebug){
+			fprintf(parseFile,"storage_class_specifier <- DOUBLE \n\n");
+			}
+		}
 	| SIGNED
+		{if(parseDebug){
+			fprintf(parseFile,"storage_class_specifier <- SIGNED \n\n");
+			}
+		}
 	| UNSIGNED
+		{if(parseDebug){
+			fprintf(parseFile,"storage_class_specifier <- UNSIGNED \n\n");
+			}
+		}
 	| struct_or_union_specifier
+		{if(parseDebug){
+			fprintf(parseFile,"storage_class_specifier <- struct_or_union_specifier \n\n");
+			}
+		}
 	| enum_specifier
+		{if(parseDebug){
+			fprintf(parseFile,"storage_class_specifier <- enum_specifier \n\n");
+			}
+		}
 	| TYPEDEF_NAME
+		{if(parseDebug){
+			fprintf(parseFile,"storage_class_specifier <- TYPEDEF_NAME \n\n");
+			}
+		}
 	;
 
 type_qualifier
 	: CONST
+		{if(parseDebug){
+			fprintf(parseFile,"type_qualifier <- CONST \n\n");
+			}
+		}
+	
 	| VOLATILE
+		{if(parseDebug){
+			fprintf(parseFile,"type_qualifier <- VOLATILE \n\n");
+			}
+		}
 	;
 
 struct_or_union_specifier
@@ -195,7 +272,15 @@ struct_or_union_specifier
 
 struct_or_union
 	: STRUCT
+		{if(parseDebug){
+			    fprintf(parseFile,"STRUCT \n\n");
+			}
+		}
 	| UNION
+		{if(parseDebug){
+			fprintf(parseFile,"UNION \n\n");
+		}
+		}
 	;
 
 struct_declaration_list
@@ -824,16 +909,58 @@ assignment_expression
 
 assignment_operator
 	: '='
+	{if(parseDebug){
+			fprintf(parseFile,"assignment_operator <- = \n\n");
+			}
+	}
+	
 	| MUL_ASSIGN
+	{if(parseDebug){
+			fprintf(parseFile,"assignment_operator <- MUL_ASSIGN \n\n");
+			}
+		}
 	| DIV_ASSIGN
+	{if(parseDebug){
+			fprintf(parseFile,"assignment_operator <- =  DIV_ASSIGN\n\n");
+			}
+		}
 	| MOD_ASSIGN
+	{if(parseDebug){
+			fprintf(parseFile,"assignment_operator <- = MOD_ASSIGN\n\n");
+			}
+		}
 	| ADD_ASSIGN
+	{if(parseDebug){
+			fprintf(parseFile,"assignment_operator <- = ADD_ASSIGN\n\n");
+			}
+		}
 	| SUB_ASSIGN
+	{if(parseDebug){
+			fprintf(parseFile,"assignment_operator <- = SUB_ASSIGN \n\n");
+			}
+		}
 	| LEFT_ASSIGN
+	{if(parseDebug){
+			fprintf(parseFile,"assignment_operator <- = LEFT_ASSIGNn\n");
+			}
+		}
 	| RIGHT_ASSIGN
+	{if(parseDebug){
+			fprintf(parseFile,"assignment_operator <- = RIGHT_ASSIGN\n\n");
+			}
+		}
 	| AND_ASSIGN
+	{if(parseDebug){
+			fprintf(parseFile,"assignment_operator <- = AND_ASSIGNn\n");
+			}
+		}
 	| XOR_ASSIGN
+	{if(parseDebug){
+			fprintf(parseFile,"assignment_operator <- = XOR_ASSIGN\n\n");
+			}
+		}
 	| OR_ASSIGN
+	
 	;
 
 conditional_expression
@@ -1162,18 +1289,64 @@ argument_expression_list
 	;
 
 constant
-	: INTEGER_CONSTANT  {if(!lookUpToggle){currentIdentifier->dataI = yylval.iVal;printf("%d\n",currentIdentifier->dataI);} }
-	| CHARACTER_CONSTANT {currentIdentifier->dataC = yylval.iVal;printf("%d\n",currentIdentifier->dataC);}
-	| FLOATING_CONSTANT {currentIdentifier->dataF = yylval.iVal;printf("%d\n",currentIdentifier->dataF);}
-	| ENUMERATION_CONSTANT {currentIdentifier->dataE = yylval.iVal;printf("%d\n",currentIdentifier->dataE);}
+	: INTEGER_CONSTANT  {
+	        if(!lookUpToggle){currentIdentifier->dataI = yylval.iVal;
+	            
+	            printf("%d\n",currentIdentifier->dataI);}
+	        
+	            if(parseDebug){
+			        fprintf(parseFile,"CONSTANT <- INTEGER_CONSTANT \n\n");
+			    }
+	         }
+	| CHARACTER_CONSTANT {
+	        if(!lookUpToggle){currentIdentifier->dataI = yylval.iVal;
+	        
+                printf("%d\n",currentIdentifier->dataC);}
+	        
+	            if(parseDebug){
+			        fprintf(parseFile,"CONSTANT -> INTEGER_CONSTANT \n\n");
+			    }
+	         }
+	| FLOATING_CONSTANT {	        
+	
+	    if(!lookUpToggle){currentIdentifier->dataI = yylval.iVal;
+	    
+	            printf("%d\n",currentIdentifier->dataF);}
+	        
+	            if(parseDebug){
+			        fprintf(parseFile,"CONSTANT ->FLOATING_CONSTANT \n\n");
+			    }
+	         }
+	| ENUMERATION_CONSTANT {	        	
+	    if(!lookUpToggle){currentIdentifier->dataI = yylval.iVal;
+	    
+	            printf("%d\n",currentIdentifier->dataE);}
+	        
+	            if(parseDebug){
+			        fprintf(parseFile,"CONSTANT ->ENUMERATION_CONSTANT\n\n");
+			    }
+	         }
 	;
 
 string
 	: STRING_LITERAL
+	    {
+	    if(!lookUpToggle){currentIdentifier->dataI = yylval.iVal;printf("%d\n",currentIdentifier->dataE);}
+	        
+	            if(parseDebug){
+			        fprintf(parseFile,"string ->STRING_LITERAL \n\n");
+			    }
+        }
 	;
 
 identifier
-	: IDENTIFIER { currentIdentifier = top->treePtr = insertIdentifier(top->treePtr, (short)yyget_text());}
+	: IDENTIFIER { 
+	        currentIdentifier = top->treePtr = insertIdentifier(top->treePtr, (int)yyget_text());
+	        
+	            if(parseDebug){
+			        fprintf(parseFile,"identifier ->IDENTIFIER\n\n");
+			    }        
+	        }
 	;
 %%
 

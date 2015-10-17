@@ -64,30 +64,33 @@ string \".\"
 {digit}+"."{digit}*     {if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "FLOATING_CONSTANT\n\n");}  yylval.fVal = atof(yytext); return FLOATING_CONSTANT;}
 {alphabet}+{digit}?     {if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "IDENTIFIER\n\n");}  return IDENTIFIER;}
 
-"("			            {column += yyleng; return('('); }
-")"			            {column += yyleng; return(')');}
-";"                     {column += yyleng; return ';';}
-"{"			            {column += yyleng; return('{');}
-"}"			            {column += yyleng; return('}');}
-"["			            {column += yyleng; return('[');}
-"]"			            {column += yyleng; return(']');}
-"+"			            {column += yyleng; return('+');}
-"-"			            {column += yyleng; return('-');}
-"="			            {column += yyleng; return('=');}
-"*"			            {column += yyleng; return('*');}
-"&"			            {column += yyleng; return('&');}
-"!"			            {column += yyleng; return('!');}
-"~"			            {column += yyleng; return('~');}
-">"			            {column += yyleng; return('>');}
-"<"			            {column += yyleng; return('<');}
-","			            {column += yyleng; return(',');}
-"?"			            {column += yyleng; return('?');}
-"^"			            {column += yyleng; return('^');}
-"|"			            {column += yyleng; return('|');}
-":"			            {column += yyleng; return(':');}
-"."			            {column += yyleng;  return('.');}
+"("			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "(\n\n");} return('('); }
+")"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, ")\n\n");} return(')');}
+";"                     {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, ";\n\n");} return ';';}
+"{"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "{\n\n");} return('{');}
+"}"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "}\n\n");} return('}');}
+"["			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "[\n\n");} return('[');}
+"]"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "]\n\n");} return(']');}
+"+"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "+\n\n");} return('+');}
+"-"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "-\n\n");} return('-');}
+"="			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "=\n\n");} return('=');}
+"*"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "*\n\n");} return('*');}
+"&"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "&\n\n");} return('&');}
+"!"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "!\n\n");} return('!');}
+"~"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "~\n\n");} return('~');}
+">"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, ">\n\n");} return('>');}
+"<"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "<\n\n");} return('<');}
+","			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, ",\n\n");} return(',');}
+"?"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "?\n\n");} return('?');}
+"^"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "^\n\n");} return('^');}
+"|"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "|\n\n");} return('|');}
+":"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, ":\n\n");} return(':');}
+"."			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, ".\n\n");} return('.');}
 
 "!!S"                   {printTable();}
+
+
+
 .                       {    
                          printf("Diagnostic Report:\n\n");
                          printf("%s \n", yytext);                        
