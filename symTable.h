@@ -3,15 +3,17 @@
 
 /* Symbol Table Function Headers */
 
-void createTable(void);
+node * createTable(node * statck);
 
-void pushLevel(int data);
+node * pushLevel(node * statck, int data);
 
-void popLevel(void);
+node * popLevel(node * statck);
 
-void destroyTable(void);
+node * destroyTable(node * statck);
 
-void printTable(void);
+node * printTable(node * statck);
+
+
 
 /* IdentifierTree Function Headers */
 
@@ -22,6 +24,8 @@ treeNode * insertIdentifier(treeNode *leaf,int data);
 treeNode * deleteIdentifier(treeNode *leaf,int data);
 
 treeNode * findIdentifier(treeNode *leaf,int data);
+
+treeNode * deleteTree(treeNode *leaf);
 
 treeNode* shadows(int id);
 

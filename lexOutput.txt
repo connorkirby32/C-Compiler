@@ -1,45 +1,15 @@
 //int
 INT
 
-//foo
+//i
 IDENTIFIER
 
-//(
-(
-
-//int
-INT
-
-//)
-)
-
-//;
-;
-
-//int
-INT
-
-//main
-IDENTIFIER
-
-//(
-(
-
-//)
-)
-
-//{
-{
-
-//return
-RETURN
+//=
+=
 
 //0
 INTEGER_CONSTANT
 
 //;
 ;
-
-//}
-}
 

@@ -1,36 +1,43 @@
 #include "driver.h"
 #include <stdlib.h>
 
-void createTable()
+node * createTable(node * top)
 {
     top = NULL;
-  
+    return top;
     
 }
 
-void pushLevel(int data)
+node * pushLevel(node * top, int data)
 {
+    
     if (top == NULL)
     {
+      
         top =(struct node *)malloc(1*sizeof(struct node));
         top->ptr = NULL;
         top->level = data;
         top->treePtr = NULL;
+        top->size = 0;
     }
     else
     {
+        node * temp;
         temp =(struct node *)malloc(1*sizeof(struct node));
         temp->ptr = top;
         temp->level = data;
         top = temp;
     }
-    count++;
+    top->size++;
+    
+    return top;
     
     
 }
 
-void popLevel()
+node * popLevel(node * top)
 {
+    node * cursor;
     cursor = top;
  
     if (cursor == NULL)
@@ -42,14 +49,17 @@ void popLevel()
     cursor = cursor->ptr;
     free(top);
     top = cursor;
-    count--;
+    top->size--;
     
     }
+    
+    return top;
 }
 
  
-void destroy()
+node * destroy(node * top)
 {
+    node * cursor;
     if(top != NULL)
     {
         
@@ -64,7 +74,8 @@ void destroy()
         }
         free(cursor);
         top = NULL; 
-        count = 0;
+        top->size = 0;
+        return top;
     }
 }
 /***************************************/
@@ -75,9 +86,11 @@ void printIdentifiers(treeNode *leaf)
         {
                 return;
         }
+        
+        /* LISTITEM */ 
         printIdentifiers(leaf->left);
         fprintf(symbolTableFile,"%d ",leaf->id);
-        fprintf(symbolTableFile,"%d ",leaf->id);
+        fprintf(symbolTableFile,"%d ",leaf->dataI);
         printIdentifiers(leaf->right);
 }
 
@@ -169,8 +182,9 @@ treeNode * findIdentifier(treeNode *leaf, int data)
 }
 
 
-void printTable()
+void printTable(node * top)
 {
+    node * cursor;
     cursor = top;
  
     if (cursor == NULL)
@@ -192,10 +206,10 @@ void printTable()
  }
  
 
-treeNode* shadows(int id){
+treeNode* shadows(int id, node * top){
 
     int i = 0;
-    
+    node * cursor;
     cursor = top->ptr;
      
     
@@ -219,6 +233,27 @@ treeNode* shadows(int id){
     }
 
     return NULL;
+
+
+}
+
+
+/* LISTITEM */ 
+
+
+treeNode * deleteTree(treeNode *leaf){
+
+        if(leaf->left !=NULL)
+        {
+                return deleteTree(leaf->right);
+        }
+        if(leaf->right !=NULL)
+        {
+                return deleteTree(leaf->right);
+        }
+
+        free(leaf);
+        leaf = NULL;
 
 
 }

@@ -19,6 +19,29 @@ extern FILE *parseFile;
 extern FILE *symbolTableFile;
 
 
+
+//Type Flags
+bool void_flag;
+bool short_flag;    
+bool bool_flag;
+bool long_flag;
+bool float_flag;
+bool double_flag;  
+bool signed_flag;
+bool unsigned_flag;   
+bool struct_flag;
+bool enum_flag;
+bool typedef_id;
+
+
+//Storage Flag	
+bool auto_flag;
+bool register_flag;
+bool static_flag;
+bool extern_flag;
+	
+
+
 extern int rowNum;
 extern int tabSize;
 extern int column;
@@ -29,6 +52,7 @@ extern int column;
 typedef struct node
 {
     int level;
+    int size;
     struct treeNode *treePtr;
     struct node *ptr;
 } node;
@@ -36,28 +60,7 @@ typedef struct node
 //BST Tree Structure
 typedef struct treeNode
 {
-    //Type Flags
-    bool void_flag;
-    bool short_flag;    
-    bool bool_flag;
-    bool long_flag;
-    bool float_flag;
-    bool double_flag;  
-    bool signed_flag;
-    bool unsigned_flag;   
-    bool struct_flag;
-    bool enum_flag;
-    bool typedef_id;
-    
-    
-    //Storage Flag	
-	bool auto_flag;
-	bool register_flag;
-	bool static_flag;
-	bool extern_flag;
-	
-    
-    
+       
     //Data Containers
     int dataI;
     float dataF;
@@ -74,14 +77,10 @@ typedef struct treeNode
 }treeNode;
 
 //Global data that will be defined in main.c
-extern node * top;
-extern node * cursor;
-extern node * temp;
+extern node * symbolTable;
 
 extern treeNode* currentIdentifier; 
 
-
-extern int count;
 #endif 
 
 

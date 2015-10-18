@@ -1149,7 +1149,7 @@ multiplicative_expression
 		}
 	| multiplicative_expression '%' cast_expression
 		{if(parseDebug){
-			fprintf(parseFile,"multiplicative_expression <- multiplicative_expression ''%'' cast_expression \n\n");
+			fprintf(parseFile,"multiplicative_expression <- multiplicative_expression ''AND'' cast_expression \n\n");
 			}
 		}
 	;
@@ -1202,11 +1202,35 @@ unary_expression
 
 unary_operator
 	: '&'
+		{if(parseDebug){
+			fprintf(parseFile,"unary_operator <- & '(' type_name ')' \n\n");
+			}
+		}
 	| '*'
+		{if(parseDebug){
+			fprintf(parseFile,"unary_operator <- * '(' type_name ')' \n\n");
+			}
+		}
 	| '+'
+		{if(parseDebug){
+			fprintf(parseFile,"unary_operator <- + '(' type_name ')' \n\n");
+			}
+		}
 	| '-'
+		{if(parseDebug){
+			fprintf(parseFile,"unary_operator <- - '(' type_name ')' \n\n");
+			}
+		}
 	| '~'
+		{if(parseDebug){
+			fprintf(parseFile,"unary_operator <- ~ '(' type_name ')' \n\n");
+			}
+		}
 	| '!'
+		{if(parseDebug){
+			fprintf(parseFile,"unary_operator <- ! '(' type_name ')' \n\n");
+			}
+		}
 	;
 
 postfix_expression
@@ -1299,9 +1323,7 @@ constant
 			    }
 	         }
 	| CHARACTER_CONSTANT {
-	        if(!lookUpToggle){currentIdentifier->dataI = yylval.iVal;
-	        
-                printf("%d\n",currentIdentifier->dataC);}
+
 	        
 	            if(parseDebug){
 			        fprintf(parseFile,"CONSTANT -> INTEGER_CONSTANT \n\n");
@@ -1309,18 +1331,12 @@ constant
 	         }
 	| FLOATING_CONSTANT {	        
 	
-	    if(!lookUpToggle){currentIdentifier->dataI = yylval.iVal;
-	    
-	            printf("%d\n",currentIdentifier->dataF);}
-	        
+	       
 	            if(parseDebug){
 			        fprintf(parseFile,"CONSTANT ->FLOATING_CONSTANT \n\n");
 			    }
 	         }
-	| ENUMERATION_CONSTANT {	        	
-	    if(!lookUpToggle){currentIdentifier->dataI = yylval.iVal;
-	    
-	            printf("%d\n",currentIdentifier->dataE);}
+	| ENUMERATION_CONSTANT {	        
 	        
 	            if(parseDebug){
 			        fprintf(parseFile,"CONSTANT ->ENUMERATION_CONSTANT\n\n");
@@ -1331,7 +1347,7 @@ constant
 string
 	: STRING_LITERAL
 	    {
-	    if(!lookUpToggle){currentIdentifier->dataI = yylval.iVal;printf("%d\n",currentIdentifier->dataE);}
+	
 	        
 	            if(parseDebug){
 			        fprintf(parseFile,"string ->STRING_LITERAL \n\n");
@@ -1341,7 +1357,7 @@ string
 
 identifier
 	: IDENTIFIER { 
-	        currentIdentifier = top->treePtr = insertIdentifier(top->treePtr, (int)yyget_text());
+	        currentIdentifier = symbolTable->treePtr = insertIdentifier(symbolTable->treePtr, (int)yyget_text());
 	        
 	            if(parseDebug){
 			        fprintf(parseFile,"identifier ->IDENTIFIER\n\n");

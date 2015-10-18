@@ -17,13 +17,10 @@ int column = 1;
 
 int lookUpToggle = 0; 
 
-node * top;
-node * cursor;
-node * temp;
+node * symbolTable;
 treeNode* currentIdentifier;
 
 
-int count = 0;
 
 int main(int argc, char **argv)
 {
@@ -33,9 +30,9 @@ int main(int argc, char **argv)
   FILE * testFile;
   
   //Initiate SymTable
-  createTable();
-  pushLevel(0);
-  
+  symbolTable = createTable(symbolTable);
+  symbolTable = pushLevel(symbolTable,0);
+
   //Parse the command line for debugging options
   while ((options = getopt (argc, argv, "-d[lsp]")) != -1){ 
     switch (options)
@@ -82,7 +79,7 @@ int main(int argc, char **argv)
         
     if(symbolTableDebug)
     {
-        printTable();
+        printTable(symbolTable);
         fclose(symbolTableFile);
     }
         	  
