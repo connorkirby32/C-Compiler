@@ -183,10 +183,11 @@ union YYSTYPE
 	int iVal;
 	double fVal;
 	char * sVal;
+	char * identifierName;
 
 
 
-#line 190 "y.tab.h" /* yacc.c:1909  */
+#line 191 "y.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

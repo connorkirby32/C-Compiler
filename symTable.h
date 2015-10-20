@@ -19,11 +19,11 @@ node * printTable(node * statck);
 
 void printIdentifiers(treeNode *leaf);
 
-treeNode * insertIdentifier(treeNode *leaf,int data);
+treeNode * insertIdentifier(treeNode *leaf,char * data);
 
-treeNode * deleteIdentifier(treeNode *leaf,int data);
+treeNode * deleteIdentifier(treeNode *leaf,char * data);
 
-treeNode * findIdentifier(treeNode *leaf,int data);
+treeNode * findIdentifier(treeNode *leaf,char * data);
 
 treeNode * deleteTree(treeNode *leaf);
 

@@ -1,15 +1,51 @@
 //int
 INT
 
-//i
+//main
+IDENTIFIER
+
+//(
+(
+
+//)
+)
+
+//{
+{
+
+//int
+INT
+
+//x
 IDENTIFIER
 
 //=
 =
 
-//0
+//1
+INTEGER_CONSTANT
+
+//,
+,
+
+//cat
+IDENTIFIER
+
+//;
+;
+
+//x
+IDENTIFIER
+
+//=
+=
+
+//4
 INTEGER_CONSTANT
 
 //;
 ;
+
+//}
+}
 

@@ -11,13 +11,14 @@ void yyerror(char *);
 	int iVal;
 	double fVal;
 	char * sVal;
+	char * identifierName;
 
 
 }
 
 
 
-%token IDENTIFIER 
+%token <identifierName> IDENTIFIER 
 %token INTEGER_CONSTANT FLOATING_CONSTANT CHARACTER_CONSTANT ENUMERATION_CONSTANT 
 %token STRING_LITERAL 
 %token SIZEOF
@@ -57,12 +58,15 @@ external_declaration
 		{if (parseDebug){
 			fprintf(parseFile,"external_declaration <- function_definition \n\n");
 			}
+			
 		}
 	| declaration
 		{if (parseDebug){
 			fprintf(parseFile,"external_declaration <- declarationn \n\n");
 			}
+			
 		}
+		
 	;
 
 function_definition
@@ -70,6 +74,8 @@ function_definition
 		{if (parseDebug){
 			fprintf(parseFile,"function_definition <- declarator compound_statement \n\n");
 			}
+			
+			
 		}
 	| declarator declaration_list compound_statement
 		{if(parseDebug){
@@ -105,12 +111,17 @@ declaration_list
 	: declaration
 		{if(parseDebug){
 			fprintf(parseFile,"declaration_list <- declaration \n\n");
+			fprintf(parseFile,"Look up is true \n\n");
+			
 			}
+			lookUpMode = true;
 		}
 	| declaration_list declaration
 		{if(parseDebug){
 			fprintf(parseFile,"declaration_list <- declaration_list declaration \n\n");
 			}
+			fprintf(parseFile,"Look up is true \n\n");
+			lookUpMode = true;
 		}
 	;
 
@@ -129,6 +140,9 @@ declaration_specifiers
 		{if(parseDebug){
 			fprintf(parseFile,"declaration_specifiers <- type_specifier \n\n");
 			}
+			fprintf(parseFile,"Insert Mode \n\n");
+		    lookUpMode = false;
+			 
 		}
 	| type_specifier declaration_specifiers
 		{if(parseDebug){
@@ -766,6 +780,8 @@ compound_statement
 		{if(parseDebug){
 			fprintf(parseFile,"compound_statement <- '{' declaration_list statement_list '}'  \n\n");
 			}
+			
+			
 		}
 	;
 
@@ -774,11 +790,14 @@ statement_list
 		{if(parseDebug){
 			fprintf(parseFile,"statement_list <- statement  \n\n");
 			}
+			
+
 		}
 	| statement_list statement
 		{if(parseDebug){
 			fprintf(parseFile,"statement_list <- statement_list statement \n\n");
 			}
+
 		}
 	;
 
@@ -1314,10 +1333,11 @@ argument_expression_list
 
 constant
 	: INTEGER_CONSTANT  {
-	        if(!lookUpToggle){currentIdentifier->dataI = yylval.iVal;
-	            
-	            printf("%d\n",currentIdentifier->dataI);}
-	        
+	            if(currentIdentifier != NULL){
+	                
+	                currentIdentifier->dataI = yylval.iVal;
+	                currentIdentifier = NULL;
+                }
 	            if(parseDebug){
 			        fprintf(parseFile,"CONSTANT <- INTEGER_CONSTANT \n\n");
 			    }
@@ -1357,10 +1377,27 @@ string
 
 identifier
 	: IDENTIFIER { 
-	        currentIdentifier = symbolTable->treePtr = insertIdentifier(symbolTable->treePtr, (int)yyget_text());
+
+    printf("%d\n", (int)$1);
+    
+	if(!lookUpMode){
+	       
 	        
+	        currentIdentifier = symbolTable->treePtr = insertIdentifier(symbolTable->treePtr,$1 ); 
+        }
+	  else{
+            printf("Looking for %d \n", (int)$1);
+            
+	        currentIdentifier = findIdentifier(symbolTable->treePtr, $1);
+            if(currentIdentifier != NULL){
+            
+                fprintf(parseFile,"Found %d \n", (int)$1);
+            
+            }
+	  
+	  }      
 	            if(parseDebug){
-			        fprintf(parseFile,"identifier ->IDENTIFIER\n\n");
+			        fprintf(parseFile,"identifier ->IDENTIFIER\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx\n");
 			    }        
 	        }
 	;

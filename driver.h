@@ -10,7 +10,6 @@
 
 
 
-extern bool lookUpToggle;
 extern bool lexDebug;
 extern bool parseDebug;
 extern bool symbolTableDebug;
@@ -40,6 +39,7 @@ bool register_flag;
 bool static_flag;
 bool extern_flag;
 	
+extern bool lookUpMode; 
 
 
 extern int rowNum;
@@ -51,8 +51,8 @@ extern int column;
 //Any type definitions needed
 typedef struct node
 {
-    int level;
     int size;
+    int level;
     struct treeNode *treePtr;
     struct node *ptr;
 } node;
@@ -69,7 +69,7 @@ typedef struct treeNode
     int dataE;
     
     int declerationLineNumber; 
-    int id;
+    char * id;
   
     struct treeNode *left;
     struct treeNode *right;

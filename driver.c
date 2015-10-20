@@ -15,7 +15,8 @@ int rowNum = 1;
 int tabSize = 4;
 int column = 1;
 
-int lookUpToggle = 0; 
+
+bool lookUpMode = 0; 
 
 node * symbolTable;
 treeNode* currentIdentifier;
@@ -81,6 +82,7 @@ int main(int argc, char **argv)
     {
         printTable(symbolTable);
         fclose(symbolTableFile);
+        
     }
         	  
 	

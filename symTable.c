@@ -89,12 +89,12 @@ void printIdentifiers(treeNode *leaf)
         
         /* LISTITEM */ 
         printIdentifiers(leaf->left);
-        fprintf(symbolTableFile,"%d ",leaf->id);
+        fprintf(symbolTableFile,"%s ",leaf->id);
         fprintf(symbolTableFile,"%d ",leaf->dataI);
         printIdentifiers(leaf->right);
 }
 
-treeNode * insertIdentifier(treeNode *leaf,int data)
+treeNode * insertIdentifier(treeNode *leaf,char * data)
 {
         if(leaf==NULL)
         {
@@ -118,7 +118,7 @@ treeNode * insertIdentifier(treeNode *leaf,int data)
 
 }
 
-treeNode * deleteIdentifier(treeNode *leaf, int data)
+treeNode * deleteIdentifier(treeNode *leaf, char * data)
 {
         treeNode *temp;
         if(leaf==NULL)
@@ -159,10 +159,11 @@ treeNode * deleteIdentifier(treeNode *leaf, int data)
 
 }
 
-treeNode * findIdentifier(treeNode *leaf, int data)
+treeNode * findIdentifier(treeNode *leaf, char * data)
 {
         if(leaf==NULL)
-        {
+        {       
+                printf("Element Not Found");
                 return NULL;
         }
         if(data > leaf->id)
@@ -206,7 +207,7 @@ void printTable(node * top)
  }
  
 
-treeNode* shadows(int id, node * top){
+treeNode* shadows(char * id, node * top){
 
     int i = 0;
     node * cursor;

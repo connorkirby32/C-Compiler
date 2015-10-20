@@ -62,7 +62,7 @@ string \".\"
 {string}                {if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "ENUMERATION_CONSTANT\n\n");}  return ENUMERATION_CONSTANT;}
 {digit}+                {if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "INTEGER_CONSTANT\n\n");}  yylval.iVal = atoi(yytext); return INTEGER_CONSTANT;}
 {digit}+"."{digit}*     {if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "FLOATING_CONSTANT\n\n");}  yylval.fVal = atof(yytext); return FLOATING_CONSTANT;}
-{alphabet}+{digit}?     {if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "IDENTIFIER\n\n");}  return IDENTIFIER;}
+{alphabet}+{digit}?     {if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "IDENTIFIER\n\n");} yylval.identifierName = strdup(yytext); return IDENTIFIER;}
 
 "("			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "(\n\n");} return('('); }
 ")"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, ")\n\n");} return(')');}
