@@ -11,13 +11,14 @@ void yyerror(char *);
 	int iVal;
 	double fVal;
 	char * sVal;
+	char * identifierName;
 
 
 }
 
 
 
-%token IDENTIFIER 
+%token <identifierName> IDENTIFIER 
 %token INTEGER_CONSTANT FLOATING_CONSTANT CHARACTER_CONSTANT ENUMERATION_CONSTANT 
 %token STRING_LITERAL 
 %token SIZEOF
@@ -1335,7 +1336,6 @@ constant
 	            if(currentIdentifier != NULL){
 	                
 	                currentIdentifier->dataI = yylval.iVal;
-	                currentIdentifier = NULL;
                 }
 	            if(parseDebug){
 			        fprintf(parseFile,"CONSTANT <- INTEGER_CONSTANT \n\n");
@@ -1376,28 +1376,33 @@ string
 
 identifier
 	: IDENTIFIER { 
-	char * x = yyget_text();
-	int r = (x[1] + x[2] + x[3]);
-    printf("%d\n", r);
+    
+    int i;
+    int n;
+    for(i = 0, n = 0; i < sizeof($1) ; i++){
+            n += $1[i];       
+    }
     
 	if(!lookUpMode){
 	       
 	        
-	        currentIdentifier = symbolTable->treePtr = insertIdentifier(symbolTable->treePtr,r ); 
+	          symbolTable->treePtr = insertIdentifier(symbolTable->treePtr,n ); 
+	          currentIdentifier = findIdentifier(symbolTable->treePtr, n);
+	          currentIdentifier->name = $1;
         }
 	  else{
-            printf("Looking for %d \n", r);
+            printf("Looking for %d \n", n);
             
-	        currentIdentifier = findIdentifier(symbolTable->treePtr, r);
-            if(currentIdentifier != NULL){
+	        currentIdentifier = findIdentifier(symbolTable->treePtr, n);
+            if(currentIdentifier == NULL){
             
-                fprintf(parseFile,"Found %d \n", r);
+                fprintf(parseFile,"ERROR: identifier,%s, not declared \n", $1);
             
             }
 	  
 	  }      
 	            if(parseDebug){
-			        fprintf(parseFile,"identifier ->IDENTIFIER\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx\n");
+			        fprintf(parseFile,"identifier ->IDENTIFIER (%s)\n", $1);
 			    }        
 	        }
 	;
