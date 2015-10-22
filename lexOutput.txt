@@ -16,31 +16,13 @@ IDENTIFIER
 //int
 INT
 
-//x
+//i
 IDENTIFIER
 
 //=
 =
 
-//1
-INTEGER_CONSTANT
-
-//,
-,
-
-//cat
-IDENTIFIER
-
-//;
-;
-
-//x
-IDENTIFIER
-
-//=
-=
-
-//4
+//3
 INTEGER_CONSTANT
 
 //;

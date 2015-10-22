@@ -9,14 +9,12 @@ void yyerror(char *);
 
 %union {
 	int iVal;
-	double fVal;
+	double dVal;
 	char * sVal;
 	char * identifierName;
 
 
 }
-
-
 
 %token <identifierName> IDENTIFIER 
 %token INTEGER_CONSTANT FLOATING_CONSTANT CHARACTER_CONSTANT ENUMERATION_CONSTANT 
@@ -119,8 +117,9 @@ declaration_list
 	| declaration_list declaration
 		{if(parseDebug){
 			fprintf(parseFile,"declaration_list <- declaration_list declaration \n\n");
-			}
 			fprintf(parseFile,"Look up is true \n\n");
+			}
+		
 			lookUpMode = true;
 		}
 	;
@@ -139,8 +138,10 @@ declaration_specifiers
 	| type_specifier
 		{if(parseDebug){
 			fprintf(parseFile,"declaration_specifiers <- type_specifier \n\n");
-			}
 			fprintf(parseFile,"Insert Mode \n\n");
+			}
+			
+			  //Set Lookup mode to false
 		    lookUpMode = false;
 			 
 		}
@@ -166,26 +167,44 @@ storage_class_specifier
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- AUTO \n\n");
 			}
+			
+			//Set Flag
+			flags.auto_flag = true;
 		}	
 	| REGISTER
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- REGISTER  \n\n");
 			}
+			
+			//Set Flag
+			flags.register_flag = true;
 		}
 	| STATIC
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- STATIC \n\n");
 			}
+			
+						
+			//Set Flag
+			flags.static_flag = true;
+
 		}
 	| EXTERN
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- EXTERN \n\n");
 			}
+			
+			//Set Flag
+			flags.extern_flag = true;
 		}
 	| TYPEDEF
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- TYPEDEF \n\n");
 			}
+			
+			
+			//Set Flag
+			flags.typedef_flag = true;
 		}
 	;
 
@@ -194,61 +213,97 @@ type_specifier
 		{if(parseDebug){
 			fprintf(parseFile,"type_specifier <- VOID \n\n");
 			}
+			
+			//Set Flag
+			flags.void_flag = true;
 		}
 	| CHAR
 		{if(parseDebug){
 			fprintf(parseFile,"type_specifier <- CHAR \n\n");
 			}
+			
+			//Set Flag
+			flags.char_flag = true;
 		}
 	| SHORT
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- SHORT \n\n");
 			}
+			
+			//Set Flag
+			flags.short_flag = true;
 		}
 	| INT
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- INT \n\n");
 			}
+			
+			//Set Flag
+			flags.int_flag = true;
 		}
 	| LONG
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- LONG \n\n");
 			}
+			
+			//Set Flag
+			flags.long_flag = true;
 		}
 	| FLOAT 
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- FLOAT \n\n");
 			}
+			
+			//Set Flag
+			flags.float_flag = true;
 		}
 	| DOUBLE
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- DOUBLE \n\n");
 			}
+			
+			//Set Flag
+			flags.double_flag = true;
 		}
 	| SIGNED
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- SIGNED \n\n");
 			}
+			
+			//Set Flag
+			flags.signed_flag = true;
 		}
 	| UNSIGNED
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- UNSIGNED \n\n");
 			}
+			
+			//Set Flag
+			flags.unsigned_flag = true;
 		}
 	| struct_or_union_specifier
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- struct_or_union_specifier \n\n");
 			}
+			
+			//Set Flag
+			flags.struct_flag = true;
 		}
 	| enum_specifier
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- enum_specifier \n\n");
 			}
+			
+			//Set Flag
+			flags.enum_flag = true;
 		}
 	| TYPEDEF_NAME
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- TYPEDEF_NAME \n\n");
 			}
+			
+			//Set Flag
+			flags.typedef_flag = true;
 		}
 	;
 
@@ -257,12 +312,18 @@ type_qualifier
 		{if(parseDebug){
 			fprintf(parseFile,"type_qualifier <- CONST \n\n");
 			}
+			
+			//Set Flag
+			flags.const_flag = true;
 		}
 	
 	| VOLATILE
 		{if(parseDebug){
 			fprintf(parseFile,"type_qualifier <- VOLATILE \n\n");
 			}
+			
+			//Set Flag
+			flags.volatile_flag = true;
 		}
 	;
 
@@ -1335,19 +1396,25 @@ constant
 	: INTEGER_CONSTANT  {
 	            if(currentIdentifier != NULL){
 	                
+	                currentIdentifier->dataI = (int *) malloc(sizeof(int));
 	                currentIdentifier->dataI = yylval.iVal;
-	                currentIdentifier = NULL;
                 }
 	            if(parseDebug){
 			        fprintf(parseFile,"CONSTANT <- INTEGER_CONSTANT \n\n");
 			    }
 	         }
 	| CHARACTER_CONSTANT {
-
-	        
+	
+	            if(currentIdentifier != NULL){
+	                
+	                currentIdentifier->dataC = (char *) malloc(sizeof(char));
+	                currentIdentifier->dataC = yylval.sVal;
+                }
 	            if(parseDebug){
-			        fprintf(parseFile,"CONSTANT -> INTEGER_CONSTANT \n\n");
+			        fprintf(parseFile,"CONSTANT <- CHARACTER_CONSTANT \n\n");
 			    }
+
+
 	         }
 	| FLOATING_CONSTANT {	        
 	
@@ -1355,6 +1422,9 @@ constant
 	            if(parseDebug){
 			        fprintf(parseFile,"CONSTANT ->FLOATING_CONSTANT \n\n");
 			    }
+			    
+	                
+	               currentIdentifier->dataD = yylval.dVal;
 	         }
 	| ENUMERATION_CONSTANT {	        
 	        
@@ -1367,8 +1437,11 @@ constant
 string
 	: STRING_LITERAL
 	    {
-	
-	        
+	            if(currentIdentifier != NULL){
+	                
+	                currentIdentifier->dataC = (char *) malloc(sizeof(yylval.sVal));
+	                currentIdentifier->dataC = yylval.sVal;
+                }
 	            if(parseDebug){
 			        fprintf(parseFile,"string ->STRING_LITERAL \n\n");
 			    }
@@ -1377,37 +1450,114 @@ string
 
 identifier
 	: IDENTIFIER { 
-
-    printf("%d\n", (int)$1);
-    
+       
+  int i;
+  int n;
+  treeNode * shadowCheck;
+  
+  //Cipher id name to numberical value
+  for(i = 0, n = 0; i < sizeof($1) ; i++){
+    n += $1[i];       
+  }
+  //We are in decleration mode  
 	if(!lookUpMode){
-	       
-	        
-	        currentIdentifier = symbolTable->treePtr = insertIdentifier(symbolTable->treePtr,$1 ); 
+    //Check and make sure variable is not already declared in the level        
+    currentIdentifier = FindIdentifier(symbolTable->treePtr, n);
+    if(currentIdentifier != NULL){
+      yyerror("Already Declared ");
+      return -1;
+    }
+
+    //Insert the id into the identifer tree
+    symbolTable->treePtr = insertIdentifier(symbolTable->treePtr, n, flags);
+
+    //Save the id name into the identifier tree 
+    currentIdentifier = FindIdentifier(symbolTable->treePtr, n);
+    currentIdentifier->name = $1;
+    
+    //Check and see if it shadows
+    
+    Shadows(n, symbolTable);
+
+
+    //Reset flags for following declerations
+    flags = reset;
+  //We are in look up mode
+  }else {
+     //Locate the identifier
+     currentIdentifier = FindIdentifier(symbolTable->treePtr, n);
+     //If not found, search the entire table
+     if(currentIdentifier == NULL){
+        currentIdentifier = FindIDTableScope(n, symbolTable);
+        if(currentIdentifier == NULL){
+          yyerror("Variable Not Declared ");
         }
-	  else{
-            printf("Looking for %d \n", (int)$1);
-            
-	        currentIdentifier = findIdentifier(symbolTable->treePtr, $1);
-            if(currentIdentifier != NULL){
-            
-                fprintf(parseFile,"Found %d \n", (int)$1);
-            
-            }
-	  
-	  }      
-	            if(parseDebug){
-			        fprintf(parseFile,"identifier ->IDENTIFIER\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx\n");
-			    }        
-	        }
+      } 
+	 }      
+      if(parseDebug){
+        fprintf(parseFile,"identifier ->IDENTIFIER (%s)\n", $1);
+	    }        
+  }
 	;
 %%
 
-
-void yyerror(char * msg)
+//TODO Fix up this dood with fancier error messages
+void yyerror(char *msg)
 {
-        fprintf(parseFile,"%s \n",msg);
+  
+  int index, lineTracker = 0, lineCount = 0;
+  
+  //Go to appropriate line
+  for(index = 0 ; index < rowNum - 1; index++){
+   //Track our current location in the file
+   while(buffer[lineTracker] != '\n'){         
+      lineTracker++;
+    }
+    lineTracker++;
+    lineCount++;
+  }
+  //Check that we still have file to parse
+  if(lineCount < rowNum  ){
+    //Print the line with the error
+    while(buffer[lineTracker] != '\n'){
+    
+      //Be wary to avoid printing garbage
+      if(lineTracker < bufferSize){
+        printf("%c", buffer[lineTracker]);
+     
+      }
+      lineTracker++;
+    
+    }
+    printf("\n");
+  }
+  
+  if(!scanner_error){
+    //Print the arrow and appropriate error message based on our state
+    
+    for(index = 0; index < column -(sizeof(yyget_text()) + 1); index++){
+      printf(" ");
+    }
+    printf("^\n");
+    if(!lookUpMode){
+      printf( "error: expected ‘,’ or ‘;’ before %s\n", yyget_text());
+    }else {
+      printf( "error: expected ‘}’ or ‘)’");}
+      printf("\t%s line %d and column: %d\n", msg, rowNum, column);
+      
+  }else {
+      
+      for(index = 0; index < column; index++){
+        printf(" ");
+      }
+      printf("^\n");
+        printf("\t%s line %d and column: %d\n", msg, rowNum, column);
+        
+    
+      scanner_error = false;
+    
+    
+    }
 }
-
 
 

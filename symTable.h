@@ -3,30 +3,32 @@
 
 /* Symbol Table Function Headers */
 
-node * createTable(node * statck);
+node * CreateTable(node * statck);
 
-node * pushLevel(node * statck, int data);
+node * PushLevel(node * statck, int data);
 
-node * popLevel(node * statck);
+node * PopLevel(node * statck);
 
-node * destroyTable(node * statck);
+node * DestroyTable(node * statck);
 
-node * printTable(node * statck);
+node * PrintTable(node * statck);
 
 
 
 /* IdentifierTree Function Headers */
 
-void printIdentifiers(treeNode *leaf);
+void PrintIdentifiers(treeNode *leaf);
 
-treeNode * insertIdentifier(treeNode *leaf,char * data);
+treeNode * InsertIdentifier(treeNode *leaf,int data, flagContainer flagInfo);
 
-treeNode * deleteIdentifier(treeNode *leaf,char * data);
+treeNode * DeleteIdentifier(treeNode *leaf,int data);
 
-treeNode * findIdentifier(treeNode *leaf,char * data);
+treeNode * FindIdentifier(treeNode *leaf,int data);
 
-treeNode * deleteTree(treeNode *leaf);
+treeNode * DeleteTree(treeNode *leaf);
 
-treeNode* shadows(int id);
+treeNode* Shadows(int id, node * top);
+
+treeNode* FindIDTableScope(int id, node * top);
 
 #endif

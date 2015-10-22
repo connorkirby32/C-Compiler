@@ -1,4 +1,5 @@
 Level:
 0
 IDS at that Level:
-main 1 x 0 cat 0 
+int i    Value: 3
+int main    Value: None 

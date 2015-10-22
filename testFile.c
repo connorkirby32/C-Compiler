@@ -1,7 +1,4 @@
 int main(){
-
-int x = 1, cat;
-x = 4;
-
+int i = 3; 
 
 }
