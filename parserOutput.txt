@@ -125,11 +125,3 @@ declaration_list <- declaration_list declaration
 
 Look up is true 
 
-compound_statement <- '{' declaration_list '}' 
-
-function_definition <- declaration_specifiers declarator compound_statement 
-
-external_declaration <- function_definition 
-
-translation_unit <- external_declaration 
-
