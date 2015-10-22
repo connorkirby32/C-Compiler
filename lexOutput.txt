@@ -1,6 +1,21 @@
 //int
 INT
 
+//x
+IDENTIFIER
+
+//=
+=
+
+//10
+INTEGER_CONSTANT
+
+//;
+;
+
+//int
+INT
+
 //main
 IDENTIFIER
 
@@ -22,8 +37,43 @@ IDENTIFIER
 //=
 =
 
+<<<<<<< HEAD
 //3
 INTEGER_CONSTANT
+=======
+//4323
+INTEGER_CONSTANT
+
+//;
+;
+
+//char
+CHAR
+
+//u
+IDENTIFIER
+
+//=
+=
+
+//'c'
+CHARACTER_CONSTANT
+
+//;
+;
+
+//float
+FLOAT
+
+//r
+IDENTIFIER
+
+//=
+=
+
+//4.3222
+FLOATING_CONSTANT
+>>>>>>> 35fd83aea0df439b292c4d681f42678667e724f3
 
 //;
 ;

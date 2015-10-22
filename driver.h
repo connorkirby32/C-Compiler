@@ -28,8 +28,12 @@ extern char * buffer;
 extern long bufferSize;
 
 //For symbol table and parser
+<<<<<<< HEAD
 extern bool lookUpMode;
 extern bool scanner_error;
+=======
+extern bool lookUpMode; 
+>>>>>>> 35fd83aea0df439b292c4d681f42678667e724f3
 
 #ifndef DRIVER_H
 #define DRIVER_H
