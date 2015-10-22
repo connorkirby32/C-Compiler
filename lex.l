@@ -1,8 +1,6 @@
 %{
-
 #include "y.tab.h"
 #include "driver.h"
-
 %}
 
 
@@ -19,7 +17,7 @@ character \'.\'
 string \".\"
 
 %%
-{carriage}              {rowNum++; column = 1;}
+{carriage}              {rowNum++; column = 0;}
 {tab}                   {column += tabSize;}
 {whiteSpace}            {column += yyleng;}
 
@@ -58,15 +56,15 @@ string \".\"
 "volatile"              {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "VOLATILE\n\n");}  return VOLATILE;}
 "while"                 {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "WHILE\n\n");}  return WHILE;}
 
-{character}             {if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "CHARACTER_CONSTANT\n\n");}  return CHARACTER_CONSTANT;}
-{string}                {if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "ENUMERATION_CONSTANT\n\n");}  return ENUMERATION_CONSTANT;}
-{digit}+                {if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "INTEGER_CONSTANT\n\n");}  yylval.iVal = atoi(yytext); return INTEGER_CONSTANT;}
-{digit}+"."{digit}*     {if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "FLOATING_CONSTANT\n\n");}  yylval.fVal = atof(yytext); return FLOATING_CONSTANT;}
-{alphabet}+{digit}?     {if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "IDENTIFIER\n\n");} yylval.identifierName = strdup(yytext); return IDENTIFIER;}
+{character}             {if(yyleng > 8){printf("Over Flow \n");} column += yyleng;if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "CHARACTER_CONSTANT\n\n");}  return CHARACTER_CONSTANT;}
+{string}                {column += yyleng;if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "ENUMERATION_CONSTANT\n\n");}  return ENUMERATION_CONSTANT;}
+{digit}+                {if(yyleng > 10){printf("Over Flow \n");}column += yyleng;if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "INTEGER_CONSTANT\n\n");}  yylval.iVal = atoi(yytext); return INTEGER_CONSTANT;}
+{digit}+"."{digit}*     {if(yyleng > 32){printf("Over Flow \n");}column += yyleng;if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "FLOATING_CONSTANT\n\n");}  yylval.dVal = atof(yytext); return FLOATING_CONSTANT;}
+{alphabet}+{digit}?     {column += yyleng;if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "IDENTIFIER\n\n");} yylval.identifierName = strdup(yytext); return IDENTIFIER;}
 
 "("			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "(\n\n");} return('('); }
 ")"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, ")\n\n");} return(')');}
-";"                     {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, ";\n\n");} return ';';}
+";"                 {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, ";\n\n");} return ';';}
 "{"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "{\n\n");} return('{');}
 "}"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "}\n\n");} return('}');}
 "["			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "[\n\n");} return('[');}
@@ -87,19 +85,7 @@ string \".\"
 ":"			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, ":\n\n");} return(':');}
 "."			            {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, ".\n\n");} return('.');}
 
-"!!S"                   {printTable();}
-
-
-
-.                       {    
-                         printf("Diagnostic Report:\n\n");
-                         printf("%s \n", yytext);                        
-                         printf("^ is not a valid token. \n");
-                         printf("Error at Row #:%i\n",rowNum);
-                         printf("Error at Column #:%i\n",column); 
-                         return -1;
-                        } 
-
+"!!S"               {if(symbolTableDebug){PrintTable();}else{printf("Set symbol flag table debugging to dump table\n");}}
 
 %%
 

@@ -1,4 +1,23 @@
 Level:
+5
+IDS at that Level:
+float r    Value: 4.322200
+Level:
+4
+IDS at that Level:
+char u    Value: u
+Level:
+3
+IDS at that Level:
+int x    Value: 4323
+Level:
+2
+IDS at that Level:
+int main    Value: None 
+Level:
+1
+IDS at that Level:
+int x    Value: 10
+Level:
 0
 IDS at that Level:
-main 1 x 0 cat 0 

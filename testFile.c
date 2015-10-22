@@ -1,7 +1,10 @@
+int x = 10;
+
+
 int main(){
 
-int x = 1, cat;
-x = 4;
-
-
+int x = 4323;
+char u = 'c';
+float r = 4.3222;
 }
+

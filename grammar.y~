@@ -1459,6 +1459,7 @@ identifier
   for(i = 0, n = 0; i < sizeof($1) ; i++){
     n += $1[i];       
   }
+  symbolTable = PushLevel(symbolTable,(symbolTable->level + 1));
   //We are in decleration mode  
 	if(!lookUpMode){
     //Check and make sure variable is not already declared in the level        

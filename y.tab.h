@@ -181,7 +181,7 @@ union YYSTYPE
 #line 10 "grammar.y" /* yacc.c:1909  */
 
 	int iVal;
-	double fVal;
+	double dVal;
 	char * sVal;
 	char * identifierName;
 
