@@ -1,5 +1,6 @@
-#include "driver.h"
-#include <stdlib.h>
+#include "symTable.h"
+
+
 
 
 //Creates symbol table (stack) by setting the top to null
@@ -264,7 +265,7 @@ treeNode * FindIdentifier(treeNode *leaf, int data){
 }
 
 //Prints out our symbol table
-void PrintTable(node * top){
+node * PrintTable(node * top){
   
   //Create cursor variable and set to top
   node * cursor;

@@ -113,6 +113,8 @@ declaration_list
 			
 			}
 			lookUpMode = true;
+	    //Reset flags for following declerations
+      flags = reset;
 		}
 	| declaration_list declaration
 		{if(parseDebug){
@@ -1454,6 +1456,7 @@ identifier
   int i;
   int n;
   treeNode * shadowCheck;
+  node * shadow_level;
   
   //Cipher id name to numberical value
   for(i = 0, n = 0; i < sizeof($1) ; i++){
@@ -1464,7 +1467,8 @@ identifier
     //Check and make sure variable is not already declared in the level        
     currentIdentifier = FindIdentifier(symbolTable->treePtr, n);
     if(currentIdentifier != NULL){
-      yyerror("Already Declared ");
+      yyerror("Error: ");
+      printf("\t%s already declared on line number %d\n", $1, currentIdentifier->declerationLineNumber);
       return -1;
     }
 
@@ -1474,14 +1478,11 @@ identifier
     //Save the id name into the identifier tree 
     currentIdentifier = FindIdentifier(symbolTable->treePtr, n);
     currentIdentifier->name = $1;
+    currentIdentifier->declerationLineNumber = rowNum;
     
-    //Check and see if it shadows
-    
+    //Check and see if it shadows    
     Shadows(n, symbolTable);
 
-
-    //Reset flags for following declerations
-    flags = reset;
   //We are in look up mode
   }else {
      //Locate the identifier
@@ -1490,7 +1491,8 @@ identifier
      if(currentIdentifier == NULL){
         currentIdentifier = FindIDTableScope(n, symbolTable);
         if(currentIdentifier == NULL){
-          yyerror("Variable Not Declared ");
+          yyerror("Error: ");
+          printf("\tVariable %s Not Declared ", $1);
         }
       } 
 	 }      
@@ -1505,8 +1507,9 @@ identifier
 void yyerror(char *msg)
 {
   
-  int index, lineTracker = 0, lineCount = 0, index2;
-  
+  int index, lineTracker = 0, lineCount = 0;
+  char * temp = yyget_text();
+ 
   //Go to appropriate line
   for(index = 0 ; index < rowNum - 1; index++){
    //Track our current location in the file
@@ -1532,32 +1535,24 @@ void yyerror(char *msg)
     printf("\n");
   }
   
-  if(!scanner_error){
-    //Print the arrow and appropriate error message based on our state
-    
-    for(index = 0; index < column; index++){
+  if(scanner_error){
+  
+      for(index = 0; index < column ; index++){
       printf(" ");
-    }
-    printf("^\n");
-    if(!lookUpMode){
-      printf( "error: expected ‘,’ or ‘;’ before %s\n", yyget_text());
-    }else {
-      printf( "error: expected ‘}’ or ‘)’");}
-      printf("\t%s line %d and column: %d\n", msg, rowNum, column);
-      
-  }else {
-      
-      for(index = 0; index < column; index++){
-        printf(" ");
       }
-      printf("^\n");
-        printf("\t%s line %d and column: %d\n", msg, rowNum, column);
-        
-    
+      printf("^\n");    
       scanner_error = false;
-    
-    
+      printf("\t%s\n", msg);
+      exit(0);
+  
+  }else {
+    for(index = 0; index < column - 1; index++){
+        printf(" ");
     }
+      printf("^\n"); 
+  }
+   
+  printf("\t%s line %d and column: %d\n", msg, rowNum, column);
 }
 
 

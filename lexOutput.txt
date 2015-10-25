@@ -22,24 +22,12 @@ IDENTIFIER
 //=
 =
 
-//3
+//5
 INTEGER_CONSTANT
 
 //;
 ;
 
-//int
-INT
-
-//r
-IDENTIFIER
-
-//=
-=
-
-//1
-INTEGER_CONSTANT
-
-//;
-;
+//}
+}
 

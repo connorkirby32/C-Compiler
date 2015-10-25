@@ -1,5 +1,6 @@
 #include "driver.h"
 #include "symTable.c"
+#include "ast.c"
 
 
 //Global variables.....

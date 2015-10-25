@@ -1,6 +1,5 @@
 Level:
 0
 IDS at that Level:
-int i    Value: 3
-int r    Value: 1
+int i    Value: 5
 int main    Value: None 
