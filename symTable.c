@@ -1,6 +1,5 @@
-#include "symTable.h"
-
-
+#include "driver.h"
+#include <stdlib.h>
 
 
 //Creates symbol table (stack) by setting the top to null

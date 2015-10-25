@@ -71,9 +71,7 @@ function_definition
 	: declarator compound_statement
 		{if (parseDebug){
 			fprintf(parseFile,"function_definition <- declarator compound_statement \n\n");
-			}
-			
-			
+			}		
 		}
 	| declarator declaration_list compound_statement
 		{if(parseDebug){
@@ -154,12 +152,12 @@ declaration_specifiers
 		}
 	| type_qualifier 
 		{if(parseDebug){
-			fprintf(parseFile,"declaration_specifiers <- type_specifier declaration_specifiers \n\n");
+			fprintf(parseFile,"declaration_specifiers <- type_qualifier \n\n");
 			}
 		}
 	| type_qualifier declaration_specifiers
 		{if(parseDebug){
-			fprintf(parseFile,"declaration_specifiers <- type_qualifier declaration_specifiers \n\n");
+			fprintf(parseFile,"declaration_specifiers <- declaration_specifiers \n\n");
 			}
 		}
 	;

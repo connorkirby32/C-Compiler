@@ -1,5 +1,7 @@
 #include "driver.h"
+#include "symTable.h"
 #include "symTable.c"
+#include "ast.h"
 #include "ast.c"
 
 
