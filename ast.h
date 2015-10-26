@@ -212,7 +212,8 @@ typedef struct declarator_node
   
 }DeclaratorNode;
 
-typedef struct direct_declarator_node
+
+typedef struct direct_declarator_node_node
 {
    IdentifierNode * identifier;
    DeclaratorNode * declarator;
@@ -222,418 +223,191 @@ typedef struct direct_declarator_node
    ParaneterTypeListNode * parameter_type_list;
    IdentifierListNode * identifier_list; 
   
-}DeclaratorNode;
+}DirectDeclaratorNode;
 
+
+typedef struct pointer_node
+{
+
+    TypeQualiferListNode * type_qualifier_list;
+    PointerNode * pointer;
+}PointerNode;
+
+typedef struct type_qualifier_list_node
+{
+
+    TypeQualifierNode * type_qualifier;
+    TypeQualifierListNode * type_qualifier_list;
+}TypeQualiferListNode;
+
+typedef struct parameter_type_list_node{
+
+    ParameterListNode * parameter_list;
+    char * ELIPSIS; 
+}ParameterTypeListNode;
+
+typedef struct parameter_declaration_node
+{
+
+    DeclarationSpecifiersNode * declaration_specifiers;
+    DeclaratorNode * declarator;
+    AbstractDeclaratorNode * abstract_declarator; 
+    
+}ParameterDeclarationNode;
+
+typedef struct identifier_list_node
+{
+
+   IdentifierNode * identifier;
+   IdentifieListNode * identifier_list;
+    
+}IdentifierListNode;
+
+typedef struct initializer_node
+{
+
+   InitializerListNode * initializer_list;
+   AssignmentExpressionNode * assignment_expression;
+    
+}InitializerNode;
+
+typedef struct initializer_list_node
+{
+
+   InitializerNode * initializer;
+   InitializerListNode * initializer_list;
+    
+}InitializerListNode;
+
+typedef struct type_name_node
+{
+
+   AbstractDeclaratorNode * abstract_declarator;
+   SpecifierQualifierListNode * specifier_qualifier_list; 
+    
+}TypeNameNode;
+
+typedef struct abstract_declarator_node
+{
+
+  PointerNode * pointer;
+  DirectAbstractDeclaratorNode * direct_abstract_declarator;
+  ConstantExpressionNode * constant_expression;
+    
+}AbstractDeclaratorNode;
+
+typedef struct type_name_node
+{
+
+  PointerNode * pointer;
+  DirectAbstractDeclaratorNode * direct_abstract_declarator;
+  AbstractDeclaratorNode * abstract_declarator;
+  ConstantExpressionNode * constant_expression;
+  ParameterListNode * parameter_list;
+    
+}DirectAbstractDeclaratorNode;
+
+typedef struct statement_node
+{
+
+  LabeledStatementNode * labeled_statement;
+  CompoundStatementNode * compound_statement;
+  ExpressionStatementNode * expression_statement;
+  SelectionStatementNode * selection_statement;
+  IterationStatementNode * iteration_statement;
+  JumpStatementNode * jump_statement;
+    
+}StatementNode;
+
+typedef struct labeled_statement_node
+{
+    
+  IdentifierNode * identifier;
+  ConstantExpressionNode * constant_expression;
+  StatementNode * statement;
+  char * CASE; 
+  char * COLON;
+  char * DEFAULT;
+
+
+}LabeledStatementNode;
+
+typedef struct expression_statement_node
+{
+
+  char * SEMICOLON;
+  ExpressionNode * expression;
+  
+    
+}ExpressionStatementNode;
+
+typedef struct compound_statement_node
+{
+
+  char * LEFTBRACKET;
+  char * RIGHTBRACKET;
+  StatementListNode * statment_list;
+  DeclarationListNode * declaration_list;
+    
+}CompoundStatementNode;
+
+
+typedef struct statement_list_node
+{
+  StatementListNode * statementList;
+  StatementNode * statement;
+
+
+}StatementListNode;
+
+typedef struct selection_statement_node
+{
+
+  ExpressionNode * expressionNode;
+  StatementNode * statement;
+  StatementNode * statement2;
+  char * IF;
+  char * ELSE:
+  char * SWITCH;
+  char * LEFTPAREN;
+  char * RIGHTPAREN;
+
+}SelectionStatementNode:
+
+typedef struct iteration_statement_node
+{
+
+  ExpressionNode * expressionNode;
+  ExpressionNode * expressionNode1;
+  ExpressionNode * expressionNode2;
+  ExpressionStatementNode * expression_statement;
+  StatementNode * statement;
+  char * WHILE;
+  char * DO:
+  char * FOR;
+  char * LEFTPAREN;
+  char * RIGHTPAREN;
+  char * SEMICOLON;
+
+}IterationStatementNode;
+
+typedef struct iteration_statement_node
+{
+
+  IdentifierNode * identifier;
+  ExpressionNode * expressionNode;
+  char * RETURN;
+  char * BREAK:
+  char * RETURN;
+  char * SEMICOLON;
+
+}JumpStatementNode:
 
 #endif
 
 
-pointer
-	: '*'
-		{if(parseDebug){
-			fprintf(parseFile,"pointer <- '*' \n\n");
-			}
-		}
-	| '*' type_qualifier_list
-		{if(parseDebug){
-			fprintf(parseFile,"pointer <- '*' type_qualifier_list \n\n");
-			}
-		}
-	| '*' pointer
-		{if(parseDebug){
-			fprintf(parseFile,"pointer <- '*' pointer \n\n");
-			}
-		}
-	| '*' type_qualifier_list pointer
-		{if(parseDebug){
-			fprintf(parseFile,"pointer <- '*' type_qualifier_list pointer \n\n");
-			}
-		}
-	;
 
-type_qualifier_list
-	: type_qualifier
-		{if(parseDebug){
-			fprintf(parseFile,"type_qualifier_list <- type_qualifier \n\n");
-			}
-		}
-	| type_qualifier_list type_qualifier
-		{if(parseDebug){
-			fprintf(parseFile,"type_qualifier_list <- type_qualifier_list type_qualifier_list \n\n");
-			}
-		}
-	;
 
-parameter_type_list
-	: parameter_list
-		{if(parseDebug){
-			fprintf(parseFile,"parameter_type_list <- parameter_list \n\n");
-			}
-		}
-	| parameter_list ',' ELIPSIS
-		{if(parseDebug){
-			fprintf(parseFile,"parameter_type_list <- parameter_list ',' ELIPSIS \n\n");
-			}
-		}
-	;
-
-parameter_list
-	: parameter_declaration
-		{if(parseDebug){
-			fprintf(parseFile,"parameter_list <- parameter_declaration \n\n");
-			}
-		}
-	| parameter_list ',' parameter_declaration
-		{if(parseDebug){
-			fprintf(parseFile,"parameter_list <- parameter_list ',' parameter_declaration \n\n");
-			}
-		}
-	;
-
-parameter_declaration
-	: declaration_specifiers declarator
-		{if(parseDebug){
-			fprintf(parseFile,"parameter_declaration <- declaration_specifiers declarator \n\n");
-			}
-		}
-	| declaration_specifiers
-		{if(parseDebug){
-			fprintf(parseFile,"parameter_declaration <- declaration_specifiers \n\n");
-			}
-		}
-	| declaration_specifiers abstract_declarator
-		{if(parseDebug){
-			fprintf(parseFile,"parameter_declaration <- declaration_specifiers abstract_declarator \n\n");
-			}
-		}
-	;
-
-identifier_list
-	: identifier
-		{if(parseDebug){
-			fprintf(parseFile,"identifier_list <- identifier \n\n");
-			}
-		}
-	| identifier_list ',' identifier
-		{if(parseDebug){
-			fprintf(parseFile,"identifier_list <- identifier_list ',' identifier \n\n");
-			}
-		}
-	;
-
-initializer
-	: assignment_expression
-		{if(parseDebug){
-			fprintf(parseFile,"initializer <- assignment_expression \n\n");
-			}
-		}
-	| '{' initializer_list '}'
-		{if(parseDebug){
-			fprintf(parseFile,"initializer <- '{' initializer_list '}' \n\n");
-			}
-		}
-	| '{' initializer_list ',' '}'
-		{if(parseDebug){
-			fprintf(parseFile,"initializer <- '{' initializer_list ',' '}' \n\n");
-			}
-		}
-	;
-
-initializer_list
-	: initializer
-		{if(parseDebug){
-			fprintf(parseFile,"initializer_list <- initializer \n\n");
-			}
-		}
-	| initializer_list ',' initializer
-		{if(parseDebug){
-			fprintf(parseFile,"initializer_list <- initializer_list ',' initializer \n\n");
-			}
-		}
-	;
-
-type_name
-	: specifier_qualifier_list
-		{if(parseDebug){
-			fprintf(parseFile,"type_name <- specifier_qualifier_list \n\n");
-			}
-		}
-	| specifier_qualifier_list abstract_declarator
-		{if(parseDebug){
-			fprintf(parseFile,"type_name <- specifier_qualifier_list abstract_declarator \n\n");
-			}
-		}
-	;
-
-abstract_declarator
-	: pointer
-		{if(parseDebug){
-			fprintf(parseFile,"abstract_declarator <- pointer \n\n");
-			}
-		}
-	| direct_abstract_declarator
-		{if(parseDebug){
-			fprintf(parseFile,"abstract_declarator <- direct_abstract_declarator \n\n");
-			}
-		}
-	| pointer direct_abstract_declarator
-		{if(parseDebug){
-			fprintf(parseFile,"abstract_declarator <- pointer direct_abstract_declarator \n\n");
-			}
-		}
-	;
-
-direct_abstract_declarator
-	: '(' abstract_declarator ')'
-		{if(parseDebug){
-			fprintf(parseFile,"direct_abstract_declarator <- '(' abstract_declarator ')' \n\n");
-			}
-		}
-	| '[' ']'
-		{if(parseDebug){
-			fprintf(parseFile,"direct_abstract_declarator <- '[' ']' \n\n");
-			}
-		}
-	| '[' constant_expression ']'
-		{if(parseDebug){
-			fprintf(parseFile,"direct_abstract_declarator <- '[' constant_expression ']' \n\n");
-			}
-		}
-	| direct_abstract_declarator '[' ']'
-		{if(parseDebug){
-			fprintf(parseFile,"direct_abstract_declarator <- direct_abstract_declarator '[' ']' \n\n");
-			}
-		}
-	| direct_abstract_declarator '[' constant_expression ']'
-		{if(parseDebug){
-			fprintf(parseFile,"direct_abstract_declarator <- direct_abstract_declarator '[' constant_expression ']' \n\n");
-			}
-		}
-	| '(' ')'
-		{if(parseDebug){
-			fprintf(parseFile,"direct_abstract_declarator <- '(' ')' \n\n");
-			}
-		}
-	| '(' parameter_type_list ')'
-		{if(parseDebug){
-			fprintf(parseFile,"direct_abstract_declarator <- '(' parameter_type_list ')' \n\n");
-			}
-		}
-	| direct_abstract_declarator '(' ')'
-		{if(parseDebug){
-			fprintf(parseFile,"direct_abstract_declarator <- direct_abstract_declarator '(' ')' \n\n");
-			}
-		}
-	| direct_abstract_declarator '(' parameter_type_list ')'
-		{if(parseDebug){
-			fprintf(parseFile,"direct_abstract_declarator <- direct_abstract_declarator '(' parameter_type_list ')' \n\n");
-			}
-		}
-	;
-
-statement
-	: labeled_statement
-		{if(parseDebug){
-			fprintf(parseFile,"statement <- labeled_statement \n\n");
-			}
-		}
-	| compound_statement
-		{if(parseDebug){
-			fprintf(parseFile,"statement <- compound_statement \n\n");
-			}
-		}
-	| expression_statement
-		{if(parseDebug){
-			fprintf(parseFile,"statement <- expression_statement \n\n");
-			}
-		}
-	| selection_statement
-		{if(parseDebug){
-			fprintf(parseFile,"statement <- selection_statement \n\n");
-			}
-		}
-	| iteration_statement
-		{if(parseDebug){
-			fprintf(parseFile,"statement <- iteration_statement \n\n");
-			}
-		}
-	| jump_statement
-		{if(parseDebug){
-			fprintf(parseFile,"statement <- jump_statement \n\n");
-			}
-		}
-	;
-
-labeled_statement
-	: identifier ':' statement
-		{if(parseDebug){
-			fprintf(parseFile,"labeled_statement <- identifier ':' \n\n");
-			}
-		}
-	| CASE constant_expression ':' statement
-		{if(parseDebug){
-			fprintf(parseFile,"labeled_statement <- CASE constant_expression ':' statement \n\n");
-			}
-		}
-	| DEFAULT ':' statement
-		{if(parseDebug){
-			fprintf(parseFile,"DEFAULT ':' statement \n\n");
-			}
-		}
-	;
-
-expression_statement
-	: ';'
-		{if(parseDebug){
-			fprintf(parseFile,"expression_statement <- ';' \n\n");
-			}
-		}
-	| expression ';'
-		{if(parseDebug){
-			fprintf(parseFile,"expression_statement <- expression ';' \n\n");
-			}
-		}
-	;
-
-compound_statement
-	: '{' '}'
-		{if(parseDebug){
-			fprintf(parseFile,"compound_statement <- '{' '}' \n\n");
-			}
-		}
-	| '{' statement_list '}'
-		{if(parseDebug){
-			fprintf(parseFile,"compound_statement <- '{' statement_list '}' \n\n");
-			}
-		}
-	| '{' declaration_list '}'
-		{if(parseDebug){
-			fprintf(parseFile,"compound_statement <- '{' declaration_list '}' \n\n");
-			}
-		}
-	| '{' declaration_list statement_list '}'
-		{if(parseDebug){
-			fprintf(parseFile,"compound_statement <- '{' declaration_list statement_list '}'  \n\n");
-			}
-			
-			
-		}
-	;
-
-statement_list
-	: statement
-		{if(parseDebug){
-			fprintf(parseFile,"statement_list <- statement  \n\n");
-			}
-			
-
-		}
-	| statement_list statement
-		{if(parseDebug){
-			fprintf(parseFile,"statement_list <- statement_list statement \n\n");
-			}
-
-		}
-	;
-
-selection_statement
-	: IF '(' expression ')' statement
-		{if(parseDebug){
-			fprintf(parseFile,"selection_statement <- IF '(' expression ')' statement  \n\n");
-			}
-		}
-	| IF '(' expression ')' statement ELSE statement
-		{if(parseDebug){
-			fprintf(parseFile,"selection_statement <- IF '(' expression ')' statement ELSE statement \n\n");
-			}
-		}
-	| SWITCH '(' expression ')' statement
-		{if(parseDebug){
-			fprintf(parseFile,"selection_statement <- SWITCH '(' expression ')' statement \n\n");
-			}
-		}
-	;
-
-iteration_statement
-	: WHILE '(' expression ')' statement
-		{if(parseDebug){
-			fprintf(parseFile,"iteration_statement <- WHILE '(' expression ')' statement \n\n");
-			}
-		}
-	| DO statement WHILE '(' expression ')' ';'
-		{if(parseDebug){
-			fprintf(parseFile,"iteration_statement <- DO statement WHILE '(' expression_statement ')'; \n\n");
-			}
-		}
-	| FOR '(' ';' ';' ')' statement
-		{if(parseDebug){
-			fprintf(parseFile,"iteration_statement <- FOR '(' ';' ';' ')' statement \n\n");
-			}
-		}
-	| FOR '(' ';' ';' expression ')' statement
-		{if(parseDebug){
-			fprintf(parseFile,"iteration_statement <- FOR '(' ';' ';' expression ')' statement \n\n");
-			}
-		}
-	| FOR '(' ';' expression ';' ')' statement
-		{if(parseDebug){
-			fprintf(parseFile,"iteration_statement <- FOR '(' ';' expression ';' ')' statement \n\n");
-			}
-		}
-	| FOR '(' ';' expression ';' expression ')' statement
-		{if(parseDebug){
-			fprintf(parseFile,"iteration_statement <- FOR '(' ';' expression ';' expression ')' statement \n\n");
-			}
-		}
-	| FOR '(' expression ';' ';' ')' statement
-		{if(parseDebug){
-			fprintf(parseFile,"iteration_statement <- FOR '(' expression ';' ';' ')' statement \n\n");
-			}
-		}
-	| FOR '(' expression ';' ';' expression ')' statement
-		{if(parseDebug){
-			fprintf(parseFile,"iteration_statement <- FOR '(' expression ';' ';' expression ')' statement \n\n");
-			}
-		}
-	| FOR '(' expression ';' expression ';' ')' statement
-		{if(parseDebug){
-			fprintf(parseFile,"iteration_statement <- FOR '(' expression ';' expression ';' ')' statement \n\n");
-			}
-		}
-	| FOR '(' expression ';' expression ';' expression ')' statement
-		{if(parseDebug){
-			fprintf(parseFile,"iteration_statement <- FOR '(' expression ';' expression ';' expression ')' statement \n\n");
-			}
-		}
-	;
-
-jump_statement
-	: GOTO identifier ';'
-		{if(parseDebug){
-			fprintf(parseFile,"jump_statement <- GOTO identifier ';' \n\n");
-			}
-		}
-	| CONTINUE ';'
-		{if(parseDebug){
-			fprintf(parseFile,"jump_statement <- CONTINUE ';' \n\n");
-			}
-		}
-	| BREAK ';'
-		{if(parseDebug){
-			fprintf(parseFile,"jump_statement <- BREAK ';' \n\n");
-			}
-		}
-	| RETURN ';'
-		{if(parseDebug){
-			fprintf(parseFile,"jump_statement <- RETURN ';' \n\n");
-			}
-		}
-	| RETURN expression ';'
-		{if(parseDebug){
-			fprintf(parseFile,"jump_statement <- RETURN expression';' \n\n");
-			}
-		}
-	;
 
 
 

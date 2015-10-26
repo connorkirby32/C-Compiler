@@ -13,6 +13,9 @@ IDENTIFIER
 //{
 {
 
+//const
+CONST
+
 //int
 INT
 
@@ -23,6 +26,21 @@ IDENTIFIER
 =
 
 //5
+INTEGER_CONSTANT
+
+//;
+;
+
+//int
+INT
+
+//r
+IDENTIFIER
+
+//=
+=
+
+//2
 INTEGER_CONSTANT
 
 //;

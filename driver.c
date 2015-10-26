@@ -1,8 +1,8 @@
 #include "driver.h"
 #include "symTable.h"
 #include "symTable.c"
-#include "ast.h"
-#include "ast.c"
+//#include "ast.h"
+//#include "ast.c"
 
 
 //Global variables.....
@@ -34,7 +34,7 @@ bool scanner_error = 0;
 node * symbolTable;
 treeNode* currentIdentifier;
 flagContainer flags;
-flagContainer reset;
+flagContainer reset = {0};
 
 int main(int argc, char **argv)
 {

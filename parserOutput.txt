@@ -11,11 +11,15 @@ direct_declarator <- direct_declarator '(' ')'
 
 declarator <- direct_declarator 
 
+type_qualifier <- CONST 
+
 storage_class_specifier <- INT 
 
 declaration_specifiers <- type_specifier 
 
 Insert Mode 
+
+declaration_specifiers <- declaration_specifiers 
 
 identifier ->IDENTIFIER (i)
 direct_declarator <- identifier 
@@ -65,6 +69,63 @@ init_declarator_list <- init_declarator
 declaration <- declaration_specifiers init_declarator_list 
 
 declaration_list <- declaration 
+
+Look up is true 
+
+storage_class_specifier <- INT 
+
+declaration_specifiers <- type_specifier 
+
+Insert Mode 
+
+identifier ->IDENTIFIER (r)
+direct_declarator <- identifier 
+
+declarator <- direct_declarator 
+
+CONSTANT <- INTEGER_CONSTANT 
+
+primary_expression <- constant 
+
+postfix_expression <- primary_expression 
+
+unary_expression <- postfix_expression 
+
+cast_expression <- unary_expression 
+
+multiplicative_expression <- cast_expression 
+
+additive_expression <- multiplicative_expression 
+
+shift_expression <- additive_expression 
+
+relational_expression <- shift_expression 
+
+equality_expression <- relational_expression 
+
+and_expression <- equality_expression 
+
+exclusive_or_expression <- and_expression 
+
+inclusive_or_expression <- exclusive_or_expression  
+
+logical_and_expression <- inclusive_or_expression 
+
+logical_or_expression <- logical_and_expression 
+
+conditional_expression <- logical_or_expression 
+ 
+assignment_expression <- conditional_expression 
+
+initializer <- assignment_expression 
+
+init_declarator <- declarator '=' initializer 
+
+init_declarator_list <- init_declarator 
+
+declaration <- declaration_specifiers init_declarator_list 
+
+declaration_list <- declaration_list declaration 
 
 Look up is true 
 

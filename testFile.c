@@ -1,4 +1,5 @@
 int main(){
 
-int i = 5;
+const int i = 5;
+int r = 2;
 }
