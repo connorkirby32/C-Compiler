@@ -40,68 +40,56 @@ typedef struct declaration_node
     struct node *ptr;
 } DeclarationNode;
 
-
-
-
 typedef struct declaration_list_node
 {
-    struct DeclarationNode * declaration;
-    struct DeclarationList * declaration_list;
+  struct DeclarationNode * declaration;
+  struct DeclarationList * declaration_list;
     
 } DeclarationListNode;
 
-
-
 typedef struct declaration_specifiers_node
 {
-
-    struct StorageClassSpecifier * storage_class_specifier;
+    struct StorageClassSpecifierNode * storage_class_specifier;
     struct DeclartionSpecifiersNodes * declaration_specifiers;
     struct TypeSpecifierNode * type_specifier;
     struct TypeQualifier * type_qualifier;
-
 } DeclarationSpecifiersNode;
 
 
 typedef struct storage_class_specifier_node
 {
 
-    struct StorageClassSpecifier * storage_class_specifier;
-    struct DeclartionSpecifiersNodes * declaration_specifiers;
-    struct TypeSpecifierNode * type_specifier;
-    struct TypeQualifier * type_qualifier;
-
+  char * SPECIFIER;
+  
 } StorageClassSpecifierNode;
 
-typedef struct storage_class_specifier_node
-{
-    char * storage_class_type;
 
-}StorageClassTypeNode;
 
 typedef struct type_specifier_node
 {
+
+    struct StructOrUnionSpecifierNode * struct_or_union_specifier;
+    struct EnumSpecifier * enum_specifier; 
     char * type;
-    StructOrUnionSpecifierNode * struct_or_union_specifier;
-    EnumSpecifier * enum_specifier; 
     
-}TypeSpecifierNode;
+} TypeSpecifierNode;
 
 typedef struct type_qualifier_node
 {
     char * type;
-}TypeQualifierNode;
+} TypeQualifierNode;
 
 
 typedef struct struct_or_union_specifier_node
 {
 
-    StructOrUnionNode * struct_or_union;
-    Identifier * identifier;
-    StructDeclarationList * struct_declartion_list;
+    struct StructOrUnionNode * struct_or_union;
+    struct Identifier * identifier;
+    struct StructDeclarationList * struct_declartion_list;
 
 
-}StructOrUnionSpecifierNode;
+} StructOrUnionSpecifierNode;
+
 
 typedef struct struct_or_union_node
 {
@@ -113,8 +101,8 @@ typedef struct struct_or_union_node
 typedef struct struct_declaration_list_node
 {
 
-    StructDeclarationNode * struct_declaration;
-    StructDeclarationListNode * struct_declaration_list;
+    struct StructDeclarationNode * struct_declaration;
+    struct StructDeclarationListNode * struct_declaration_list;
 
 
 }StructDeclarationList; 
@@ -123,8 +111,8 @@ typedef struct struct_declaration_list_node
 typedef struct init_declarator_list_node
 {
 
-   InitDeclaratorList * init_declarator_list;
-   InitDeclarator * init_declarator; 
+   struct InitDeclaratorList * init_declarator_list;
+   struct InitDeclarator * init_declarator; 
    
 
 
@@ -133,8 +121,8 @@ typedef struct init_declarator_list_node
 typedef struct init_declarator_node_node
 {
 
-   InitializerNode* initializer;
-   Declarator * declarator; 
+   struct InitializerNode* initializer;
+   struct Declarator * declarator; 
    
 
 
@@ -143,17 +131,17 @@ typedef struct init_declarator_node_node
 typedef struct struct_declaration_node_node
 {
 
-   SpecifierQualifierList* specifier_qualifier_list;     
-   StructDeclaratorList * struct_declarator_list; 
+   struct SpecifierQualifierList* specifier_qualifier_list;     
+   struct StructDeclaratorList * struct_declarator_list; 
    
 }StructDeclarationNode;
 
 typedef struct specifier_qualifier_list_node
 {
 
-   TypeSpecifierNode * type_specifier; 
-   TypeQualifierNode * type_qualifier;    
-   SpecifierQualifierListNode * specifier_qualifier_list; 
+   struct TypeSpecifierNode * type_specifier; 
+   struct TypeQualifierNode * type_qualifier;    
+   struct SpecifierQualifierListNode * specifier_qualifier_list; 
   
 }SpecifierQualifierListNode;
 
@@ -161,17 +149,17 @@ typedef struct specifier_qualifier_list_node
 typedef struct struct_declarator_list_node
 {
 
-   StructDeclaratorListNode * struct_declarator_list; 
-   StructDeclaratorNode * struct_declarator;    
+   struct StructDeclaratorListNode * struct_declarator_list; 
+   struct StructDeclaratorNode * struct_declarator;    
   
 }StructDeclaratorListNode;
 
 typedef struct struct_declarator_node
 {
 
-   DeclaratorNode * declarator; 
-   StructDeclaratorNode * struct_declarator;  
-   ConstantExpressionNode * constant_expression;  
+   struct DeclaratorNode * declarator; 
+   struct StructDeclaratorNode * struct_declarator;  
+   struct ConstantExpressionNode * constant_expression;  
   
 }StructDeclaratorNode;
 
@@ -179,18 +167,17 @@ typedef struct struct_declarator_node
 typedef struct enum_specifier_node
 {
 
-   char * ENUM; 
-   EnumeratorListNode enumerator_list; 
-   IdentifierNode * identifier; 
-  
+   struct EnumeratorListNode * enumerator_list; 
+   struct IdentifierNode * identifier; 
+   char * ENUMt; 
 }EnumSpecifierNode;
 
 
 typedef struct enumerator_list_node
 {
 
-   EnumeratorListNode * enumerator_list; 
-   EnumeratorNode * enumerator; 
+   struct EnumeratorListNode * enumerator_list; 
+   struct EnumeratorNode * enumerator; 
   
 }EnumeratorListNode;
 
@@ -198,8 +185,8 @@ typedef struct enumerator_list_node
 typedef struct enumerator_node
 {
    //TODO go back and add characters being returned as characters i.e. =, +, - etc
-   ConstantExpressionNode * constant_expression;
-   IdentifierNode * identifier; 
+   struct ConstantExpressionNode * constant_expression;
+   struct IdentifierNode * identifier; 
   
 }EnumeratorNode;
 
@@ -207,21 +194,21 @@ typedef struct enumerator_node
 typedef struct declarator_node
 {
 
-   DirectDeclaratorNode * direct_declarator; 
-   PointerNode * pointer;
+   struct DirectDeclaratorNode * direct_declarator; 
+   struct PointerNode * pointer;
   
 }DeclaratorNode;
 
 
 typedef struct direct_declarator_node_node
 {
-   IdentifierNode * identifier;
-   DeclaratorNode * declarator;
-   DirectDeclaratorNode * direct_declarator; 
-   ConstantExpressionNode * constant_expression;
-   PointerNode * pointer;
-   ParaneterTypeListNode * parameter_type_list;
-   IdentifierListNode * identifier_list; 
+   struct IdentifierNode * identifier;
+   struct DeclaratorNode * declarator;
+   struct DirectDeclaratorNode * direct_declarator; 
+   struct ConstantExpressionNode * constant_expression;
+   struct PointerNode * pointer;
+   struct ParaneterTypeListNode * parameter_type_list;
+   struct IdentifierListNode * identifier_list; 
   
 }DirectDeclaratorNode;
 
@@ -229,105 +216,105 @@ typedef struct direct_declarator_node_node
 typedef struct pointer_node
 {
 
-    TypeQualiferListNode * type_qualifier_list;
-    PointerNode * pointer;
+    struct TypeQualiferListNode * type_qualifier_list;
+    struct PointerNode * pointer;
 }PointerNode;
 
 typedef struct type_qualifier_list_node
 {
 
-    TypeQualifierNode * type_qualifier;
-    TypeQualifierListNode * type_qualifier_list;
+    struct TypeQualifierNode * type_qualifier;
+    struct TypeQualifierListNode * type_qualifier_list;
 }TypeQualiferListNode;
 
 typedef struct parameter_type_list_node{
 
-    ParameterListNode * parameter_list;
-    char * ELIPSIS; 
+    struct ParameterListNode * parameter_list;
+    char * ELIPSISt; 
 }ParameterTypeListNode;
 
 typedef struct parameter_declaration_node
 {
 
-    DeclarationSpecifiersNode * declaration_specifiers;
-    DeclaratorNode * declarator;
-    AbstractDeclaratorNode * abstract_declarator; 
+    struct DeclarationSpecifiersNode * declaration_specifiers;
+    struct DeclaratorNode * declarator;
+    struct AbstractDeclaratorNode * abstract_declarator; 
     
 }ParameterDeclarationNode;
 
 typedef struct identifier_list_node
 {
 
-   IdentifierNode * identifier;
-   IdentifieListNode * identifier_list;
+   struct IdentifierNode * identifier;
+   struct IdentifieListNode * identifier_list;
     
 }IdentifierListNode;
 
 typedef struct initializer_node
 {
 
-   InitializerListNode * initializer_list;
-   AssignmentExpressionNode * assignment_expression;
+   struct InitializerListNode * initializer_list;
+   struct AssignmentExpressionNode * assignment_expression;
     
 }InitializerNode;
 
 typedef struct initializer_list_node
 {
 
-   InitializerNode * initializer;
-   InitializerListNode * initializer_list;
+   struct InitializerNode * initializer;
+   struct InitializerListNode * initializer_list;
     
 }InitializerListNode;
 
 typedef struct type_name_node
 {
 
-   AbstractDeclaratorNode * abstract_declarator;
-   SpecifierQualifierListNode * specifier_qualifier_list; 
+   struct AbstractDeclaratorNode * abstract_declarator;
+   struct SpecifierQualifierListNode * specifier_qualifier_list; 
     
 }TypeNameNode;
 
 typedef struct abstract_declarator_node
 {
 
-  PointerNode * pointer;
-  DirectAbstractDeclaratorNode * direct_abstract_declarator;
-  ConstantExpressionNode * constant_expression;
+  struct PointerNode * pointer;
+  struct DirectAbstractDeclaratorNode * direct_abstract_declarator;
+  struct ConstantExpressionNode * constant_expression;
     
 }AbstractDeclaratorNode;
 
-typedef struct type_name_node
+typedef struct direct_abstract_declarator_node
 {
 
-  PointerNode * pointer;
-  DirectAbstractDeclaratorNode * direct_abstract_declarator;
-  AbstractDeclaratorNode * abstract_declarator;
-  ConstantExpressionNode * constant_expression;
-  ParameterListNode * parameter_list;
+  struct PointerNode * pointer;
+  struct DirectAbstractDeclaratorNode * direct_abstract_declarator;
+  struct AbstractDeclaratorNode * abstract_declarator;
+  struct ConstantExpressionNode * constant_expression;
+  struct ParameterListNode * parameter_list;
     
 }DirectAbstractDeclaratorNode;
 
 typedef struct statement_node
 {
 
-  LabeledStatementNode * labeled_statement;
-  CompoundStatementNode * compound_statement;
-  ExpressionStatementNode * expression_statement;
-  SelectionStatementNode * selection_statement;
-  IterationStatementNode * iteration_statement;
-  JumpStatementNode * jump_statement;
+  struct LabeledStatementNode * labeled_statement;
+  struct CompoundStatementNode * compound_statement;
+  struct ExpressionStatementNode * expression_statement;
+  struct SelectionStatementNode * selection_statement;
+  struct IterationStatementNode * iteration_statement;
+  struct JumpStatementNode * jump_statement;
     
 }StatementNode;
 
 typedef struct labeled_statement_node
 {
     
-  IdentifierNode * identifier;
-  ConstantExpressionNode * constant_expression;
-  StatementNode * statement;
-  char * CASE; 
-  char * COLON;
-  char * DEFAULT;
+  struct IdentifierNode * identifier;
+  struct ConstantExpressionNode * constant_expression;
+  struct StatementNode * statement;
+  char * CASEt; 
+  char * COLONt;
+  char * DEFAULTt;
 
 
 }LabeledStatementNode;
@@ -335,8 +322,8 @@ typedef struct labeled_statement_node
 typedef struct expression_statement_node
 {
 
-  char * SEMICOLON;
-  ExpressionNode * expression;
+  char * SEMICOLONt;
+  struct ExpressionNode * expression;
   
     
 }ExpressionStatementNode;
@@ -344,18 +331,18 @@ typedef struct expression_statement_node
 typedef struct compound_statement_node
 {
 
-  char * LEFTBRACKET;
-  char * RIGHTBRACKET;
-  StatementListNode * statment_list;
-  DeclarationListNode * declaration_list;
+  char * LEFTBRACKETt;
+  char * RIGHTBRACKETt;
+  struct StatementListNode * statment_list;
+  struct DeclarationListNode * declaration_list;
     
 }CompoundStatementNode;
 
 
 typedef struct statement_list_node
 {
-  StatementListNode * statementList;
-  StatementNode * statement;
+  struct StatementListNode * statementList;
+  struct StatementNode * statement;
 
 
 }StatementListNode;
@@ -363,48 +350,301 @@ typedef struct statement_list_node
 typedef struct selection_statement_node
 {
 
-  ExpressionNode * expressionNode;
-  StatementNode * statement;
-  StatementNode * statement2;
-  char * IF;
-  char * ELSE:
-  char * SWITCH;
-  char * LEFTPAREN;
-  char * RIGHTPAREN;
+  struct ExpressionNode * expressionNode;
+  struct StatementNode * statement;
+  struct StatementNode * statement2;
+  char * IFt;
+  char * ELSEt;
+  char * SWITCHt;
+  char * LEFTPARENt;
+  char * RIGHTPARENt;
 
-}SelectionStatementNode:
+}SelectionStatementNode;
 
 typedef struct iteration_statement_node
 {
 
-  ExpressionNode * expressionNode;
-  ExpressionNode * expressionNode1;
-  ExpressionNode * expressionNode2;
-  ExpressionStatementNode * expression_statement;
-  StatementNode * statement;
-  char * WHILE;
-  char * DO:
-  char * FOR;
-  char * LEFTPAREN;
-  char * RIGHTPAREN;
-  char * SEMICOLON;
+  struct ExpressionNode * expressionNode;
+  struct ExpressionNode * expressionNode1;
+  struct ExpressionNode * expressionNode2;
+  struct ExpressionStatementNode * expression_statement;
+  struct StatementNode * statement;
+  char * WHILEt;
+  char * DOt;
+  char * FORt;
+  char * LEFTPARENt;
+  char * RIGHTPARENt;
+  char * SEMICOLONt;
 
 }IterationStatementNode;
 
-typedef struct iteration_statement_node
+typedef struct jump_statement_node
 {
 
-  IdentifierNode * identifier;
-  ExpressionNode * expressionNode;
-  char * RETURN;
-  char * BREAK:
-  char * RETURN;
-  char * SEMICOLON;
+  struct IdentifierNode * identifier;
+  struct ExpressionNode * expressionNode;
+  char * RETURNt;
+  char * BREAKt;
+  char * SEMICOLONt;
 
-}JumpStatementNode:
+}JumpStatementNode;
+
+typedef struct expression_node
+{
+
+  struct ExpressionNode * expressionNode;
+  struct AssignmentExpressionNode * assignment_expression;
+  char * COMMAt;
+
+}ExpressionNode;
+
+typedef struct assignment_expression_node
+{
+  struct ConditionalExpressionNode * conditional_expression;
+  struct AssignmentExpressionNode * assignment_expression;
+  struct AssignmentOperatorNode * assignment_operator;
+  struct UnaryExpressionNode * unary_expression;
+
+
+}AssignmentExpressionNode;
+
+typedef struct assignment_operator_node
+{
+  char * MUL_ASSIGNt;
+  char * DIV_ASSIGNt;
+  char * MOD_ASSIGNt;
+  char * ADD_ASSIGNt;
+  char * SUB_ASSIGNt;
+  char * LEFT_ASSIGNt;
+  char * RIGHT_ASSIGNt;
+  char * AND_ASSIGNt;
+  char * XOR_ASSIGNt;
+
+
+}AssignmentOperatorNode;
+
+typedef struct conditional_expression_node
+{
+
+  struct ExpressionNode * expressionNode;
+  struct LogicalOrExpressionNode * logical_or_expression;
+  struct ConditionalExpressionNode * conditional_expression;
+  char * COLONt;
+  char * QUESTIONt;
+
+
+}ConditionalExpressionNode;
+
+typedef struct constant_expression_node
+{
+  struct ConditionalExpressionNode * conditional_expression;
+  
+}ConstantExpressionNode;
+
+typedef struct logical_or_expression_node
+{
+  struct LogicalAndExpressionNode * logical_and_expression;
+  struct LogicalOrExpressionNode * logical_or_expression;
+  char * OR_OPt;
+  
+}LogicalOrExpressionNode;
+
+typedef struct logical_and_expression
+{
+  struct LogicalAndExpressionNode * logical_and_expression;
+  struct InclusiveOrExpressionNode * inclusive_or_expression;
+  char * AND_OPt;
+  
+}LogicalAndExpressionNode;
+
+typedef struct inclusive_or_expression
+{
+  struct ExclusiveOrExpressionNode * exclusive_or_expression;
+  struct InclusiveOrExpressionNode * inclusive_or_expression;
+  char * PIPEt;
+  
+}InclusiveOrExpressionNode;
+
+typedef struct exclusive_or_expression
+{
+  struct ExclusiveOrExpressionNode * exclusive_or_expression;
+  struct AndExpressionNode * and_expression;
+  char * ARROWt;
+  
+}ExclusiveOrExpressionNode;
+
+typedef struct and_expression_node
+{
+
+  struct EqualitiyExpressionNode * equality_expression;
+  struct AndExpressionNode * and_expression;
+  char * ANDt;
+  
+}AndExpressionNode;
+
+typedef struct equality_expression_node
+{
+
+  struct RelationalExpressionNode * relational_expression;
+  struct EqualityExpressionNode * equality_expression; 
+  struct AndExpressionNode * and_expression;
+  char * EQ_OPt;
+  char * NE_OPt;
+  
+}EqualitiyExpressionNode;
+
+
+typedef struct relational_expression_node
+{
+
+  struct ShiftExpressionNode * shift_expression;
+  struct RelationalExpressionNode * relational_expression;
+  char * LESSTHANt;
+  char * GREATERTHANt;
+  char * LE_OPt;
+  char * GE_OPt;
+  
+}RelationalExpressionNode;
+
+typedef struct shift_expression_node
+{
+
+  struct AdditiveExpressionNode * additive_expression;
+  struct ShiftExpressionNode * shift_expression;
+  char * LEFT_OPt;
+  char * RIGHT_OPt;
+  
+} ShiftExpressionNode;
+
+
+typedef struct additive_expression_node
+{
+
+  struct AdditiveExpressionNode * additive_expression;
+  struct MultiplicativeExpressionNode * multiplicative_expression;
+  char * PLUSt;
+  char * MINUSt;
+  
+} AdditiveExpressionNode;
+
+
+typedef struct multiplicative_expression_node
+{
+
+  struct CastExpressionNode * cast_expression;
+  struct MultiplicativeExpressionNode * multiplicative_expression;
+  char * MULTIPLYt;
+  char * DIVIDEt;
+  char * ANDt;
+  
+} MultiplicativeExpressionNode;
+
+
+typedef struct cast_expression_node
+{
+
+  struct CastExpressionNode * cast_expression;
+  struct UnaryExpressionNode * unary_expression;
+  struct TypeNameNode * type_name;
+  char * LEFTPARENt;
+  char * RIGHTPARENt;
+  
+} CastExpressionNode;
+
+typedef struct unary_expression_node
+{
+
+  struct CastExpressionNode * cast_expression;
+  struct UnaryExpressionNode * unary_expression;
+  struct UnaryOperatorNode * unary_operator;
+  struct TypeNameNode * type_name;
+  char * DEC_OPt;
+  char * INC_OPt;
+  char * SIZEOFt;
+  char * LEFTPARENt;
+  char * RIGHTPARENt;
+  
+} UnaryExpressionNode;
+
+typedef struct unary_operator_node
+{
+
+  struct TypeNameNode * type_name;
+  char * ANDt;
+  char * POINTERt;
+  char * PLUSt;
+  char * MINUSt;
+  char * TILDAt;
+  char * EXCLAMATIONPOINTt;
+  char * LEFTPARENt;
+  char * RIGHTPARENt;
+  
+} UnaryOperatorNode;
+
+
+
+typedef struct postfix_expression
+{
+  struct PrimaryExpressionNode * primary_expression;
+  struct PostfixExpressionNode * postfix_expression;
+  struct ArgumentExpressionListNode * argument_expression_list;
+  struct IdentifierNode * identifier;
+  char * LEFTPARENt;
+  char * RIGHTPARENt;
+  char * LEFTSQUAREPARENt;
+  char * RIGHTSQUAREPARENt;
+  char * PERIODt;
+  char * PTR_OPt;
+  char * DEC_OPt;
+  char * INC_OPt;
+  
+
+}PostfixExpressionNode;
+
+typedef struct primary_expression
+{
+  struct ExpressionNode * expression;
+  struct IdentifierNode * identifier;
+  struct ConstantNode * constant;
+  struct StringNode * string;
+  char * LEFTPARENt;
+  char * RIGHTPARENt;
+  
+
+}PrimaryExpressionNode;
+
+typedef struct argument_expression_list_node
+{
+
+  struct AssignmentExpressionNode * assignment_expression;
+  struct ArgumentExpressionListNode * argument_expression_list;
+  char * COMMAt;
+
+}ArgumentExpressionListNode;
+
+typedef struct constant_node
+{
+
+  int * intConstantt;
+  char * charConstantt;
+  float * floatConstantt;
+
+}ConstantNode;
+
+typedef struct string_node
+{
+  char * charConstantt;
+  
+}StringNode;
+
+
+typedef struct identifier_node
+{
+  char * charConstantt;
+  
+}IdentifierNode;
 
 #endif
-
 
 
 

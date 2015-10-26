@@ -1,7 +1,7 @@
 #include "driver.h"
 #include "symTable.h"
 #include "symTable.c"
-//#include "ast.h"
+#include "ast.h"
 //#include "ast.c"
 
 
@@ -33,7 +33,7 @@ bool scanner_error = 0;
 //Sybmol Table
 node * symbolTable;
 treeNode* currentIdentifier;
-flagContainer flags;
+flagContainer flags = {0};
 flagContainer reset = {0};
 
 int main(int argc, char **argv)

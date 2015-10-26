@@ -1,6 +1,0 @@
-Level:
-0
-IDS at that Level:
-const int i    Value: 5
-int r    Value: 2
-int main    Value: None 
