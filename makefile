@@ -1,5 +1,5 @@
 YFLAGS = -dv -t
-CFLAGS = -g -Wformat=0
+CFLAGS = -g -Wformat=0 -w
 a.out: grammar.o lex.o
 	gcc -o a.out grammar.o lex.o driver.c -lfl
 	rm -f *.o *~ y.output y.yab.h

@@ -644,7 +644,8 @@ typedef struct identifier_node
   
 }IdentifierNode;
 
-
+//
+extern TranslationUnitNode * abstract_syntax_tree;
 
 //Pointers used in our compiler
 
@@ -661,8 +662,6 @@ extern DeclaratorNode * declarator_node;
 extern InitDeclaratorListNode * init_declarator_list_node;
 
 extern DeclarationNode * declaration_node;
-
-extern DeclarationSpecifiersNode * declaration_specifiers_node;
 
 extern ExternalDeclarationNode * external_declaration_node;
 

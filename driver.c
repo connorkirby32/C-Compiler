@@ -2,7 +2,7 @@
 #include "symTable.h"
 #include "symTable.c"
 #include "ast.h"
-//#include "ast.c"
+#include "ast.c"
 
 
 //Global variables.....
@@ -38,7 +38,9 @@ flagContainer reset = {0};
 
 
 //AST
+TranslationUnitNode * abstract_syntax_tree;
 
+//AST Poiners
 StorageClassSpecifierNode * storage_class_specifier_node;
 
 DeclarationSpecifiersNode * declaration_specifiers_node;
@@ -123,6 +125,8 @@ int main(int argc, char **argv)
 	
 	//Parse test_file
   yyparse(); 
+  
+ 
   
 	//Close test_file
   fclose(test_file);

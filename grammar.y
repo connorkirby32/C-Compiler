@@ -27,6 +27,7 @@ void yyerror(char *);
   struct DeclaratorNode * declarator_node;
   struct InitDeclaratorNode * init_declarator_node;
   struct InitDeclaratorListNode * init_declarator_list_node;
+  struct DirectDeclaratorNode * direct_declarator_node;
 
 
 }
@@ -65,7 +66,7 @@ void yyerror(char *);
 %type <declarator_node> declarator
 %type <init_declarator_node> init_declarator
 %type <init_declarator_list_node> init_declarator_list
-
+%type <direct_declarator_node> direct_declarator
 
 
 %start translation_unit
@@ -77,10 +78,12 @@ translation_unit
    			fprintf(parseFile,"translation_unit <- external_declaration \n\n");
    			}
    			
-   	  //AST 
-			translation_unit_node = (TranslationUnitNode *)malloc(1*sizeof(TranslationUnitNode));
-			translation_unit_node -> external_declaration = $1;
-			
+     	  //AST 
+		    translation_unit_node = (TranslationUnitNode *)malloc(1*sizeof(TranslationUnitNode));
+		    translation_unit_node -> external_declaration = $1;
+		   
+		    reportAST(translation_unit_node);
+		
    		}
 	| translation_unit external_declaration
 		{if (parseDebug){
@@ -103,6 +106,7 @@ external_declaration
 			 //AST
 			 external_declaration_node = (ExternalDeclarationNode *)malloc(1*sizeof(ExternalDeclarationNode));
 			 external_declaration_node -> declaration = $1;
+			 $$ = external_declaration_node;
 			
 		}
 		
@@ -142,10 +146,11 @@ declaration
 			fprintf(parseFile,"declaration <- declaration_specifiers init_declarator_list \n\n");
 			}
 			
-						
+			 //AST
 			 declaration_node = (DeclarationNode *)malloc(1*sizeof(DeclarationNode));
 			 declaration_node -> declaration_specifiers  = $1;
 			 declaration_node -> init_declarator_list = $2;
+			  $$ = declaration_node;
 		}
 	;
 
@@ -186,9 +191,13 @@ declaration_specifiers
 			fprintf(parseFile,"declaration_specifiers <- type_specifier \n\n");
 			fprintf(parseFile,"Insert Mode \n\n");
 			}
-			
-			  //Set Lookup mode to false
-		    lookUpMode = false;
+        //AST
+        declaration_specifiers_node = (DeclarationSpecifiersNode *)malloc(1*sizeof(DeclarationSpecifiersNode));
+        declaration_specifiers_node->type_specifier = $1;
+        $$ = declaration_specifiers_node;
+        //Set Lookup mode to false
+        lookUpMode = false;
+        
 			 
 		}
 	| type_specifier declaration_specifiers
@@ -422,6 +431,11 @@ init_declarator_list
 		{if(parseDebug){
 			fprintf(parseFile,"init_declarator_list <- init_declarator \n\n");
 			}
+			 
+			 //AST
+			 init_declarator_list_node = (InitDeclaratorNode *)malloc(1*sizeof(InitDeclaratorNode));
+			 init_declarator_list_node -> init_declarator = $1;
+			 $$ = init_declarator_list_node;
 		}
 	| init_declarator_list ',' init_declarator
 		{if(parseDebug){
@@ -435,6 +449,11 @@ init_declarator
 		{if(parseDebug){
 			fprintf(parseFile,"init_declarator <- declarator \n\n");
 			}
+			
+			 //AST
+			 init_declarator_node = (InitDeclaratorNode *)malloc(1*sizeof(InitDeclaratorNode));
+			 init_declarator_node -> declarator = $1;
+			 $$ = init_declarator_node;
 		}
 	| declarator '=' initializer
 		{if(parseDebug){
@@ -554,6 +573,12 @@ declarator
 		{if(parseDebug){
 			fprintf(parseFile,"declarator <- direct_declarator \n\n");
 			}
+			
+			 //AST
+			 declarator_node = (DeclaratorNode *)malloc(1*sizeof(DeclaratorNode));
+			 declarator_node -> direct_declarator = $1;
+			 declarator_node = $$;
+			
 		}
 	| pointer direct_declarator
 		{if(parseDebug){
@@ -567,6 +592,10 @@ direct_declarator
 		{if(parseDebug){
 			fprintf(parseFile,"direct_declarator <- identifier \n\n");
 			}
+			
+			 //AST
+			 direct_declarator_node = (DeclaratorNode *)malloc(1*sizeof(DeclaratorNode));
+			 
 		}
 	| '(' declarator ')'
 		{if(parseDebug){

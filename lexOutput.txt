@@ -1,0 +1,9 @@
+//int
+INT
+
+//i
+IDENTIFIER
+
+//;
+;
+
