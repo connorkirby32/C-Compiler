@@ -36,6 +36,30 @@ treeNode* currentIdentifier;
 flagContainer flags = {0};
 flagContainer reset = {0};
 
+
+//AST
+
+StorageClassSpecifierNode * storage_class_specifier_node;
+
+DeclarationSpecifiersNode * declaration_specifiers_node;
+
+DirectDeclaratorNode * direct_declarator_node;
+
+InitDeclaratorNode * init_declarator_node;
+
+DeclaratorNode * declarator_node;
+
+InitDeclaratorListNode * init_declarator_list_node;
+
+DeclarationNode * declaration_node;
+
+DeclarationSpecifiersNode * declaration_specifiers_node;
+
+ExternalDeclarationNode * external_declaration_node;
+
+TranslationUnitNode * translation_unit_node;
+
+
 int main(int argc, char **argv)
 {
 

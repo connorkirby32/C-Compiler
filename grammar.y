@@ -1,6 +1,7 @@
 %{
 #include "driver.h"
 #include "symTable.h"
+#include "ast.h"
 #include <stdio.h>
 
 void yyerror(char *);
@@ -12,9 +13,24 @@ void yyerror(char *);
 	double dVal;
 	char * sVal;
 	char * identifierName;
+	
+	
+	struct TranslationUnitNode * translation_unit_node;
+	struct ExternalDeclarationNode * external_declaration_node;
+	struct FunctionDefinitionNode * function_definition_node;
+	struct CompoundStatementNode * compound_statement_node;
+  struct DeclarationListNode * declaration_list_node;
+  struct DeclarationNode * declaration_node;
+  struct DeclarationSpecifiersNode * declaration_specifier_node;
+  struct TypeSpecifierNode * type_specifier_node;
+  struct StorageClassSpecifierNode * storage_class_specifier_node;
+  struct DeclaratorNode * declarator_node;
+  struct InitDeclaratorNode * init_declarator_node;
+  struct InitDeclaratorListNode * init_declarator_list_node;
 
 
 }
+
 
 %token <identifierName> IDENTIFIER 
 %token INTEGER_CONSTANT FLOATING_CONSTANT CHARACTER_CONSTANT ENUMERATION_CONSTANT 
@@ -35,6 +51,23 @@ void yyerror(char *);
 
 %token CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
 
+//Ast token declarations
+
+%type <translation_unit_node> translation_unit
+%type <external_declaration_node> external_declaration
+%type <function_definition_node> function_definition	
+%type <compound_statement_node> compound_statement
+%type <declaration_list_node> declaration_list
+%type <declaration_node> declaration
+%type <declaration_specifier_node> declaration_specifiers
+%type <type_specifier_node> type_specifier
+%type <storage_class_specifier_node> storage_class_specifier
+%type <declarator_node> declarator
+%type <init_declarator_node> init_declarator
+%type <init_declarator_list_node> init_declarator_list
+
+
+
 %start translation_unit
 %%
 
@@ -43,6 +76,11 @@ translation_unit
 		{if (parseDebug){
    			fprintf(parseFile,"translation_unit <- external_declaration \n\n");
    			}
+   			
+   	  //AST 
+			translation_unit_node = (TranslationUnitNode *)malloc(1*sizeof(TranslationUnitNode));
+			translation_unit_node -> external_declaration = $1;
+			
    		}
 	| translation_unit external_declaration
 		{if (parseDebug){
@@ -62,6 +100,9 @@ external_declaration
 		{if (parseDebug){
 			fprintf(parseFile,"external_declaration <- declarationn \n\n");
 			}
+			 //AST
+			 external_declaration_node = (ExternalDeclarationNode *)malloc(1*sizeof(ExternalDeclarationNode));
+			 external_declaration_node -> declaration = $1;
 			
 		}
 		
@@ -100,6 +141,11 @@ declaration
 		{if(parseDebug){
 			fprintf(parseFile,"declaration <- declaration_specifiers init_declarator_list \n\n");
 			}
+			
+						
+			 declaration_node = (DeclarationNode *)malloc(1*sizeof(DeclarationNode));
+			 declaration_node -> declaration_specifiers  = $1;
+			 declaration_node -> init_declarator_list = $2;
 		}
 	;
 

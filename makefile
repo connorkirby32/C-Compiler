@@ -2,7 +2,7 @@ YFLAGS = -dv -t
 CFLAGS = -g -Wformat=0
 a.out: grammar.o lex.o
 	gcc -o a.out grammar.o lex.o driver.c -lfl
-	rm -f *.o *~ y.output
+	rm -f *.o *~ y.output y.yab.h
 
 grammar.o: grammar.y
 lex.o: lex.l

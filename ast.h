@@ -36,7 +36,7 @@ typedef struct function_definition_node
 typedef struct declaration_node
 {
     struct DeclarationSpecifiersNode * declaration_specifiers;
-    struct InitDeclaratorListNode * declaration_specifier;
+    struct InitDeclaratorListNode * init_declarator_list;
     struct node *ptr;
 } DeclarationNode;
 
@@ -105,34 +105,34 @@ typedef struct struct_declaration_list_node
     struct StructDeclarationListNode * struct_declaration_list;
 
 
-}StructDeclarationList; 
+}StructDeclarationListNode; 
 
 
 typedef struct init_declarator_list_node
 {
 
-   struct InitDeclaratorList * init_declarator_list;
-   struct InitDeclarator * init_declarator; 
+   struct InitDeclaratorListNode * init_declarator_list;
+   struct InitDeclaratorNode * init_declarator; 
    
 
 
-}InitDeclaratorList; 
+}InitDeclaratorListNode; 
 
-typedef struct init_declarator_node_node
+typedef struct init_declarator_node
 {
 
    struct InitializerNode* initializer;
-   struct Declarator * declarator; 
+   struct DeclaratorNode * declarator; 
    
 
 
-}InitDeclarator;
+}InitDeclaratorNode;
 
-typedef struct struct_declaration_node_node
+typedef struct struct_declaration_node
 {
 
-   struct SpecifierQualifierList* specifier_qualifier_list;     
-   struct StructDeclaratorList * struct_declarator_list; 
+   struct SpecifierQualifierListNode* specifier_qualifier_list;     
+   struct StructDeclaratorListNode * struct_declarator_list; 
    
 }StructDeclarationNode;
 
@@ -200,7 +200,7 @@ typedef struct declarator_node
 }DeclaratorNode;
 
 
-typedef struct direct_declarator_node_node
+typedef struct direct_declarator_node
 {
    struct IdentifierNode * identifier;
    struct DeclaratorNode * declarator;
@@ -643,6 +643,31 @@ typedef struct identifier_node
   char * charConstantt;
   
 }IdentifierNode;
+
+
+
+//Pointers used in our compiler
+
+extern StorageClassSpecifierNode * storage_class_specifier_node;
+
+extern DeclarationSpecifiersNode * declaration_specifiers_node;
+
+extern DirectDeclaratorNode * direct_declarator_node;
+
+extern InitDeclaratorNode * init_declarator_node;
+
+extern DeclaratorNode * declarator_node;
+
+extern InitDeclaratorListNode * init_declarator_list_node;
+
+extern DeclarationNode * declaration_node;
+
+extern DeclarationSpecifiersNode * declaration_specifiers_node;
+
+extern ExternalDeclarationNode * external_declaration_node;
+
+extern TranslationUnitNode * translation_unit_node;
+
 
 #endif
 
