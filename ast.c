@@ -1,49 +1,97 @@
 #include "driver.h"
+#include "ast.h"
 #include <stdlib.h>
 
-void reportAST(TranslationUnitNode * ast){
+void ReportAST(TranslationUnitNode * ast){
   
   if(ast->external_declaration != NULL){
   
       printf("External Declaration"); 
-      printExternalDeclaration(ast->external_declaration);
+      PrintExternalDeclaration(ast->external_declaration);
   
   } 
-  
-  if(ast->translation_unit != NULL){
-  
-  
-  } 
-
-
+ 
 
 }
 
-void printExternalDeclaration(ExternalDeclarationNode * ast){
+void PrintExternalDeclaration(ExternalDeclarationNode * ast){
 
 
- if(ast->function_definition != NULL){
+  if(ast->function_definition != NULL){
   
   
   } 
   
   if(ast->declaration != NULL){
   
-    printDeclaration(ast->declaration);
+    PrintDeclaration(ast->declaration);
     
   } 
+   printf("Int\n");
+
+
+}
+
+
+PrintDeclaration(DeclarationNode * ast){
+
+  if(ast->declaration_specifiers != NULL && ast->init_declarator_list != NULL){
+      PrintDeclarationSpecifiers(ast->declaration_specifiers);
+      PrintInitDeclaratorList(ast->init_declarator_list);
+       printf("DeclarationNode\n");
+  }
+    
+
+
+}
+
+PrintDeclarationSpecifiers(DeclarationSpecifiersNode * ast){
+
+    if(ast->type_specifier != NULL){
+     
+  }
+ printf("Int\n");
+}
+
+PrintInitDeclaratorList(InitDeclaratorListNode * ast){
+
+    if(ast-> init_declarator != NULL){
+    
+      PrintInitDeclarator(ast->init_declarator);
+      printf("InitDeclaratorListNode\n");
+    }
+
+
+}
+
+PrintInitDeclarator(InitDeclaratorNode * ast){
+
+    if(ast-> declarator != NULL){
+    
+      PrintDeclarator(ast->declarator);
+      printf("Declarator\n");
+    }
+
+}
+
+PrintDeclarator(DeclaratorNode * ast){
+
+
+  if(ast->direct_declarator != NULL){
+  
+    PrintDirectDeclarator(ast -> direct_declarator);
+    printf("Direct Declarator\n");
+  }
 
 
 
 }
 
-void printDeclaration(DeclarationNode * ast){
+void PrintDirectDeclarator(DirectDeclaratorNode * ast){
 
 
 
-
-
+  printf("Identifier Goes Here\n");
 
 
 }
-

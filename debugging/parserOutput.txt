@@ -1,0 +1,21 @@
+storage_class_specifier <- INT 
+
+declaration_specifiers <- type_specifier 
+
+Insert Mode 
+
+identifier ->IDENTIFIER (i)
+direct_declarator <- identifier 
+
+declarator <- direct_declarator 
+
+init_declarator <- declarator 
+
+init_declarator_list <- init_declarator 
+
+declaration <- declaration_specifiers init_declarator_list 
+
+external_declaration <- declarationn 
+
+translation_unit <- external_declaration 
+

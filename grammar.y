@@ -82,7 +82,7 @@ translation_unit
 		    translation_unit_node = (TranslationUnitNode *)malloc(1*sizeof(TranslationUnitNode));
 		    translation_unit_node -> external_declaration = $1;
 		   
-		    reportAST(translation_unit_node);
+		    ReportAST(translation_unit_node);
 		
    		}
 	| translation_unit external_declaration
@@ -150,7 +150,7 @@ declaration
 			 declaration_node = (DeclarationNode *)malloc(1*sizeof(DeclarationNode));
 			 declaration_node -> declaration_specifiers  = $1;
 			 declaration_node -> init_declarator_list = $2;
-			  $$ = declaration_node;
+			 $$ = declaration_node;
 		}
 	;
 

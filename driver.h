@@ -14,6 +14,7 @@ extern FILE *yyin;
 extern FILE *lexFile;
 extern FILE *parseFile;
 extern FILE *symbolTableFile;
+extern FILE *astFile;
 
 //Debug flags
 extern int parseDebug;

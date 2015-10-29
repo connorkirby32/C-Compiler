@@ -668,6 +668,22 @@ extern ExternalDeclarationNode * external_declaration_node;
 extern TranslationUnitNode * translation_unit_node;
 
 
+//All the functions to print our AST because objects are for the weak
+void ReportAST(TranslationUnitNode * ast);
+void PrintExternalDeclaration(ExternalDeclarationNode * ast);
+void PrintDeclaration(DeclarationNode * ast);
+void PrintDeclarationSpecifiers(DeclarationSpecifiersNode * ast);
+void PrintInitDeclaratorList(InitDeclaratorListNode * ast);
+void PrintInitDeclarator(InitDeclaratorNode * ast);
+void PrintDeclarator(DeclaratorNode * ast);
+void PrintDirectDeclarator(DirectDeclaratorNode * ast);
+
+//Stuff for the javascript
+
+extern int level; 
+extern int ast_id;
+
+
 #endif
 
 

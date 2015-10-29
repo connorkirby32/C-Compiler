@@ -13,6 +13,7 @@
 FILE *lexFile = NULL;
 FILE *parseFile = NULL;
 FILE *symbolTableFile = NULL;
+FILE *astFile = NULL;
 
 //Debug flags
 int parseDebug = 0;
@@ -39,6 +40,8 @@ flagContainer reset = {0};
 
 //AST
 TranslationUnitNode * abstract_syntax_tree;
+int level; 
+int ast_id;
 
 //AST Poiners
 StorageClassSpecifierNode * storage_class_specifier_node;
@@ -98,24 +101,27 @@ int main(int argc, char **argv)
   symbolTable = PushLevel(symbolTable,0);
   
   //Parse the command line for debugging options
-  while ((options = getopt (argc, argv, "-d[lsp]")) != -1){ 
+  while ((options = getopt (argc, argv, "-d[lsp] -a")) != -1){ 
     switch (options)
       {
       //Lex Debug
       case 'l':
-        lexDebug = 1;
-        lexFile = fopen("lexOutput.txt", "w");
+        lexDebug = true;
+        lexFile = fopen("debugging/lexOutput.txt", "w");
         break;
       //Symbol Table Debug
       case 's':
-        symbolTableDebug = 1;
-        symbolTableFile = fopen("symbolTableOutput.txt", "w");
+        symbolTableDebug = true;
+        symbolTableFile = fopen("debugging/symbolTableOutput.txt", "w");
         break;
       //Parser Debug
       case 'p':
-        parseDebug = 1;
-        parseFile = fopen("parserOutput.txt", "w");
+        parseDebug = true;
+        parseFile = fopen("debugging/parserOutput.txt", "w");
         break;
+        
+      case 'a':
+        printf("Make this shit pretty sometime soon \n");
 
       }
       
@@ -126,6 +132,8 @@ int main(int argc, char **argv)
 	//Parse test_file
   yyparse(); 
   
+  parseDebug = 1;
+  astFile = fopen("js/astInfo.txt", "w");
  
   
 	//Close test_file
