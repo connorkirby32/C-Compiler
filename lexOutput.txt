@@ -1,9 +1,0 @@
-//int
-INT
-
-//i
-IDENTIFIER
-
-//;
-;
-

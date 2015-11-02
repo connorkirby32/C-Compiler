@@ -191,6 +191,7 @@ union YYSTYPE
 	struct FunctionDefinitionNode * function_definition_node;
 	struct CompoundStatementNode * compound_statement_node;
   struct DeclarationListNode * declaration_list_node;
+  struct StatementListNode * statement_list_node;
   struct DeclarationNode * declaration_node;
   struct DeclarationSpecifiersNode * declaration_specifier_node;
   struct TypeSpecifierNode * type_specifier_node;
@@ -199,10 +200,26 @@ union YYSTYPE
   struct InitDeclaratorNode * init_declarator_node;
   struct InitDeclaratorListNode * init_declarator_list_node;
   struct DirectDeclaratorNode * direct_declarator_node;
+  struct treeNode * indentifier_node;
+  struct ConstantExpressionNode * constant_expression_node;
+  struct ConditionalExpressionNode * conditional_expression_node;
+  struct StatementNode * statement_node;
+  struct SelectionStatementNode * selection_statement_node;
+  struct IterationStatementNode * iteration_statement_node;
+  struct ExpressionNode * expression_node;
+  struct AssignmentExpressionNode * assignment_expression_node;
+  struct InitializerNode * initializer_node;
+  struct LogicalOrExpression * logical_or_expression_node;
+  struct LogicalAndExpression * logical_and_expression_node;
+  struct InclusiveOrExpression * inclusive_or_expression_node;
+  struct ExclusiveOrExpression * exclusive_or_expression_node;
+  struct AndExpressionNode * and_expression_node;
+  struct EqualityExpressionNode * equality_expression_node;
+  struct RelationalExpressionNode * relational_expression_node;
 
 
 
-#line 206 "y.tab.h" /* yacc.c:1909  */
+#line 223 "y.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

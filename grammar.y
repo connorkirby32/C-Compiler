@@ -20,6 +20,7 @@ void yyerror(char *);
 	struct FunctionDefinitionNode * function_definition_node;
 	struct CompoundStatementNode * compound_statement_node;
   struct DeclarationListNode * declaration_list_node;
+  struct StatementListNode * statement_list_node;
   struct DeclarationNode * declaration_node;
   struct DeclarationSpecifiersNode * declaration_specifier_node;
   struct TypeSpecifierNode * type_specifier_node;
@@ -28,12 +29,27 @@ void yyerror(char *);
   struct InitDeclaratorNode * init_declarator_node;
   struct InitDeclaratorListNode * init_declarator_list_node;
   struct DirectDeclaratorNode * direct_declarator_node;
+  struct treeNode * indentifier_node;
+  struct ConstantExpressionNode * constant_expression_node;
+  struct ConditionalExpressionNode * conditional_expression_node;
+  struct StatementNode * statement_node;
+  struct SelectionStatementNode * selection_statement_node;
+  struct IterationStatementNode * iteration_statement_node;
+  struct ExpressionNode * expression_node;
+  struct AssignmentExpressionNode * assignment_expression_node;
+  struct InitializerNode * initializer_node;
+  struct LogicalOrExpression * logical_or_expression_node;
+  struct LogicalAndExpression * logical_and_expression_node;
+  struct InclusiveOrExpression * inclusive_or_expression_node;
+  struct ExclusiveOrExpression * exclusive_or_expression_node;
+  struct AndExpressionNode * and_expression_node;
+  struct EqualityExpressionNode * equality_expression_node;
+  struct RelationalExpressionNode * relational_expression_node;
 
 
 }
 
-
-%token <identifierName> IDENTIFIER 
+%token IDENTIFIER 
 %token INTEGER_CONSTANT FLOATING_CONSTANT CHARACTER_CONSTANT ENUMERATION_CONSTANT 
 %token STRING_LITERAL 
 %token SIZEOF
@@ -59,6 +75,7 @@ void yyerror(char *);
 %type <function_definition_node> function_definition	
 %type <compound_statement_node> compound_statement
 %type <declaration_list_node> declaration_list
+%type <statement_list_node> statement_list
 %type <declaration_node> declaration
 %type <declaration_specifier_node> declaration_specifiers
 %type <type_specifier_node> type_specifier
@@ -67,9 +84,25 @@ void yyerror(char *);
 %type <init_declarator_node> init_declarator
 %type <init_declarator_list_node> init_declarator_list
 %type <direct_declarator_node> direct_declarator
-
-
+%type <constant_expression_node> constant_expression
+%type <conditional_expression_node> conditional_expression
+%type <indentifier_node> identifier
+%type <statement_node> statement
+%type <selection_statement_node> selection_statement
+%type <iteration_statement_node> iteration_statement
+%type <expression_node> expression;
+%type <assignment_expression_node> assignment_expression;
+%type <initializer_node> initializer;
+%type < logical_or_expression_node> logical_or_expression;
+%type < logical_and_expression_node> logical_and_expression;
+%type < inclusive_or_expression_node> inclusive_or_expression;
+%type < exclusive_or_expression_node> exclusive_or_expression;
+%type < and_expression_node > and_expression;
+%type < equality_expression_node > equality_expression;
+%type < relational_expression_node > relational_expression;
 %start translation_unit
+
+
 %%
 
 translation_unit
@@ -80,15 +113,25 @@ translation_unit
    			
      	  //AST 
 		    translation_unit_node = (TranslationUnitNode *)malloc(1*sizeof(TranslationUnitNode));
-		    translation_unit_node -> external_declaration = $1;
-		   
-		    ReportAST(translation_unit_node);
+		    translation_unit_node -> translation_unit = NULL;
+		    translation_unit_node -> external_declaration = $1;		   
+        $$ = translation_unit_node;
+	      
 		
    		}
 	| translation_unit external_declaration
 		{if (parseDebug){
 			fprintf(parseFile,"translation_unit <- translation_unit external_declaration \n\n");
 			}
+			
+     	  //AST 
+		    translation_unit_node = (TranslationUnitNode *)malloc(1*sizeof(TranslationUnitNode));
+		    translation_unit_node -> translation_unit = $1;
+		    translation_unit_node -> external_declaration = $2;	
+		    $$ = translation_unit_node;
+	      		
+			
+
 		}
 	;
 
@@ -97,6 +140,12 @@ external_declaration
 		{if (parseDebug){
 			fprintf(parseFile,"external_declaration <- function_definition \n\n");
 			}
+			
+			 //AST
+			 external_declaration_node = (ExternalDeclarationNode *)malloc(1*sizeof(ExternalDeclarationNode));
+			 external_declaration_node -> function_definition = $1;
+			 $$ = external_declaration_node;
+
 			
 		}
 	| declaration
@@ -127,6 +176,13 @@ function_definition
 		{if(parseDebug){
 			fprintf(parseFile,"function_definition <- declaration_specifiers declarator compound_statement \n\n");
 			}
+			
+		 //AST
+		 function_definition_node = (FunctionDefinitionNode *)malloc(1*sizeof(FunctionDefinitionNode));
+		 function_definition_node -> declaration_specifiers = $1;
+ 		 function_definition_node -> compound_statement = $3;
+		 function_definition_node -> declarator = $2;
+		 $$ = function_definition_node;
 		}
 	| declaration_specifiers declarator declaration_list compound_statement
 		{if(parseDebug){
@@ -162,6 +218,13 @@ declaration_list
 			
 			}
 			lookUpMode = true;
+			
+				//AST
+			 declaration_list_node = (DeclarationListNode *)malloc(1*sizeof(DeclarationListNode));
+			 declaration_list_node -> declaration  = $1;
+			 $$ = declaration_list_node;
+			
+			
 	    //Reset flags for following declerations
       flags = reset;
 		}
@@ -170,6 +233,13 @@ declaration_list
 			fprintf(parseFile,"declaration_list <- declaration_list declaration \n\n");
 			fprintf(parseFile,"Look up is true \n\n");
 			}
+			
+				//AST
+			 declaration_list_node = (DeclarationListNode *)malloc(1*sizeof(DeclarationListNode));
+ 			 declaration_list_node -> declaration_list = $1;
+			 declaration_list_node -> declaration  = $2;
+			 $$ = declaration_list_node;
+			
 		
 			lookUpMode = true;
 		}
@@ -459,6 +529,11 @@ init_declarator
 		{if(parseDebug){
 			fprintf(parseFile,"init_declarator <- declarator '=' initializer \n\n");
 			}
+			 //AST
+			 init_declarator_node = (InitDeclaratorNode *)malloc(1*sizeof(InitDeclaratorNode));
+			 init_declarator_node -> declarator = $1;
+			 init_declarator_node -> initializer = $3;
+			 $$ = init_declarator_node;
 		}
 	;
 
@@ -577,7 +652,7 @@ declarator
 			 //AST
 			 declarator_node = (DeclaratorNode *)malloc(1*sizeof(DeclaratorNode));
 			 declarator_node -> direct_declarator = $1;
-			 declarator_node = $$;
+			 $$ = declarator_node;
 			
 		}
 	| pointer direct_declarator
@@ -592,9 +667,11 @@ direct_declarator
 		{if(parseDebug){
 			fprintf(parseFile,"direct_declarator <- identifier \n\n");
 			}
-			
+			 
 			 //AST
-			 direct_declarator_node = (DeclaratorNode *)malloc(1*sizeof(DeclaratorNode));
+			 direct_declarator_node = (DirectDeclaratorNode *)malloc(1*sizeof(DirectDeclaratorNode));
+			 direct_declarator_node->identifier = $1;
+			 $$ = direct_declarator_node;
 			 
 		}
 	| '(' declarator ')'
@@ -611,6 +688,12 @@ direct_declarator
 		{if(parseDebug){
 			fprintf(parseFile,"direct_declarator <- direct_declarator '[' constant_expression ']' \n\n");
 			}
+			
+			 //AST
+			 direct_declarator_node = (DirectDeclaratorNode *)malloc(1*sizeof(DirectDeclaratorNode));
+			 direct_declarator_node->direct_declarator = $1;
+			 direct_declarator_node->constant_expression = $3;
+			 $$ = direct_declarator_node;
 		}
 	| direct_declarator '(' ')' 
 		{if(parseDebug){
@@ -727,6 +810,12 @@ initializer
 		{if(parseDebug){
 			fprintf(parseFile,"initializer <- assignment_expression \n\n");
 			}
+			
+			 //AST
+			 initializer_node = (InitializerNode *)malloc(1*sizeof(InitializerNode));
+			 initializer_node->assignment_expression = $1;
+			 $$ = initializer_node;
+
 		}
 	| '{' initializer_list '}'
 		{if(parseDebug){
@@ -842,6 +931,11 @@ statement
 		{if(parseDebug){
 			fprintf(parseFile,"statement <- compound_statement \n\n");
 			}
+			 //AST
+			 statement_node = (StatementNode *)malloc(1*sizeof(StatementNode));
+			 statement_node->compound_statement = $1;
+			 $$ = statement_node;
+			
 		}
 	| expression_statement
 		{if(parseDebug){
@@ -852,11 +946,24 @@ statement
 		{if(parseDebug){
 			fprintf(parseFile,"statement <- selection_statement \n\n");
 			}
+			
+
+		    statement_node = (StatementNode *)malloc(1*sizeof(StatementNode));
+		    statement_node->selection_statement = $1;
+		    $$ = statement_node;
+
 		}
 	| iteration_statement
 		{if(parseDebug){
 			fprintf(parseFile,"statement <- iteration_statement \n\n");
 			}
+			
+				//AST 
+		    statement_node = (StatementNode *)malloc(1*sizeof(StatementNode));
+		    statement_node -> iteration_statement = $1;
+		    $$ = statement_node;
+	
+			
 		}
 	| jump_statement
 		{if(parseDebug){
@@ -901,21 +1008,42 @@ compound_statement
 		{if(parseDebug){
 			fprintf(parseFile,"compound_statement <- '{' '}' \n\n");
 			}
+			
+			 //AST TODO ADD {}
+			 compound_statement_node = NULL;
+			 $$ = compound_statement_node;
+
+
 		}
 	| '{' statement_list '}'
 		{if(parseDebug){
 			fprintf(parseFile,"compound_statement <- '{' statement_list '}' \n\n");
+			
+			 //AST TODO ADD {}
+			 compound_statement_node = (CompoundStatementNode *)malloc(1*sizeof(CompoundStatementNode));
+			 compound_statement_node->statement_list = $2;
+			 $$ = compound_statement_node;
 			}
 		}
 	| '{' declaration_list '}'
 		{if(parseDebug){
 			fprintf(parseFile,"compound_statement <- '{' declaration_list '}' \n\n");
 			}
+			 //AST TODO ADD {}
+			 compound_statement_node = (CompoundStatementNode *)malloc(1*sizeof(CompoundStatementNode));
+			 compound_statement_node->declaration_list = $2;
+			 $$ = compound_statement_node;
 		}
 	| '{' declaration_list statement_list '}'
 		{if(parseDebug){
 			fprintf(parseFile,"compound_statement <- '{' declaration_list statement_list '}'  \n\n");
 			}
+			
+				//AST TODO ADD {}
+			 compound_statement_node = (CompoundStatementNode *)malloc(1*sizeof(CompoundStatementNode));
+			 compound_statement_node->declaration_list = $2;
+ 			 compound_statement_node->statement_list = $3;
+			 $$ = compound_statement_node;
 			
 			
 		}
@@ -927,6 +1055,10 @@ statement_list
 			fprintf(parseFile,"statement_list <- statement  \n\n");
 			}
 			
+			 statement_list_node = (StatementListNode *)malloc(1*sizeof(StatementListNode));
+			 statement_list_node->statement = $1;
+			 $$ = statement_list_node;
+		
 
 		}
 	| statement_list statement
@@ -942,11 +1074,22 @@ selection_statement
 		{if(parseDebug){
 			fprintf(parseFile,"selection_statement <- IF '(' expression ')' statement  \n\n");
 			}
+			
+			 selection_statement_node = (SelectionStatementNode *)malloc(1*sizeof(SelectionStatementNode));
+			 selection_statement_node -> expression = $3;
+			 selection_statement_node -> statement = $5;
+			 $$ = selection_statement_node;
 		}
 	| IF '(' expression ')' statement ELSE statement
 		{if(parseDebug){
 			fprintf(parseFile,"selection_statement <- IF '(' expression ')' statement ELSE statement \n\n");
 			}
+			
+			 selection_statement_node = (SelectionStatementNode *)malloc(1*sizeof(SelectionStatementNode));
+			 selection_statement_node -> expression = $3;
+			 selection_statement_node -> statement = $5;
+			 selection_statement_node -> statement2 = $7;
+			 $$ = selection_statement_node;
 		}
 	| SWITCH '(' expression ')' statement
 		{if(parseDebug){
@@ -960,6 +1103,12 @@ iteration_statement
 		{if(parseDebug){
 			fprintf(parseFile,"iteration_statement <- WHILE '(' expression ')' statement \n\n");
 			}
+			
+						/*
+			iteration_statement_node = (IterationStatementNode *)malloc(1*sizeof(IterationStatementNode));
+			iteration_statement_node -> expressionNode = $3;
+			iteration_statement_node -> statement = $
+			*/
 		}
 	| DO statement WHILE '(' expression ')' ';'
 		{if(parseDebug){
@@ -1041,11 +1190,23 @@ expression
 		{if(parseDebug){
 			fprintf(parseFile,"expression <- assignment_expression \n\n");
 			}
+			
+			//AST
+			expression_node = (ExpressionNode *)malloc(1*sizeof(ExpressionNode));
+			expression_node->assignment_expression = $1;
+			$$ = expression_node; 
 		}
 	| expression ',' assignment_expression
 		{if(parseDebug){
 			fprintf(parseFile,"expression <- expression ',' assignment_expression \n\n");
 			}
+			
+			
+			//AST
+			expression_node = (ExpressionNode *)malloc(1*sizeof(ExpressionNode));
+			expression_node-> expression = $1;
+			expression_node->assignment_expression = $3;
+			$$ = expression_node; 
 		}
 	;
 
@@ -1054,6 +1215,11 @@ assignment_expression
 		{if(parseDebug){
 			fprintf(parseFile,"assignment_expression <- conditional_expression \n\n");
 			}
+			
+			//AST
+			assignment_expression_node = (ExpressionNode *)malloc(1*sizeof(ExpressionNode));
+			assignment_expression_node-> conditional_expression = $1;
+			$$ = assignment_expression_node;
 		}
 	| unary_expression assignment_operator assignment_expression
 		{if(parseDebug){
@@ -1123,6 +1289,10 @@ conditional_expression
 		{if(parseDebug){
 			fprintf(parseFile,"conditional_expression <- logical_or_expression \n \n");
 			}
+			 //AST TODO ADD {}
+			 conditional_expression_node = (ConditionalExpressionNode *)malloc(1*sizeof(ConditionalExpressionNode));
+			 conditional_expression_node->logical_or_expression= $1;
+			 $$ = conditional_expression_node;
 		}
 	| logical_or_expression '?' expression ':' conditional_expression
 		{if(parseDebug){
@@ -1136,6 +1306,14 @@ constant_expression
 		{if(parseDebug){
 			fprintf(parseFile,"constant_expression <- conditional_expression \n\n");
 			}
+			
+			//AST
+			
+			 //AST TODO ADD {}
+			 constant_expression_node = (ConstantExpressionNode *)malloc(1*sizeof(ConstantExpressionNode));
+			 constant_expression_node->conditional_expression= $1;
+			 $$ = constant_expression_node;
+			
 		}
 	;
 
@@ -1144,6 +1322,11 @@ logical_or_expression
 		{if(parseDebug){
 			fprintf(parseFile,"logical_or_expression <- logical_and_expression \n\n");
 			}
+			
+			 //AST TODO ADD {}
+			 logical_or_expression_node = (LogicalOrExpressionNode *)malloc(1*sizeof(LogicalOrExpressionNode));
+			 logical_or_expression_node->logical_and_expression = $1;
+			 $$ = logical_or_expression_node;
 		}
 	| logical_or_expression OR_OP logical_and_expression
 		{if(parseDebug){
@@ -1157,6 +1340,11 @@ logical_and_expression
 		{if(parseDebug){
 			fprintf(parseFile,"logical_and_expression <- inclusive_or_expression \n\n");
 			}
+			
+			 //AST TODO ADD {}
+			 logical_and_expression_node = (LogicalAndExpressionNode *)malloc(1*sizeof(LogicalAndExpressionNode));
+			 logical_and_expression_node->inclusive_or_expression = $1;
+			 $$ = logical_and_expression_node;
 		}
 	| logical_and_expression AND_OP inclusive_or_expression
 		{if(parseDebug){
@@ -1170,6 +1358,11 @@ inclusive_or_expression
 		{if(parseDebug){
 			fprintf(parseFile,"inclusive_or_expression <- exclusive_or_expression  \n\n");
 			}
+			
+			 //AST TODO ADD {}
+			 inclusive_or_expression_node = (LogicalAndExpressionNode *)malloc(1*sizeof(LogicalAndExpressionNode));
+			 inclusive_or_expression_node->exclusive_or_expression = $1;
+			 $$ = inclusive_or_expression_node;
 		}
 	| inclusive_or_expression '|' exclusive_or_expression
 		{if(parseDebug){
@@ -1196,6 +1389,11 @@ and_expression
 		{if(parseDebug){
 			fprintf(parseFile,"and_expression <- equality_expression \n\n");
 			}
+			
+			 //AST TODO ADD {}
+			 and_expression_node = (AndExpressionNode *)malloc(1*sizeof(AndExpressionNode));
+			 and_expression_node->equality_expression = $1;
+			 $$ = and_expression_node;
 		}
 	| and_expression '&' equality_expression
 		{if(parseDebug){
@@ -1209,6 +1407,11 @@ equality_expression
 		{if(parseDebug){
 			fprintf(parseFile,"equality_expression <- relational_expression \n\n");
 			}
+			
+						 //AST TODO ADD {}
+			 equality_expression_node = (EqualityExpressionNode *)malloc(1*sizeof(EqualityExpressionNode));
+			 equality_expression_node->relational_expression = $1;
+			 $$ = equality_expression_node;
 		}
 	| equality_expression EQ_OP relational_expression
 		{if(parseDebug){
@@ -1532,8 +1735,8 @@ identifier
   node * shadow_level;
   
   //Cipher id name to numberical value
-  for(i = 0, n = 0; i < sizeof($1) ; i++){
-    n += $1[i];       
+  for(i = 0, n = 0; i < sizeof(yylval.identifierName) ; i++){
+    n += yylval.identifierName[i];       
   }
   //We are in decleration mode  
 	if(!lookUpMode){
@@ -1541,7 +1744,7 @@ identifier
     currentIdentifier = FindIdentifier(symbolTable->treePtr, n);
     if(currentIdentifier != NULL){
       yyerror("Error: ");
-      printf("\t%s already declared on line number %d\n", $1, currentIdentifier->declerationLineNumber);
+      printf("\t%s already declared on line number %d\n", yylval.identifierName, currentIdentifier->declerationLineNumber);
       return -1;
     }
 
@@ -1550,27 +1753,28 @@ identifier
 
     //Save the id name into the identifier tree 
     currentIdentifier = FindIdentifier(symbolTable->treePtr, n);
-    currentIdentifier->name = $1;
+    currentIdentifier->name = yylval.identifierName;
     currentIdentifier->declerationLineNumber = rowNum;
-    
+    $$ = currentIdentifier;
+			 
     //Check and see if it shadows    
     Shadows(n, symbolTable);
 
   //We are in look up mode
   }else {
      //Locate the identifier
-     currentIdentifier = FindIdentifier(symbolTable->treePtr, n);
+     $$ = currentIdentifier = FindIdentifier(symbolTable->treePtr, n);
      //If not found, search the entire table
      if(currentIdentifier == NULL){
         currentIdentifier = FindIDTableScope(n, symbolTable);
         if(currentIdentifier == NULL){
           yyerror("Error: ");
-          printf("\tVariable %s Not Declared ", $1);
+          printf("\tVariable %s Not Declared ", yylval.identifierName);
         }
       } 
 	 }      
       if(parseDebug){
-        fprintf(parseFile,"identifier ->IDENTIFIER (%s)\n", $1);
+        fprintf(parseFile,"identifier ->IDENTIFIER (%s)\n", yylval.identifierName);
 	    }        
   }
 	;

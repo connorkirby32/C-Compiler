@@ -39,14 +39,16 @@ flagContainer reset = {0};
 
 
 //AST
-TranslationUnitNode * abstract_syntax_tree;
-int level; 
+AbstractSyntaxTreeNode * abstract_syntax_tree;
+TranslationUnitNode * translation_unit_node;
 int ast_id;
 
 //AST Poiners
 StorageClassSpecifierNode * storage_class_specifier_node;
 
 DeclarationSpecifiersNode * declaration_specifiers_node;
+
+FunctionDefinitionNode * function_definition_node;
 
 DirectDeclaratorNode * direct_declarator_node;
 
@@ -58,11 +60,43 @@ InitDeclaratorListNode * init_declarator_list_node;
 
 DeclarationNode * declaration_node;
 
-DeclarationSpecifiersNode * declaration_specifiers_node;
-
 ExternalDeclarationNode * external_declaration_node;
 
-TranslationUnitNode * translation_unit_node;
+CompoundStatementNode * compound_statement_node;
+
+DeclarationListNode * declaration_list_node;
+
+ConstantExpressionNode * constant_expression_node;
+
+ConditionalExpressionNode * conditional_expression_node;
+
+StatementNode * statement_node;
+
+StatementListNode * statement_list_node;
+
+SelectionStatementNode * selection_statement_node;
+
+IterationStatementNode * iteration_statement_node;
+
+ExpressionNode * expression_node; 
+
+InitializerNode * initializer_node;
+
+AssignmentExpressionNode * assignment_expression_node;
+
+LogicalOrExpressionNode * logical_or_expression_node;
+
+LogicalAndExpressionNode * logical_and_expression_node;
+
+InclusiveOrExpressionNode * inclusive_or_expression_node;
+
+AndExpressionNode * and_expression_node;
+
+EqualityExpressionNode * equality_expression_node;
+
+RelationalExpressionNode * relational_expression_node;
+
+
 
 
 int main(int argc, char **argv)
@@ -99,7 +133,6 @@ int main(int argc, char **argv)
   //Initiate SymTable
   symbolTable = CreateTable(symbolTable);
   symbolTable = PushLevel(symbolTable,0);
-  
   //Parse the command line for debugging options
   while ((options = getopt (argc, argv, "-d[lsp] -a")) != -1){ 
     switch (options)
@@ -119,9 +152,9 @@ int main(int argc, char **argv)
         parseDebug = true;
         parseFile = fopen("debugging/parserOutput.txt", "w");
         break;
-        
+      //AST debug
       case 'a':
-        printf("Make this shit pretty sometime soon \n");
+        astFile = fopen("astInfo.lex", "w");
 
       }
       
@@ -132,8 +165,10 @@ int main(int argc, char **argv)
 	//Parse test_file
   yyparse(); 
   
-  parseDebug = 1;
-  astFile = fopen("js/astInfo.txt", "w");
+  fprintf(astFile,"\\Tree ");
+  if(translation_unit_node != NULL){
+    ReportAST(translation_unit_node);
+  }
  
   
 	//Close test_file

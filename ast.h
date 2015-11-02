@@ -1,4 +1,5 @@
 #include "driver.h"
+#include "symTable.h"
 #include <stdlib.h>
 
 #ifndef AST_H
@@ -6,9 +7,16 @@
 
 //All AST structure Decleartions
 //God Help Us
+typedef struct abstract_syntax_tree
+{
+    struct TranslationUnitNode *translation_unit;
+    
+} AbstractSyntaxTreeNode;
+
+
 typedef struct translation_unit_node
 {
-    struct TranslationUnitNode *translation_unit_list;
+    struct TranslationUnitNode *translation_unit;
     struct ExternalDeclarationNode *external_declaration;
 } TranslationUnitNode;
 
@@ -27,8 +35,8 @@ typedef struct function_definition_node
     struct DeclaratorCompoundStatementNode *declarator_compound_statment;
     struct DeclaratorDeclartionListNode * declarator_declaration_list;
     struct CompoundStatementNode * compound_statement; 
-    struct DeclarationSpecifiersNode * declaration_specifier;
-    struct DeclarationNode * declaration; 
+    struct DeclarationSpecifiersNode * declaration_specifiers;
+    struct DeclaratorNode * declarator; 
 } FunctionDefinitionNode;
 
 
@@ -202,7 +210,7 @@ typedef struct declarator_node
 
 typedef struct direct_declarator_node
 {
-   struct IdentifierNode * identifier;
+   struct treeNode * identifier;
    struct DeclaratorNode * declarator;
    struct DirectDeclaratorNode * direct_declarator; 
    struct ConstantExpressionNode * constant_expression;
@@ -333,7 +341,7 @@ typedef struct compound_statement_node
 
   char * LEFTBRACKETt;
   char * RIGHTBRACKETt;
-  struct StatementListNode * statment_list;
+  struct StatementListNode * statement_list;
   struct DeclarationListNode * declaration_list;
     
 }CompoundStatementNode;
@@ -347,10 +355,12 @@ typedef struct statement_list_node
 
 }StatementListNode;
 
+
+
 typedef struct selection_statement_node
 {
 
-  struct ExpressionNode * expressionNode;
+  struct ExpressionNode * expression;
   struct StatementNode * statement;
   struct StatementNode * statement2;
   char * IFt;
@@ -364,9 +374,9 @@ typedef struct selection_statement_node
 typedef struct iteration_statement_node
 {
 
-  struct ExpressionNode * expressionNode;
-  struct ExpressionNode * expressionNode1;
-  struct ExpressionNode * expressionNode2;
+  struct ExpressionNode * expression;
+  struct ExpressionNode * expression1;
+  struct ExpressionNode * expression2;
   struct ExpressionStatementNode * expression_statement;
   struct StatementNode * statement;
   char * WHILEt;
@@ -382,7 +392,7 @@ typedef struct jump_statement_node
 {
 
   struct IdentifierNode * identifier;
-  struct ExpressionNode * expressionNode;
+  struct ExpressionNode * expression;
   char * RETURNt;
   char * BREAKt;
   char * SEMICOLONt;
@@ -392,7 +402,7 @@ typedef struct jump_statement_node
 typedef struct expression_node
 {
 
-  struct ExpressionNode * expressionNode;
+  struct ExpressionNode * expression;
   struct AssignmentExpressionNode * assignment_expression;
   char * COMMAt;
 
@@ -491,7 +501,7 @@ typedef struct equality_expression_node
   char * EQ_OPt;
   char * NE_OPt;
   
-}EqualitiyExpressionNode;
+}EqualityExpressionNode;
 
 
 typedef struct relational_expression_node
@@ -638,24 +648,22 @@ typedef struct string_node
 }StringNode;
 
 
-typedef struct identifier_node
-{
-  char * charConstantt;
-  
-}IdentifierNode;
-
 //
-extern TranslationUnitNode * abstract_syntax_tree;
+extern TranslationUnitNode * translation_unit_node;
 
 //Pointers used in our compiler
 
 extern StorageClassSpecifierNode * storage_class_specifier_node;
+
+extern FunctionDefinitionNode * function_definition_node;
 
 extern DeclarationSpecifiersNode * declaration_specifiers_node;
 
 extern DirectDeclaratorNode * direct_declarator_node;
 
 extern InitDeclaratorNode * init_declarator_node;
+
+extern InitializerNode * initializer_node;
 
 extern DeclaratorNode * declarator_node;
 
@@ -667,23 +675,65 @@ extern ExternalDeclarationNode * external_declaration_node;
 
 extern TranslationUnitNode * translation_unit_node;
 
+extern CompoundStatementNode * compound_statement_node;
+
+extern DeclarationListNode * declaration_list_node;
+
+extern LogicalOrExpressionNode * logical_or_expression_node;
+
+extern LogicalAndExpressionNode * logical_and_expression_node;
+
+extern InclusiveOrExpressionNode * incluseive_or_expresiion_node;
+
+extern ConstantExpressionNode * constant_expression_node;
+
+extern ConditionalExpressionNode * conditional_expression_node;
+
+extern ExpressionNode * expression_node; 
+
+extern StatementNode * statement_node;
+
+extern StatementListNode * statement_list_node;
+
+extern SelectionStatementNode * selection_statement_node;
+
+extern IterationStatementNode * iteration_statement_node;
+
+extern AssignmentExpressionNode * assignment_expression_node;
+
+extern LogicalAndExpressionNode * logical_and_expression_node;
+
+extern InclusiveOrExpressionNode * inclusive_or_expression_node;
+
+extern AndExpressionNode * and_expression_node;
+
+extern EqualityExpressionNode * equality_expression_node;
+
+extern RelationalExpressionNode * relational_expression_node;
 
 //All the functions to print our AST because objects are for the weak
 void ReportAST(TranslationUnitNode * ast);
+void PrintTranslationUnit(TranslationUnitNode * ast);
 void PrintExternalDeclaration(ExternalDeclarationNode * ast);
+void PrintFunctionDefinition(FunctionDefinitionNode * ast);
 void PrintDeclaration(DeclarationNode * ast);
 void PrintDeclarationSpecifiers(DeclarationSpecifiersNode * ast);
 void PrintInitDeclaratorList(InitDeclaratorListNode * ast);
 void PrintInitDeclarator(InitDeclaratorNode * ast);
 void PrintDeclarator(DeclaratorNode * ast);
 void PrintDirectDeclarator(DirectDeclaratorNode * ast);
-
-//Stuff for the javascript
-
-extern int level; 
-extern int ast_id;
-
-
+void PrintCompoundStatement(CompoundStatementNode * ast);
+void PrintDeclarationList(DeclarationListNode * ast);
+void PrintTranslationUnit(TranslationUnitNode * ast);
+void PrintConstantExpression(ConstantExpressionNode * ast);
+void PrintConditionalExpression(ConditionalExpressionNode * ast);
+void PrintStatementList(StatementListNode * ast);
+void PrintStatement(StatementNode * ast);
+void PrintSelectionStatement(SelectionStatementNode * ast);
+void PrintIterationStatement(IterationStatementNode * ast);
+void PrintExpression(ExpressionNode * ast); 
+void PrintAssignmentExpression(AssignmentExpressionNode * ast);
+void PrintConditional(ConditionalExpressionNode * ast);
 #endif
 
 
