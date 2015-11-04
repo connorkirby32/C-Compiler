@@ -1,0 +1,4 @@
+Level:
+0
+IDS at that Level:
+int main    Value: 2
