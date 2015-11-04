@@ -459,7 +459,7 @@ typedef struct logical_or_expression_node
   
 }LogicalOrExpressionNode;
 
-typedef struct logical_and_expression
+typedef struct logical_and_expression_node
 {
   struct LogicalAndExpressionNode * logical_and_expression;
   struct InclusiveOrExpressionNode * inclusive_or_expression;
@@ -467,7 +467,7 @@ typedef struct logical_and_expression
   
 }LogicalAndExpressionNode;
 
-typedef struct inclusive_or_expression
+typedef struct inclusive_or_expression_node
 {
   struct ExclusiveOrExpressionNode * exclusive_or_expression;
   struct InclusiveOrExpressionNode * inclusive_or_expression;
@@ -475,7 +475,7 @@ typedef struct inclusive_or_expression
   
 }InclusiveOrExpressionNode;
 
-typedef struct exclusive_or_expression
+typedef struct exclusive_or_expression_node
 {
   struct ExclusiveOrExpressionNode * exclusive_or_expression;
   struct AndExpressionNode * and_expression;
@@ -568,6 +568,7 @@ typedef struct unary_expression_node
   struct UnaryExpressionNode * unary_expression;
   struct UnaryOperatorNode * unary_operator;
   struct TypeNameNode * type_name;
+  struct PostfixExpressionNode * postfix_expression;
   char * DEC_OPt;
   char * INC_OPt;
   char * SIZEOFt;
@@ -593,7 +594,7 @@ typedef struct unary_operator_node
 
 
 
-typedef struct postfix_expression
+typedef struct postfix_expression_node
 {
   struct PrimaryExpressionNode * primary_expression;
   struct PostfixExpressionNode * postfix_expression;
@@ -611,7 +612,7 @@ typedef struct postfix_expression
 
 }PostfixExpressionNode;
 
-typedef struct primary_expression
+typedef struct primary_expression_node
 {
   struct ExpressionNode * expression;
   struct IdentifierNode * identifier;
@@ -710,6 +711,23 @@ extern AndExpressionNode * and_expression_node;
 extern EqualityExpressionNode * equality_expression_node;
 
 extern RelationalExpressionNode * relational_expression_node;
+
+extern PrimaryExpressionNode * primary_expression_node;
+
+extern PostfixExpressionNode * postfix_expression_node;
+
+extern UnaryExpressionNode * unary_expression_node;
+
+extern CastExpressionNode * cast_expression_node;
+
+extern MultiplicativeExpressionNode * multiplicative_expression_node;
+
+extern ShiftExpressionNode * shift_expression_node;
+
+extern ExclusiveOrExpressionNode * exclusive_or_expression_node;
+
+extern AdditiveExpressionNode * additive_expression_node;
+
 
 //All the functions to print our AST because objects are for the weak
 void ReportAST(TranslationUnitNode * ast);

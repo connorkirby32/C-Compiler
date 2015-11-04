@@ -96,6 +96,21 @@ EqualityExpressionNode * equality_expression_node;
 
 RelationalExpressionNode * relational_expression_node;
 
+PrimaryExpressionNode * primary_expression_node;
+
+PostfixExpressionNode * postfix_expression_node;
+
+UnaryExpressionNode * unary_expression_node;
+
+CastExpressionNode * cast_expression_node;
+
+MultiplicativeExpressionNode * multiplicative_expression_node;
+
+ShiftExpressionNode * shift_expression_node;
+
+ExclusiveOrExpressionNode * exclusive_or_expression_node;
+
+AdditiveExpressionNode * additive_expression_node;
 
 
 

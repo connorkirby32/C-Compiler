@@ -41,11 +41,19 @@ void yyerror(char *);
   struct LogicalOrExpression * logical_or_expression_node;
   struct LogicalAndExpression * logical_and_expression_node;
   struct InclusiveOrExpression * inclusive_or_expression_node;
-  struct ExclusiveOrExpression * exclusive_or_expression_node;
   struct AndExpressionNode * and_expression_node;
   struct EqualityExpressionNode * equality_expression_node;
   struct RelationalExpressionNode * relational_expression_node;
+  struct PrimaryExpressionNode * primary_expression_node;
 
+  struct PostfixExpressionNode * postfix_expression_node;
+  struct UnaryExpressionNode * unary_expression_node;
+  struct CastExpressionNode * cast_expression_node;
+  struct MultiplicativeExpressionNode * multiplicative_expression_node;
+  
+  struct ShiftExpressionNode * shift_expression_node;
+  struct AdditiveExpressionNode * additive_expression_node;
+  struct ExclusiveOrExpressionNode * exclusive_or_expression_node;
 
 }
 
@@ -100,6 +108,14 @@ void yyerror(char *);
 %type < and_expression_node > and_expression;
 %type < equality_expression_node > equality_expression;
 %type < relational_expression_node > relational_expression;
+%type < primary_expression_node > primary_expression;
+%type < postfix_expression_node > postfix_expression;
+%type < unary_expression_node > unary_expression;
+%type < cast_expression_node > cast_expression;
+%type < multiplicative_expression_node > multiplicative_expression;
+%type < shift_expression_node > shift_expression;
+%type < additive_expression_node > additive_expression;
+
 %start translation_unit
 
 
@@ -1376,6 +1392,10 @@ exclusive_or_expression
 		{if(parseDebug){
 			fprintf(parseFile,"exclusive_or_expression <- and_expression \n\n");
 			}
+			exclusive_or_expression_node  = (ExclusiveOrExpressionNode *)malloc(1*sizeof(ExclusiveOrExpressionNode));
+			exclusive_or_expression_node ->and_expression = $1;
+			$$ = exclusive_or_expression_node ;
+
 		}
 	| exclusive_or_expression '^' and_expression
 		{if(parseDebug){
@@ -1430,6 +1450,9 @@ relational_expression
 		{if(parseDebug){
 			fprintf(parseFile,"relational_expression <- shift_expression \n\n");
 			}
+			relational_expression_node = (RelationalExpressionNode *)malloc(1*sizeof(RelationalExpressionNode));
+			relational_expression_node->shift_expression = $1;
+			$$ = relational_expression_node;
 		}
 	| relational_expression '<' shift_expression
 		{if(parseDebug){
@@ -1458,6 +1481,10 @@ shift_expression
 		{if(parseDebug){
 			fprintf(parseFile,"shift_expression <- additive_expression \n\n");
 			}
+			
+			shift_expression_node = (ShiftExpressionNode *)malloc(1*sizeof(ShiftExpressionNode));
+			shift_expression_node->additive_expression = $1;
+			$$ = shift_expression_node;
 		}
 	| shift_expression LEFT_OP additive_expression
 		{if(parseDebug){
@@ -1476,6 +1503,10 @@ additive_expression
 		{if(parseDebug){
 			fprintf(parseFile,"additive_expression <- multiplicative_expression \n\n");
 			}
+
+			additive_expression_node = (AdditiveExpressionNode *)malloc(1*sizeof(AdditiveExpressionNode));
+			additive_expression_node->multiplicative_expression = $1;
+			$$ = additive_expression_node;
 		}
 	| additive_expression '+' multiplicative_expression
 		{if(parseDebug){
@@ -1494,6 +1525,9 @@ multiplicative_expression
 		{if(parseDebug){
 			fprintf(parseFile,"multiplicative_expression <- cast_expression \n\n");
 			}
+			multiplicative_expression_node = (MultiplicativeExpressionNode *)malloc(1*sizeof(MultiplicativeExpressionNode));
+			multiplicative_expression_node->cast_expression = $1;
+			$$ = multiplicative_expression_node;
 		}
 	| multiplicative_expression '*' cast_expression
 		{if(parseDebug){
@@ -1517,6 +1551,9 @@ cast_expression
 		{if(parseDebug){
 			fprintf(parseFile,"cast_expression <- unary_expression \n\n");
 			}
+			cast_expression_node = (CastExpressionNode *)malloc(1*sizeof(CastExpressionNode));
+			cast_expression_node->unary_expression = $1;
+			$$ = cast_expression_node;
 		}
 	| '(' type_name ')' cast_expression
 		{if(parseDebug){
@@ -1530,6 +1567,11 @@ unary_expression
 		{if(parseDebug){
 			fprintf(parseFile,"unary_expression <- postfix_expression \n\n");
 			}
+		
+		unary_expression_node = (UnaryExpressionNode *)malloc(1*sizeof(UnaryExpressionNode));
+		unary_expression_node->postfix_expression = $1;
+		$$ = unary_expression_node;
+
 		}
 	| INC_OP unary_expression
 		{if(parseDebug){
@@ -1596,6 +1638,10 @@ postfix_expression
 		{if(parseDebug){
 			fprintf(parseFile,"postfix_expression <- primary_expression \n\n");
 			}
+
+			postfix_expression_node = (PostfixExpressionNode *)malloc(1*sizeof(PostfixExpressionNode));
+			postfix_expression_node->primary_expression = $1;
+			$$ = postfix_expression_node;
 		}
 	| postfix_expression '[' expression ']'
 		{if(parseDebug){
@@ -1639,6 +1685,10 @@ primary_expression
 		{if(parseDebug){
 			fprintf(parseFile,"primary_expression <- identifier \n\n");
 			}
+			primary_expression_node = (PrimaryExpressionNode *)malloc(1*sizeof( PrimaryExpressionNode));
+			primary_expression_node->identifier = $1;
+			$$ = primary_expression_node;			
+
 		}
 	| constant
 		{if(parseDebug){
