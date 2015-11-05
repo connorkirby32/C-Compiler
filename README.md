@@ -1,28 +1,18 @@
 # C-Compiler
 C Compiler
 
-If statements
 
-mult_expr -> cast_expr
-
-cast_expr -> unary_expr
-
-unary -> postfix
-
-postfix -> primary
-
-primary_expr -> ident
-
-.
+\documentclass[border=10pt]{standalone} 
 
 
- While loops
- 
-shift -> additive
 
-relational -> shift
-
-exclusive_or_expression -> and
+\usepackage{qtree}
+\begin{document}
 
 
-Didn't do print statements.
+\Tree [.{Translation Node}  [.{External Declaration}  [.{Function Definition}  [.{Declaration Specifiers}  ]  [.Declarator  [.{Direct Declarator}  {main}  ]  ]  [.{Compound Statement} {Open Bracket}  [.{Declaration List} [ .{Declaration}  [.{Declaration Specifiers}  ]  [.{Init Declarator List}  [.{Init Declarator}  [.Declarator  [.{Direct Declarator}  {r}  ]  ]  ]  ]  ]  ]  [.{Statement List}  [.{Statement}  [.{ Iteration Statement}  [ { while( } ] [.{Expression}  [.{Assignment Expression}  [.{Conditional Expression}  [.{Logical Or Expression}  [.{ Logical And Expression}  [.{ Inclusive Or Expression}  [.{ Exclusive Or Expression}  [.{ And Expression}  [.{ Equality Expression}  [.{ Relational Expression}  [.{ Shift Expression}  [.{ Additive Expression}  [.{ Multiplicative Expression}  [.{ Cast Expression}  [.{ Unary Expression}  [.{ Postfix Expression}  [.{ Primary Expression}  [.{r} ]  ]  ]  ]  ]  ]  ]  ]  ]  ]  ]  ]  ]  ]  ]  ]  ]  ]  [  ) ] [.{Statement}  ]  ]  ]  ]  {Closed Bracket} ]  ]  ]  ] 
+
+
+
+\end{document}
+--------------------------------------------------------------
