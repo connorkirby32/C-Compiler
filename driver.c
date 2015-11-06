@@ -212,7 +212,7 @@ int main(int argc, char **argv)
   free(buffer);
   
   
-    if(astDebug){
+    if(astDebug && translation_unit_node != NULL){
       fprintf(astFile,"\\documentclass[border=10pt]{standalone}");
       fprintf(astFile,"\\usepackage{qtree} \\begin{document} ");
       fprintf(astFile,"\\Tree ");

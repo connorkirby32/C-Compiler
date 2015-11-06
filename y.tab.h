@@ -186,10 +186,10 @@ union YYSTYPE
 	char * identifierName;
 	
 	
-	struct TranslationUnitNode * translation_unit_node;
-	struct ExternalDeclarationNode * external_declaration_node;
-	struct FunctionDefinitionNode * function_definition_node;
-	struct CompoundStatementNode * compound_statement_node;
+  struct TranslationUnitNode * translation_unit_node;
+  struct ExternalDeclarationNode * external_declaration_node;
+  struct FunctionDefinitionNode * function_definition_node;
+  struct CompoundStatementNode * compound_statement_node;
   struct DeclarationListNode * declaration_list_node;
   struct StatementListNode * statement_list_node;
   struct DeclarationNode * declaration_node;

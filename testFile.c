@@ -1,5 +1,6 @@
-int main() {
-	int x;
-	char y;
-	float z;
+int main(){
+
+int a[3];
+a[2] = 1;
+
 }

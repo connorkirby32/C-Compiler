@@ -631,8 +631,7 @@ typedef struct primary_expression_node
   struct treeNode * identifier;
   struct ConstantNode * constant;
   struct StringNode * string;
-  char * LEFTPARENt;
-  char * RIGHTPARENt;
+
   
 
 }PrimaryExpressionNode;
@@ -642,7 +641,7 @@ typedef struct argument_expression_list_node
 
   struct AssignmentExpressionNode * assignment_expression;
   struct ArgumentExpressionListNode * argument_expression_list;
-  char * COMMAt;
+
 
 }ArgumentExpressionListNode;
 
@@ -651,7 +650,7 @@ typedef struct constant_node
 
   int  int_constant;
   bool int_flag;
-  char  char_constant;
+  char   char_constant;
   bool char_flag;
   float  float_constant;
   bool float_flag;
@@ -794,7 +793,7 @@ void PrintExpressionStatement(ExpressionStatementNode * ast);
 void PrintAssignmentOperator(AssignmentOperatorNode * ast);
 void PrintIterationStatement(IterationStatementNode * ast);
 void PrintInitializerList(InitializerListNode  * ast);
-
+bool CheckAdditiveExpressionTypes(AdditiveExpressionNode * exp1, MultiplicativeExpressionNode  * exp2);
 #endif
 
 

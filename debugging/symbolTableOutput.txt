@@ -1,7 +1,5 @@
 Level:
 0
 IDS at that Level:
-int x   
-char y   
-float z   
-int main   
+int a Declared on Line # 3 Array Size Of: 3
+int main Declared on Line # 1 Non Array

@@ -15,10 +15,10 @@ void yyerror(char *);
 	char * identifierName;
 	
 	
-	struct TranslationUnitNode * translation_unit_node;
-	struct ExternalDeclarationNode * external_declaration_node;
-	struct FunctionDefinitionNode * function_definition_node;
-	struct CompoundStatementNode * compound_statement_node;
+  struct TranslationUnitNode * translation_unit_node;
+  struct ExternalDeclarationNode * external_declaration_node;
+  struct FunctionDefinitionNode * function_definition_node;
+  struct CompoundStatementNode * compound_statement_node;
   struct DeclarationListNode * declaration_list_node;
   struct StatementListNode * statement_list_node;
   struct DeclarationNode * declaration_node;
@@ -1846,7 +1846,7 @@ constant
                 
 	                constant_node = (ConstantNode *)malloc(1*sizeof( ConstantNode ));
 			            constant_node->char_flag = true;
-			            constant_node->char_constant = yylval.sVal; 
+			            constant_node->char_constant = yylval.sVal[0];
 			            $$ = constant_node;	
 	            if(parseDebug){
 			        fprintf(parseFile,"CONSTANT <- CHARACTER_CONSTANT \n\n");

@@ -16,26 +16,38 @@ IDENTIFIER
 //int
 INT
 
-//x
+//a
 IDENTIFIER
+
+//[
+[
+
+//3
+INTEGER_CONSTANT
+
+//]
+]
 
 //;
 ;
 
-//char
-CHAR
-
-//y
+//a
 IDENTIFIER
 
-//;
-;
+//[
+[
 
-//float
-FLOAT
+//2
+INTEGER_CONSTANT
 
-//z
-IDENTIFIER
+//]
+]
+
+//=
+=
+
+//1
+INTEGER_CONSTANT
 
 //;
 ;

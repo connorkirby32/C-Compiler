@@ -120,11 +120,14 @@ void PrintIdentifiers(treeNode *leaf){
   if(leaf->flags.void_flag){fprintf(symbolTableFile,"void ");}
 
   //Print the identifier
-  fprintf(symbolTableFile,"%s   \n",leaf->name);
+  fprintf(symbolTableFile,"%s Declared on Line # %d ",leaf->name, leaf->declerationLineNumber);
 
   //Print character value if avaliable
   if(leaf->array_flag){
       fprintf(symbolTableFile,"Array Size Of: %d\n",leaf->array_size);
+  }
+  else{
+      fprintf(symbolTableFile,"Non Array\n");
   }
 
   //Print the follwing identifiers

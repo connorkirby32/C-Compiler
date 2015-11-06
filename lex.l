@@ -56,7 +56,7 @@ string \".\"
 "volatile"              {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "VOLATILE\n\n");}  return VOLATILE;}
 "while"                 {column += yyleng; if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "WHILE\n\n");}  return WHILE;}
 
-{character}             {if(yyleng > 8){printf("Over Flow \n");} column += yyleng;if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "CHARACTER_CONSTANT\n\n");}  return CHARACTER_CONSTANT;}
+{character}             {if(yyleng > 8){printf("Over Flow \n");} yylval.sVal = yytext; column += yyleng;if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "CHARACTER_CONSTANT\n\n");}  return CHARACTER_CONSTANT;}
 {string}                {column += yyleng;if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "ENUMERATION_CONSTANT\n\n");}  return ENUMERATION_CONSTANT;}
 {digit}+                {if(yyleng > 10){printf("Over Flow \n");}column += yyleng;if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "INTEGER_CONSTANT\n\n");}  yylval.iVal = atoi(yytext); return INTEGER_CONSTANT;}
 {digit}+"."{digit}*     {if(yyleng > 32){printf("Over Flow \n");}column += yyleng;if(lexDebug){fprintf(lexFile,"//%s\n", yytext);fprintf(lexFile, "FLOATING_CONSTANT\n\n");}  yylval.dVal = atof(yytext); return FLOATING_CONSTANT;}

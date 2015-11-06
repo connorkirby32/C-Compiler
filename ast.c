@@ -518,6 +518,7 @@ void PrintAdditiveExpressionNode(AdditiveExpressionNode * ast){
     PrintMultiplicativeExpressionNode(ast-> multiplicative_expression);
     fprintf(astFile," [ + ] ");
     PrintAdditiveExpressionNode(ast->additive_expression);
+    CheckAdditiveExpressionTypes(ast->additive_expression, ast->multiplicative_expression);
   
   }
   
@@ -590,13 +591,12 @@ void PrintPostfixExpressionNode(PostfixExpressionNode * ast){
 void PrintPrimaryExpressionNode(PrimaryExpressionNode * ast){
 
   fprintf(astFile," [.{ Primary Expression} ");
+  
   if(ast->constant != NULL){
   
-  
     PrintConstant(ast->constant);
-  }
-  
-  else if(ast->identifier != NULL){
+    
+  }else if(ast->identifier != NULL){
     
     fprintf(astFile," [.{%s} ] ", ast->identifier->name);
   
@@ -615,7 +615,7 @@ void PrintConstant(ConstantNode * ast){
     fprintf(astFile," [.{%d} ] ", ast -> int_constant);
   }
   else if( ast->char_flag) {
-    fprintf(astFile," [.{%s} ] ", ast -> char_constant);
+    fprintf(astFile," [.{%c} ] ", ast -> char_constant);
   }
   else if( ast->float_flag) {
     fprintf(astFile," [.{%f} ] ", ast -> float_constant);
@@ -640,11 +640,43 @@ void PrintIterationStatement(IterationStatementNode * ast){
   fprintf(astFile," ] ");
 
 
-
-
-
-
 }
 
 
+bool CheckAdditiveExpressionTypes(AdditiveExpressionNode * exp1, MultiplicativeExpressionNode  * exp2){
+
+   AdditiveExpressionNode * additive_expression;
+   MultiplicativeExpressionNode  * multiplicative_expression;
+   CastExpressionNode * cast_expression;
+   UnaryExpressionNode * unary_expression;
+   PostfixExpressionNode * postfix_expression;
+   PrimaryExpressionNode * primary_expression;
+   ConstantNode * constant;
+   treeNode * identifier;
+     
+  //Get the value of the additive expression
+  multiplicative_expression = exp1->multiplicative_expression;
+  cast_expression = multiplicative_expression->cast_expression;
+  unary_expression = cast_expression->unary_expression;
+  postfix_expression = unary_expression->postfix_expression;
+  primary_expression = postfix_expression->primary_expression;
+  identifier = primary_expression->identifier;
+  
+  
+  //Get the value of the multiplicative expression
+  cast_expression = exp2->cast_expression;
+  unary_expression = cast_expression->unary_expression;
+  postfix_expression = unary_expression->postfix_expression;
+  primary_expression = postfix_expression->primary_expression;
+  constant = primary_expression->constant;
+  
+  //Check Flags
+  if(constant->float_flag && identifier->flags.int_flag){
+        printf("Warning: Addition of type int and float, type conversion to occur\n");
+    
+  }else if(constant->float_flag && identifier->flags.char_flag){
+        printf("Warning: Addition of type char and float, type conversion to occur\n");
+  
+
+}
 
