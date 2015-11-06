@@ -1,7 +1,0 @@
-Level:
-0
-IDS at that Level:
-int j    Value: 4
-int l    Value: None 
-int r    Value: None 
-int main    Value: None 
