@@ -1194,7 +1194,7 @@ iteration_statement
 		{if(parseDebug){
 			fprintf(parseFile,"iteration_statement <- WHILE '(' expression ')' statement \n\n");
 			}			
-				
+			lookUpMode = true;
 			iteration_statement_node = (IterationStatementNode *)malloc(1*sizeof(IterationStatementNode));
 			iteration_statement_node -> expression= $3;
 			iteration_statement_node -> statement = $5;
@@ -1827,7 +1827,7 @@ constant
                 }
 
 	                constant_node = (ConstantNode *)malloc(1*sizeof( ConstantNode ));
-			            constant_node->int_constant = (int *) malloc(sizeof(int));
+			            constant_node->int_flag = true;
 			            constant_node->int_constant = yylval.iVal; 
 			            $$ = constant_node;	
                 
@@ -1845,7 +1845,7 @@ constant
                 }
                 
 	                constant_node = (ConstantNode *)malloc(1*sizeof( ConstantNode ));
-			            constant_node->char_constant = (char *) malloc(sizeof(char));
+			            constant_node->char_flag = true;
 			            constant_node->char_constant = yylval.sVal; 
 			            $$ = constant_node;	
 	            if(parseDebug){
@@ -1861,9 +1861,9 @@ constant
 			        fprintf(parseFile,"CONSTANT ->FLOATING_CONSTANT \n\n");
 			    }
 			    
-			    	      constant_node = (ConstantNode *)malloc(1*sizeof( ConstantNode ));
-			            constant_node->float_constant = (float * ) malloc(sizeof(float));
-			            //constant_node->float_constant = yylval.dVal; 
+			    	    constant_node = (ConstantNode *)malloc(1*sizeof( ConstantNode ));
+			            constant_node->float_flag = true;
+			            constant_node->float_constant = yylval.dVal; 
 			            $$ = constant_node;	
 			    
 	                

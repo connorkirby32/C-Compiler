@@ -488,7 +488,7 @@ void PrintRelationalExpression(RelationalExpressionNode *ast){
   
   if(ast->shift_expression != NULL && ast->relational_expression != NULL){
     PrintRelationalExpression(ast-> relational_expression);
-    fprintf(astFile, " [ GT ] " );
+    fprintf(astFile, " [ GT  ] " );
     PrintShiftExpression(ast-> shift_expression);
   }
 
@@ -611,13 +611,13 @@ void PrintPrimaryExpressionNode(PrimaryExpressionNode * ast){
 void PrintConstant(ConstantNode * ast){
 
 
-  if(ast->int_constant != NULL){
+  if(ast->int_flag){
     fprintf(astFile," [.{%d} ] ", ast -> int_constant);
   }
-  else if( ast->char_constant != NULL ) {
+  else if( ast->char_flag) {
     fprintf(astFile," [.{%s} ] ", ast -> char_constant);
   }
-  else if( ast->float_constant != NULL ) {
+  else if( ast->float_flag) {
     fprintf(astFile," [.{%f} ] ", ast -> float_constant);
   }
 }
@@ -631,7 +631,7 @@ void PrintIterationStatement(IterationStatementNode * ast){
   //While Loop
   if(ast->expression != NULL && ast->statement != NULL){
   
-    fprintf(astFile," [ { while( } ]");
+    fprintf(astFile," [ while ] [ ( ] ");
     PrintExpression(ast->expression);
     fprintf(astFile," [  ) ]");
     PrintStatement(ast->statement);

@@ -649,9 +649,12 @@ typedef struct argument_expression_list_node
 typedef struct constant_node
 {
 
-  int * int_constant;
-  char * char_constant;
-  float * float_constant;
+  int  int_constant;
+  bool int_flag;
+  char  char_constant;
+  bool char_flag;
+  float  float_constant;
+  bool float_flag;
 
 }ConstantNode;
 
