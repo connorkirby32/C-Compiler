@@ -120,23 +120,11 @@ void PrintIdentifiers(treeNode *leaf){
   if(leaf->flags.void_flag){fprintf(symbolTableFile,"void ");}
 
   //Print the identifier
-  fprintf(symbolTableFile,"%s    ",leaf->name);
+  fprintf(symbolTableFile,"%s   \n",leaf->name);
 
   //Print character value if avaliable
-  if(leaf->dataC != NULL){
-      fprintf(symbolTableFile,"Value: %s\n",leaf->dataC);
-      
-  //Print integer value if avaliable    
-  } else if(leaf->dataI != NULL){
-      fprintf(symbolTableFile,"Value: %d\n",leaf->dataI);
-      
-  //Print float value if avaliable    
-  }else if(leaf->flags.float_flag) {
-           fprintf(symbolTableFile,"Value: %f\n",leaf->dataD);
-           
-  //Identifer contains no data
-  }else {
-      fprintf(symbolTableFile,"Value: None \n");
+  if(leaf->array_flag){
+      fprintf(symbolTableFile,"Array Size Of: %d\n",leaf->array_size);
   }
 
   //Print the follwing identifiers

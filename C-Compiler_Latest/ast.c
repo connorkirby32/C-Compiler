@@ -69,6 +69,10 @@ PrintDeclarationSpecifiers(DeclarationSpecifiersNode * ast){
     //fprintf(astFile,"Declaration Specifiers %d %d\n", level++, ast_id++);
     if(ast->type_specifier != NULL){
      
+      TypeSpecifierNode * x;
+      x = ast->type_specifier;
+      fprintf(astFile," [ %s ] ", x->type);
+      
     }
     
     fprintf(astFile," ] ");
@@ -335,6 +339,7 @@ void PrintAssignmentExpression(AssignmentExpressionNode * ast){
   if(ast-> unary_expression != NULL  && ast->assignment_expression != NULL){
   
     PrintUnaryExpressionNode(ast-> unary_expression);
+    fprintf(astFile," [ = ] ");
     PrintAssignmentExpression(ast->assignment_expression);
   
   }
@@ -415,17 +420,44 @@ void PrintExclusiveOrExpression(ExclusiveOrExpressionNode * ast){
 void PrintInitializer( InitializerNode * ast){
    
   fprintf(astFile," [.{ Initializer} ");
-  if(ast-> assignment_expression != NULL){
+  
+  if(ast->initializer_list != NULL){
+    
+    PrintInitializerList(ast-> initializer_list);
+  
+  }
+  
+  else if(ast-> assignment_expression != NULL){
     
     PrintAssignmentExpression(ast-> assignment_expression);
   
   }
     
   fprintf(astFile," ] ");
-
-
-
 }
+
+
+void PrintInitializerList(InitializerListNode * ast){
+
+  fprintf(astFile," [.{ Initializer List } ");
+
+  //initializer_list <- initializer_list ',' initializer
+  if(ast->initializer_list != NULL && ast->initializer != NULL){
+    
+    PrintInitializerList(ast-> initializer_list);
+    fprintf(astFile," [.{ , } ] ");
+    PrintInitializer(ast-> initializer);
+  
+  }
+  else if(ast->initializer != NULL){
+
+    PrintInitializer(ast-> initializer);
+  
+  }
+ 
+  fprintf(astFile," ] ");
+}
+
 
 
 void PrintAndExpression(AndExpressionNode * ast){
@@ -479,6 +511,7 @@ void PrintAdditiveExpressionNode(AdditiveExpressionNode * ast){
    if(ast->multiplicative_expression != NULL && ast->additive_expression != NULL){
     
     PrintMultiplicativeExpressionNode(ast-> multiplicative_expression);
+    fprintf(astFile," [ + ] ");
     PrintAdditiveExpressionNode(ast->additive_expression);
   
   }
@@ -531,7 +564,15 @@ void PrintUnaryExpressionNode(UnaryExpressionNode * ast){
 void PrintPostfixExpressionNode(PostfixExpressionNode * ast){
 
   fprintf(astFile," [.{ Postfix Expression} ");
-  if(ast->primary_expression != NULL){
+  //postfix_expression <- postfix_expression '[' expression ']' 
+  if(ast->postfix_expression != NULL && ast->expression != NULL){
+    
+    PrintPostfixExpressionNode(ast->postfix_expression );
+    fprintf(astFile," [ '[' ] ");
+    PrintExpression(ast->expression);
+    fprintf(astFile," [ ']' ] ");
+  }
+  else if(ast->primary_expression != NULL){
     
     PrintPrimaryExpressionNode(ast-> primary_expression);
   
@@ -564,9 +605,16 @@ void PrintPrimaryExpressionNode(PrimaryExpressionNode * ast){
 
 void PrintConstant(ConstantNode * ast){
 
-  fprintf(astFile," [.{%d} ] ", ast -> int_constant);
-  //TODO add if statements and prints for char and floats
 
+  if(ast->int_constant != NULL){
+    fprintf(astFile," [.{%d} ] ", ast -> int_constant);
+  }
+  else if( ast->char_constant != NULL ) {
+    fprintf(astFile," [.{%s} ] ", ast -> char_constant);
+  }
+  else if( ast->float_constant != NULL ) {
+    fprintf(astFile," [.{%f} ] ", ast -> float_constant);
+  }
 }
 
 

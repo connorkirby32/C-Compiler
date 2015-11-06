@@ -36,7 +36,8 @@ typedef struct FlagTypes
     bool register_flag;
     bool static_flag;
     bool extern_flag;
-    bool const_flag;
+    bool const_flag;   
+
         
 }flagContainer;
 
@@ -49,6 +50,8 @@ typedef struct treeNode
     int * dataI;
     float dataD;
     char * dataC;
+    int array_size;
+    bool array_flag;
     
     int declerationLineNumber; 
     int id;

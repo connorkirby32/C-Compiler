@@ -1,3 +1,5 @@
 int main(){
-	int i;
+
+int f[3];
+2 +2;
 }

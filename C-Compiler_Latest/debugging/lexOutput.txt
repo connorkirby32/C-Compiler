@@ -16,8 +16,29 @@ IDENTIFIER
 //int
 INT
 
-//i
+//f
 IDENTIFIER
+
+//[
+[
+
+//3
+INTEGER_CONSTANT
+
+//]
+]
+
+//;
+;
+
+//2
+INTEGER_CONSTANT
+
+//+
++
+
+//2
+INTEGER_CONSTANT
 
 //;
 ;

@@ -610,6 +610,7 @@ typedef struct postfix_expression_node
 {
   struct PrimaryExpressionNode * primary_expression;
   struct PostfixExpressionNode * postfix_expression;
+  struct ExpressionNode * expression;
   struct ArgumentExpressionListNode * argument_expression_list;
   struct IdentifierNode * identifier;
   char * LEFTPARENt;
@@ -663,6 +664,8 @@ typedef struct string_node
 //Pointers used in our compiler
 // Each pointer is used to hold a production
 extern TranslationUnitNode * translation_unit_node;
+
+//Pointers used in our compiler
 
 extern StorageClassSpecifierNode * storage_class_specifier_node;
 
@@ -744,6 +747,11 @@ extern ExpressionStatementNode * expression_statement_node;
 
 extern AssignmentOperatorNode * assignment_operator_node;
 
+extern InitializerListNode * initializer_list_node;
+
+extern TypeSpecifierNode * type_specifier_node;
+
+
 //All the functions to print our AST because objects are for the weak
 void ReportAST(TranslationUnitNode * ast);
 void PrintTranslationUnit(TranslationUnitNode * ast);
@@ -782,6 +790,7 @@ void PrintConstant(ConstantNode * ast);
 void PrintExpressionStatement(ExpressionStatementNode * ast);
 void PrintAssignmentOperator(AssignmentOperatorNode * ast);
 void PrintIterationStatement(IterationStatementNode * ast);
+void PrintInitializerList(InitializerListNode  * ast);
 
 #endif
 

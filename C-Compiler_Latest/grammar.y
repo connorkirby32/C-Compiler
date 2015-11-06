@@ -10,7 +10,7 @@ void yyerror(char *);
 
 %union {
 	int iVal;
-	double dVal;
+	float dVal;
 	char * sVal;
 	char * identifierName;
 	
@@ -45,21 +45,17 @@ void yyerror(char *);
   struct EqualityExpressionNode * equality_expression_node;
   struct RelationalExpressionNode * relational_expression_node;
   struct PrimaryExpressionNode * primary_expression_node;
-
   struct PostfixExpressionNode * postfix_expression_node;
   struct UnaryExpressionNode * unary_expression_node;
   struct CastExpressionNode * cast_expression_node;
-  struct MultiplicativeExpressionNode * multiplicative_expression_node;
-  
+  struct MultiplicativeExpressionNode * multiplicative_expression_node; 
   struct ShiftExpressionNode * shift_expression_node;
   struct AdditiveExpressionNode * additive_expression_node;
-  struct ExclusiveOrExpressionNode * exclusive_or_expression_node;
-  
+  struct ExclusiveOrExpressionNode * exclusive_or_expression_node; 
   struct ExpressionStatementNode * expression_statement_node;
-  
   struct ConstantNode * constant_node;
-  
   struct AssignmentOperatorNode * assignment_operator_node;
+  struct InitializerListNode * initializer_list_node; 
 
 }
 
@@ -124,6 +120,7 @@ void yyerror(char *);
 %type <constant_node> constant;
 %type <expression_statement_node> expression_statement;
 %type <assignment_operator_node> assignment_operator;
+%type <initializer_list_node> initializer_list;
 
 %start translation_unit
 
@@ -372,6 +369,11 @@ type_specifier
 			fprintf(parseFile,"type_specifier <- CHAR \n\n");
 			}
 			
+						//Ast
+			type_specifier_node = (TypeSpecifierNode * )malloc(1 * sizeof(TypeSpecifierNode));
+			type_specifier_node -> type = "char";
+			$$ = type_specifier_node;
+			
 			//Set Flag
 			flags.char_flag = true;
 		}
@@ -388,6 +390,11 @@ type_specifier
 			fprintf(parseFile,"storage_class_specifier <- INT \n\n");
 			}
 			
+			//Ast
+			type_specifier_node = (TypeSpecifierNode * )malloc(1 * sizeof(TypeSpecifierNode));
+			type_specifier_node -> type = "int";
+			$$ = type_specifier_node;
+			
 			//Set Flag
 			flags.int_flag = true;
 		}
@@ -403,6 +410,11 @@ type_specifier
 		{if(parseDebug){
 			fprintf(parseFile,"storage_class_specifier <- FLOAT \n\n");
 			}
+			
+			//Ast
+			type_specifier_node = (TypeSpecifierNode * )malloc(1 * sizeof(TypeSpecifierNode));
+			type_specifier_node -> type = "float";
+			$$ = type_specifier_node;
 			
 			//Set Flag
 			flags.float_flag = true;
@@ -725,6 +737,11 @@ direct_declarator
 			 direct_declarator_node->direct_declarator = $1;
 			 direct_declarator_node->constant_expression = $3;
 			 $$ = direct_declarator_node;
+			 currentIdentifier->array_flag = true;
+			 currentIdentifier->array_size = currentIdentifier->dataI;
+			 
+			 
+			 //
 		}
 	| direct_declarator '(' ')' 
 		{if(parseDebug){
@@ -852,11 +869,21 @@ initializer
 		{if(parseDebug){
 			fprintf(parseFile,"initializer <- '{' initializer_list '}' \n\n");
 			}
+			
+			//AST
+			 initializer_node = (InitializerNode *)malloc(1*sizeof(InitializerNode));
+			 initializer_node->initializer_list = $2;
+			 $$ = initializer_node;
 		}
 	| '{' initializer_list ',' '}'
 		{if(parseDebug){
 			fprintf(parseFile,"initializer <- '{' initializer_list ',' '}' \n\n");
 			}
+			
+				//AST
+			 initializer_node = (InitializerNode *)malloc(1*sizeof(InitializerNode));
+			 initializer_node->initializer_list = $2;
+			 $$ = initializer_node;
 		}
 	;
 
@@ -865,11 +892,23 @@ initializer_list
 		{if(parseDebug){
 			fprintf(parseFile,"initializer_list <- initializer \n\n");
 			}
+			
+			 //AST
+			 initializer_list_node = (InitializerNode *)malloc(1*sizeof(InitializerNode));
+			 initializer_list_node->initializer= $1;
+			 $$ = initializer_list_node;
 		}
 	| initializer_list ',' initializer
-		{if(parseDebug){
+		{
+		if(parseDebug){
 			fprintf(parseFile,"initializer_list <- initializer_list ',' initializer \n\n");
 			}
+			
+			 //AST
+			 initializer_list_node = (InitializerNode *)malloc(1*sizeof(InitializerNode));
+			 initializer_list_node->initializer_list= $1;
+			 initializer_list_node->initializer= $3;
+			 $$ = initializer_list_node;
 		}
 	;
 
@@ -1693,6 +1732,11 @@ postfix_expression
 		{if(parseDebug){
 			fprintf(parseFile,"postfix_expression <- postfix_expression '[' expression ']' \n\n");
 			}
+			
+			postfix_expression_node = (PostfixExpressionNode *)malloc(1*sizeof(PostfixExpressionNode));
+			postfix_expression_node->postfix_expression = $1;
+			postfix_expression_node->expression = $3;
+			$$ = postfix_expression_node;
 		}
 	| postfix_expression '(' ')'
 		{if(parseDebug){
@@ -1795,6 +1839,11 @@ constant
 	                currentIdentifier->dataC = (char *) malloc(sizeof(char));
 	                currentIdentifier->dataC = yylval.sVal;
                 }
+                
+	                constant_node = (ConstantNode *)malloc(1*sizeof( ConstantNode ));
+			            constant_node->char_constant = (char *) malloc(sizeof(char));
+			            constant_node->char_constant = yylval.sVal; 
+			            $$ = constant_node;	
 	            if(parseDebug){
 			        fprintf(parseFile,"CONSTANT <- CHARACTER_CONSTANT \n\n");
 			    }
@@ -1808,8 +1857,13 @@ constant
 			        fprintf(parseFile,"CONSTANT ->FLOATING_CONSTANT \n\n");
 			    }
 			    
+			    	      constant_node = (ConstantNode *)malloc(1*sizeof( ConstantNode ));
+			            constant_node->float_constant = (float * ) malloc(sizeof(float));
+			            //constant_node->float_constant = yylval.dVal; 
+			            $$ = constant_node;	
+			    
 	                
-	               currentIdentifier->dataD = yylval.dVal;
+	               
 	         }
 	| ENUMERATION_CONSTANT {	        
 	        
@@ -1866,7 +1920,7 @@ identifier
 			 
     //Check and see if it shadows    
     Shadows(n, symbolTable);
-
+    flags = reset;
   //We are in look up mode
   }else {
      //Locate the identifier

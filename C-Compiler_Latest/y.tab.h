@@ -181,7 +181,7 @@ union YYSTYPE
 #line 11 "grammar.y" /* yacc.c:1909  */
 
 	int iVal;
-	double dVal;
+	float dVal;
 	char * sVal;
 	char * identifierName;
 	
@@ -216,24 +216,20 @@ union YYSTYPE
   struct EqualityExpressionNode * equality_expression_node;
   struct RelationalExpressionNode * relational_expression_node;
   struct PrimaryExpressionNode * primary_expression_node;
-
   struct PostfixExpressionNode * postfix_expression_node;
   struct UnaryExpressionNode * unary_expression_node;
   struct CastExpressionNode * cast_expression_node;
-  struct MultiplicativeExpressionNode * multiplicative_expression_node;
-  
+  struct MultiplicativeExpressionNode * multiplicative_expression_node; 
   struct ShiftExpressionNode * shift_expression_node;
   struct AdditiveExpressionNode * additive_expression_node;
-  struct ExclusiveOrExpressionNode * exclusive_or_expression_node;
-  
+  struct ExclusiveOrExpressionNode * exclusive_or_expression_node; 
   struct ExpressionStatementNode * expression_statement_node;
-  
   struct ConstantNode * constant_node;
-  
   struct AssignmentOperatorNode * assignment_operator_node;
+  struct InitializerListNode * initializer_list_node; 
 
 
-#line 237 "y.tab.h" /* yacc.c:1909  */
+#line 233 "y.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

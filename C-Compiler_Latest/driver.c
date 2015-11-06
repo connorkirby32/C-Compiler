@@ -16,9 +16,10 @@ FILE *symbolTableFile = NULL;
 FILE *astFile = NULL;
 
 //Debug flags
-int parseDebug = 0;
-int lexDebug = 0;
-int symbolTableDebug = 0;
+bool parseDebug = false;
+bool lexDebug = false;
+bool symbolTableDebug = false;
+bool astDebug = false;
 
 //Debug info
 int rowNum = 1;
@@ -36,6 +37,8 @@ node * symbolTable;
 treeNode* currentIdentifier;
 flagContainer flags = {0};
 flagContainer reset = {0};
+
+
 
 
 //AST
@@ -118,6 +121,10 @@ ExpressionStatementNode * expression_statement_node;
 
 AssignmentOperatorNode * assignment_operator_node;
 
+InitializerListNode * initializer_list_node;
+
+TypeSpecifierNode * type_specifier_node;
+
 int main(int argc, char **argv)
 {
 
@@ -173,7 +180,8 @@ int main(int argc, char **argv)
         break;
       //AST debug
       case 'a':
-        astFile = fopen("astInfo.tex", "w");
+        astDebug = true;
+        astFile = fopen("astInfo.lex", "w");
 
       }
       
@@ -204,13 +212,13 @@ int main(int argc, char **argv)
   free(buffer);
   
   
-    if(translation_unit_node != NULL){
-    fprintf(astFile,"\\documentclass[border=10pt]{standalone}");
-    fprintf(astFile,"\\usepackage{qtree} \\begin{document} ");
-    fprintf(astFile,"\\Tree ");
-    ReportAST(translation_unit_node);
-    fprintf(astFile,"\\end{document} ");
-  }
+    if(astDebug){
+      fprintf(astFile,"\\documentclass[border=10pt]{standalone}");
+      fprintf(astFile,"\\usepackage{qtree} \\begin{document} ");
+      fprintf(astFile,"\\Tree ");
+      ReportAST(translation_unit_node);
+      fprintf(astFile,"\\end{document} ");
+    }
  
        	  	
 }

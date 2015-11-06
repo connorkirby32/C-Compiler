@@ -1,5 +1,6 @@
 Level:
 0
 IDS at that Level:
-int i    Value: None 
-int main    Value: None 
+int f   
+Array Size Of: 3
+int main   
