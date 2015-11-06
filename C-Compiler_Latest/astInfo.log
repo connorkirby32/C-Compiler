@@ -1,0 +1,222 @@
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=latex 2015.11.4)  5 NOV 2015 16:27
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**astInfo.tex
+(./astInfo.tex
+LaTeX2e <2011/06/27>
+Babel <3.9h> and hyphenation patterns for 78 languages loaded.
+(/usr/share/texlive/texmf-dist/tex/latex/standalone/standalone.cls
+Document Class: standalone 2012/09/15 v1.1b Class to compile TeX sub-files stan
+dalone
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is not detected.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2012/10/14 v2.6b package option processing (HA)
+
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+\XKV@toks=\toks14
+\XKV@tempa@toks=\toks15
+\XKV@depth=\count79
+File: xkeyval.tex 2012/10/14 v2.6b key=value parser (HA)
+
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/keyval.tex)))
+\sa@internal=\count80
+
+(/usr/share/texlive/texmf-dist/tex/latex/standalone/standalone.cfg
+File: standalone.cfg 2012/09/15 v1.1b Default configuration file for 'standalon
+e' class
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count81
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\c@figure=\count87
+\c@table=\count88
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+\sa@box=\box26
+\sa@yoffset=\skip43
+)
+(/usr/share/texlive/texmf-dist/tex/latex/qtree/qtree.sty
+Package: 2008/12/12 v.3.1bQtree: tree-drawing for linguistics
+Package: qtree 2008/12/12 v.3.1bQtree: tree-drawing for linguistics
+(/usr/share/texlive/texmf-dist/tex/latex/pict2e/pict2e.sty
+Package: pict2e 2014/01/12 v0.2z Improved picture commands (HjG,RN,JT)
+
+(/usr/share/texlive/texmf-dist/tex/latex/pict2e/pict2e.cfg
+File: pict2e.cfg 2011/04/05 v0.1t pict2e configuration for teTeX/TeXLive
+)
+Package pict2e Info: Driver file: dvips.def on input line 119.
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+)
+Package pict2e Info: Driver file for pict2e: p2e-dvips.def on input line 121.
+
+(/usr/share/texlive/texmf-dist/tex/latex/pict2e/p2e-dvips.def
+File: p2e-dvips.def 2011/04/05 v0.1t Driver-dependant file (RN,HjG,JT)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+\pIIe@GRAPH=\toks16
+\@arclen=\dimen103
+\@arcrad=\dimen104
+\@tempdimd=\dimen105
+)
+\c@treecount=\count89
+\c@branchcount=\count90
+\parentbox=\box27
+\treebox=\box28
+\treeboxone=\box29
+\treeboxtwo=\box30
+\treeboxthree=\box31
+\treeboxfour=\box32
+\treeboxfive=\box33
+\treeboxsix=\box34
+\treeboxseven=\box35
+\treeboxeight=\box36
+\treeboxnine=\box37
+\treeboxten=\box38
+\treeboxeleven=\box39
+\treeboxtwelve=\box40
+\treeboxthirteen=\box41
+\treeboxfourteen=\box42
+\treeboxfifteen=\box43
+\treeboxsixteen=\box44
+\treeboxseventeen=\box45
+\treeboxeighteen=\box46
+\treeboxnineteen=\box47
+\treeboxtwenty=\box48
+\treeoffsetone=\skip44
+\treeoffsettwo=\skip45
+\treeoffsetthree=\skip46
+\treeoffsetfour=\skip47
+\treeoffsetfive=\skip48
+\treeoffsetsix=\skip49
+\treeoffsetseven=\skip50
+\treeoffseteight=\skip51
+\treeoffsetnine=\skip52
+\treeoffsetten=\skip53
+\treeoffseteleven=\skip54
+\treeoffsettwelve=\skip55
+\treeoffsetthirteen=\skip56
+\treeoffsetfourteen=\skip57
+\treeoffsetfifteen=\skip58
+\treeoffsetsixteen=\skip59
+\treeoffsetseventeen=\skip60
+\treeoffseteighteen=\skip61
+\treeoffsetnineteen=\skip62
+\treeoffsettwenty=\skip63
+\treeshiftone=\skip64
+\treeshifttwo=\skip65
+\treeshiftthree=\skip66
+\treeshiftfour=\skip67
+\treeshiftfive=\skip68
+\treeshiftsix=\skip69
+\treeshiftseven=\skip70
+\treeshifteight=\skip71
+\treeshiftnine=\skip72
+\treeshiftten=\skip73
+\treeshifteleven=\skip74
+\treeshifttwelve=\skip75
+\treeshiftthirteen=\skip76
+\treeshiftfourteen=\skip77
+\treeshiftfifteen=\skip78
+\treeshiftsixteen=\skip79
+\treeshiftseventeen=\skip80
+\treeshifteighteen=\skip81
+\treeshiftnineteen=\skip82
+\treeshifttwenty=\skip83
+\treewidthone=\skip84
+\treewidthtwo=\skip85
+\treewidththree=\skip86
+\treewidthfour=\skip87
+\treewidthfive=\skip88
+\treewidthsix=\skip89
+\treewidthseven=\skip90
+\treewidtheight=\skip91
+\treewidthnine=\skip92
+\treewidthten=\skip93
+\treewidtheleven=\skip94
+\treewidthtwelve=\skip95
+\treewidththirteen=\skip96
+\treewidthfourteen=\skip97
+\treewidthfifteen=\skip98
+\treewidthsixteen=\skip99
+\treewidthseventeen=\skip100
+\treewidtheighteen=\skip101
+\treewidthnineteen=\skip102
+\treewidthtwenty=\skip103
+\daughteroffsetone=\skip104
+\daughteroffsettwo=\skip105
+\daughteroffsetthree=\skip106
+\daughteroffsetfour=\skip107
+\branchwidthone=\skip108
+\branchwidthtwo=\skip109
+\branchwidththree=\skip110
+\branchwidthfour=\skip111
+\parentoffset=\skip112
+\treeoffset=\skip113
+\daughteroffset=\skip114
+\branchwidth=\skip115
+\parentwidth=\skip116
+\treewidth=\skip117
+\qta=\toks17
+\qtb=\toks18
+\nbranches=\count91
+\qroofx=\count92
+\qroofy=\count93
+\@qrscratchbox=\box49
+) (./astInfo.aux)
+\openout1 = `astInfo.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 1.
+LaTeX Font Info:    ... okay on input line 1.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 1.
+LaTeX Font Info:    ... okay on input line 1.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 1.
+LaTeX Font Info:    ... okay on input line 1.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 1.
+LaTeX Font Info:    ... okay on input line 1.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 1.
+LaTeX Font Info:    ... okay on input line 1.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 1.
+LaTeX Font Info:    ... okay on input line 1.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 1.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 1.
+
+[1
+
+] (./astInfo.aux) ) 
+Here is how much of TeX's memory you used:
+ 1133 strings out of 493305
+ 16274 string characters out of 6139897
+ 91564 words of memory out of 5000000
+ 4633 multiletter control sequences out of 15000+600000
+ 3640 words of font info for 14 fonts, out of 8000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 34i,7n,56p,682b,295s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+Output written on astInfo.dvi (1 page, 3700 bytes).

@@ -173,7 +173,7 @@ int main(int argc, char **argv)
         break;
       //AST debug
       case 'a':
-        astFile = fopen("astInfo.lex", "w");
+        astFile = fopen("astInfo.tex", "w");
 
       }
       
@@ -205,8 +205,11 @@ int main(int argc, char **argv)
   
   
     if(translation_unit_node != NULL){
+    fprintf(astFile,"\\documentclass[border=10pt]{standalone}");
+    fprintf(astFile,"\\usepackage{qtree} \\begin{document} ");
     fprintf(astFile,"\\Tree ");
     ReportAST(translation_unit_node);
+    fprintf(astFile,"\\end{document} ");
   }
  
        	  	

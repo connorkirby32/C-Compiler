@@ -5,15 +5,22 @@
 #ifndef AST_H
 #define AST_H
 
-//All AST structure Decleartions
-//God Help Us
+/*
+  Each struct corresponds to a production in the grammar.
+  The data members of each stuct are the right hand side of it's production.
+  The print function is used to print out the corresponding production.
+  Each print function will print the node into a file, and then Qtree, 
+  a LaTeX library, will parse the data and create the tree.
+*/
+
+// the global abstract syntax tree struct
 typedef struct abstract_syntax_tree
 {
     struct TranslationUnitNode *translation_unit;
     
 } AbstractSyntaxTreeNode;
 
-
+// translation unit struct
 typedef struct translation_unit_node
 {
     struct TranslationUnitNode *translation_unit;
@@ -21,15 +28,14 @@ typedef struct translation_unit_node
 } TranslationUnitNode;
 
 
-
+// external declaration struct
 typedef struct external_declaration_node
 {
     struct FunctionDefinitionNode *function_definition;
     struct DeclarationNode * declaration;
 } ExternalDeclarationNode;
 
-
-
+// function definition struct
 typedef struct function_definition_node
 {
     struct DeclaratorCompoundStatementNode *declarator_compound_statment;
@@ -40,7 +46,7 @@ typedef struct function_definition_node
 } FunctionDefinitionNode;
 
 
-
+// declaration struct
 typedef struct declaration_node
 {
     struct DeclarationSpecifiersNode * declaration_specifiers;
@@ -48,6 +54,7 @@ typedef struct declaration_node
     struct node *ptr;
 } DeclarationNode;
 
+// declaration list struct
 typedef struct declaration_list_node
 {
   struct DeclarationNode * declaration;
@@ -55,6 +62,7 @@ typedef struct declaration_list_node
     
 } DeclarationListNode;
 
+// declaration specifier struct
 typedef struct declaration_specifiers_node
 {
     struct StorageClassSpecifierNode * storage_class_specifier;
@@ -63,7 +71,7 @@ typedef struct declaration_specifiers_node
     struct TypeQualifier * type_qualifier;
 } DeclarationSpecifiersNode;
 
-
+// storage class specifier struct
 typedef struct storage_class_specifier_node
 {
 
@@ -71,8 +79,7 @@ typedef struct storage_class_specifier_node
   
 } StorageClassSpecifierNode;
 
-
-
+// type specifier struct
 typedef struct type_specifier_node
 {
 
@@ -82,12 +89,13 @@ typedef struct type_specifier_node
     
 } TypeSpecifierNode;
 
+// type qualifier struct
 typedef struct type_qualifier_node
 {
     char * type;
 } TypeQualifierNode;
 
-
+// struct or union specifier struct
 typedef struct struct_or_union_specifier_node
 {
 
@@ -98,14 +106,14 @@ typedef struct struct_or_union_specifier_node
 
 } StructOrUnionSpecifierNode;
 
-
+// struct or union struct
 typedef struct struct_or_union_node
 {
     char * type; 
 
 }StructOrUnionNode;
 
-
+// struct declaration list struct
 typedef struct struct_declaration_list_node
 {
 
@@ -115,7 +123,7 @@ typedef struct struct_declaration_list_node
 
 }StructDeclarationListNode; 
 
-
+// init declarator list struct
 typedef struct init_declarator_list_node
 {
 
@@ -126,6 +134,7 @@ typedef struct init_declarator_list_node
 
 }InitDeclaratorListNode; 
 
+// init declarator struct
 typedef struct init_declarator_node
 {
 
@@ -136,6 +145,7 @@ typedef struct init_declarator_node
 
 }InitDeclaratorNode;
 
+// struct declaration struct
 typedef struct struct_declaration_node
 {
 
@@ -144,6 +154,7 @@ typedef struct struct_declaration_node
    
 }StructDeclarationNode;
 
+// specifier qualifier list struct
 typedef struct specifier_qualifier_list_node
 {
 
@@ -153,7 +164,7 @@ typedef struct specifier_qualifier_list_node
   
 }SpecifierQualifierListNode;
 
-
+// struct declarator list struct
 typedef struct struct_declarator_list_node
 {
 
@@ -162,6 +173,7 @@ typedef struct struct_declarator_list_node
   
 }StructDeclaratorListNode;
 
+// struct declarator struct
 typedef struct struct_declarator_node
 {
 
@@ -171,7 +183,7 @@ typedef struct struct_declarator_node
   
 }StructDeclaratorNode;
 
-
+// enum specifier struct
 typedef struct enum_specifier_node
 {
 
@@ -648,11 +660,9 @@ typedef struct string_node
   
 }StringNode;
 
-
-//
-extern TranslationUnitNode * translation_unit_node;
-
 //Pointers used in our compiler
+// Each pointer is used to hold a production
+extern TranslationUnitNode * translation_unit_node;
 
 extern StorageClassSpecifierNode * storage_class_specifier_node;
 

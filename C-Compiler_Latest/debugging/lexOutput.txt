@@ -13,35 +13,14 @@ IDENTIFIER
 //{
 {
 
-//if
-IF
+//int
+INT
 
-//(
-(
-
-//2
-INTEGER_CONSTANT
-
-//)
-)
-
-//{
-{
-
-//6
-INTEGER_CONSTANT
-
-//+
-+
-
-//2
-INTEGER_CONSTANT
+//i
+IDENTIFIER
 
 //;
 ;
-
-//}
-}
 
 //}
 }
