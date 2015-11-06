@@ -485,10 +485,15 @@ void PrintEqualityExpression(EqualityExpressionNode *ast){
 
 void PrintRelationalExpression(RelationalExpressionNode *ast){
   fprintf(astFile," [.{ Relational Expression} ");
-  if(ast->shift_expression != NULL){
-    
-    PrintShiftExpression(ast-> shift_expression);
   
+  if(ast->shift_expression != NULL && ast->relational_expression != NULL){
+    PrintRelationalExpression(ast-> relational_expression);
+    fprintf(astFile, " [ GT ] " );
+    PrintShiftExpression(ast-> shift_expression);
+  }
+
+  else if(ast->shift_expression != NULL){
+    PrintShiftExpression(ast-> shift_expression);
   }
     
   fprintf(astFile," ] ");

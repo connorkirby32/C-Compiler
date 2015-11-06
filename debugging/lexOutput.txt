@@ -16,32 +16,41 @@ IDENTIFIER
 //int
 INT
 
-//f
+//i
 IDENTIFIER
 
-//[
-[
+//=
+=
 
-//3
-INTEGER_CONSTANT
-
-//]
-]
-
-//;
-;
-
-//2
-INTEGER_CONSTANT
-
-//+
-+
-
-//2
+//0
 INTEGER_CONSTANT
 
 //;
 ;
+
+//if
+IF
+
+//(
+(
+
+//i
+IDENTIFIER
+
+//>
+>
+
+//5
+INTEGER_CONSTANT
+
+//)
+)
+
+//{
+{
+
+//}
+}
 
 //}
 }

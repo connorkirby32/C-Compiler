@@ -17,57 +17,11 @@ declaration_specifiers <- type_specifier
 
 Insert Mode 
 
-identifier ->IDENTIFIER (f)
+identifier ->IDENTIFIER (i)
 direct_declarator <- identifier 
-
-CONSTANT <- INTEGER_CONSTANT 
-
-primary_expression <- constant 
-
-postfix_expression <- primary_expression 
-
-unary_expression <- postfix_expression 
-
-cast_expression <- unary_expression 
-
-multiplicative_expression <- cast_expression 
-
-additive_expression <- multiplicative_expression 
-
-shift_expression <- additive_expression 
-
-relational_expression <- shift_expression 
-
-equality_expression <- relational_expression 
-
-and_expression <- equality_expression 
-
-exclusive_or_expression <- and_expression 
-
-inclusive_or_expression <- exclusive_or_expression  
-
-logical_and_expression <- inclusive_or_expression 
-
-logical_or_expression <- logical_and_expression 
-
-conditional_expression <- logical_or_expression 
- 
-constant_expression <- conditional_expression 
-
-direct_declarator <- direct_declarator '[' constant_expression ']' 
 
 declarator <- direct_declarator 
 
-init_declarator <- declarator 
-
-init_declarator_list <- init_declarator 
-
-declaration <- declaration_specifiers init_declarator_list 
-
-declaration_list <- declaration 
-
-Look up is true 
-
 CONSTANT <- INTEGER_CONSTANT 
 
 primary_expression <- constant 
@@ -81,20 +35,6 @@ cast_expression <- unary_expression
 multiplicative_expression <- cast_expression 
 
 additive_expression <- multiplicative_expression 
-
-CONSTANT <- INTEGER_CONSTANT 
-
-primary_expression <- constant 
-
-postfix_expression <- primary_expression 
-
-unary_expression <- postfix_expression 
-
-cast_expression <- unary_expression 
-
-multiplicative_expression <- cast_expression 
-
-additive_expression <- additive_expression '+' multiplicative_expression 
 
 shift_expression <- additive_expression 
 
@@ -116,11 +56,78 @@ conditional_expression <- logical_or_expression
  
 assignment_expression <- conditional_expression 
 
+initializer <- assignment_expression 
+
+init_declarator <- declarator '=' initializer 
+
+init_declarator_list <- init_declarator 
+
+declaration <- declaration_specifiers init_declarator_list 
+
+declaration_list <- declaration 
+
+Look up is true 
+
+identifier ->IDENTIFIER (i)
+primary_expression <- identifier 
+
+postfix_expression <- primary_expression 
+
+unary_expression <- postfix_expression 
+
+cast_expression <- unary_expression 
+
+multiplicative_expression <- cast_expression 
+
+additive_expression <- multiplicative_expression 
+
+shift_expression <- additive_expression 
+
+relational_expression <- shift_expression 
+
+CONSTANT <- INTEGER_CONSTANT 
+
+primary_expression <- constant 
+
+postfix_expression <- primary_expression 
+
+unary_expression <- postfix_expression 
+
+cast_expression <- unary_expression 
+
+multiplicative_expression <- cast_expression 
+
+additive_expression <- multiplicative_expression 
+
+shift_expression <- additive_expression 
+
+relational_expression <- relational_expression '>' shift_expression 
+
+equality_expression <- relational_expression 
+
+and_expression <- equality_expression 
+
+exclusive_or_expression <- and_expression 
+
+inclusive_or_expression <- exclusive_or_expression  
+
+logical_and_expression <- inclusive_or_expression 
+
+logical_or_expression <- logical_and_expression 
+
+conditional_expression <- logical_or_expression 
+ 
+assignment_expression <- conditional_expression 
+
 expression <- assignment_expression 
 
-expression_statement <- expression ';' 
+compound_statement <- '{' '}' 
 
-statement <- expression_statement 
+statement <- compound_statement 
+
+selection_statement <- IF '(' expression ')' statement  
+
+statement <- selection_statement 
 
 statement_list <- statement  
 

@@ -1,6 +1,5 @@
 Level:
 0
 IDS at that Level:
-int f   
-Array Size Of: 3
+int i   
 int main   

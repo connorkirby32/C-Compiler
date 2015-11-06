@@ -1,5 +1,6 @@
 int main(){
+	int i=0;
 
-int f[3];
-2 +2;
+	if(i>5){
+	}
 }

@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=latex 2015.11.4)  5 NOV 2015 16:27
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=latex 2015.11.4)  5 NOV 2015 20:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**astInfo.tex
-(./astInfo.tex
+**astInfo.lex
+(./astInfo.lex
 LaTeX2e <2011/06/27>
 Babel <3.9h> and hyphenation patterns for 78 languages loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/standalone/standalone.cls
@@ -211,12 +211,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 ] (./astInfo.aux) ) 
 Here is how much of TeX's memory you used:
- 1133 strings out of 493305
- 16274 string characters out of 6139897
- 91564 words of memory out of 5000000
+ 1134 strings out of 493305
+ 16278 string characters out of 6139897
+ 162531 words of memory out of 5000000
  4633 multiletter control sequences out of 15000+600000
  3640 words of font info for 14 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 34i,7n,56p,682b,295s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 34i,7n,56p,2047b,327s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on astInfo.dvi (1 page, 3700 bytes).
+Output written on astInfo.dvi (1 page, 15364 bytes).

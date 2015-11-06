@@ -1543,6 +1543,10 @@ relational_expression
 		{if(parseDebug){
 			fprintf(parseFile,"relational_expression <- relational_expression '>' shift_expression \n\n");
 			}
+			relational_expression_node = (RelationalExpressionNode *)malloc(1*sizeof(RelationalExpressionNode));
+			relational_expression_node-> relational_expression = $1;
+			relational_expression_node-> shift_expression = $3;
+			$$ = relational_expression_node;
 		}
 	| relational_expression LE_OP shift_expression
 		{if(parseDebug){
