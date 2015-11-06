@@ -1,4 +1,5 @@
 int main(){
 
-int j
+int f[3];
+2 +2;
 }
