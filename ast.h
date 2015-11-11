@@ -275,6 +275,7 @@ typedef struct initializer_node
 
    struct InitializerListNode * initializer_list;
    struct AssignmentExpressionNode * assignment_expression;
+   struct treeNode * identifier;
     
 }InitializerNode;
 
@@ -416,7 +417,8 @@ typedef struct expression_node
 
   struct ExpressionNode * expression;
   struct AssignmentExpressionNode * assignment_expression;
-  char * COMMAt;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
 
 }ExpressionNode;
 
@@ -426,6 +428,8 @@ typedef struct assignment_expression_node
   struct AssignmentExpressionNode * assignment_expression;
   struct AssignmentOperatorNode * assignment_operator;
   struct UnaryExpressionNode * unary_expression;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
 
 
 }AssignmentExpressionNode;
@@ -451,8 +455,8 @@ typedef struct conditional_expression_node
   struct ExpressionNode * expressionNode;
   struct LogicalOrExpressionNode * logical_or_expression;
   struct ConditionalExpressionNode * conditional_expression;
-  char * COLONt;
-  char * QUESTIONt;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
 
 
 }ConditionalExpressionNode;
@@ -460,6 +464,8 @@ typedef struct conditional_expression_node
 typedef struct constant_expression_node
 {
   struct ConditionalExpressionNode * conditional_expression;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
   
 }ConstantExpressionNode;
 
@@ -467,7 +473,8 @@ typedef struct logical_or_expression_node
 {
   struct LogicalAndExpressionNode * logical_and_expression;
   struct LogicalOrExpressionNode * logical_or_expression;
-  char * OR_OPt;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
   
 }LogicalOrExpressionNode;
 
@@ -475,7 +482,8 @@ typedef struct logical_and_expression_node
 {
   struct LogicalAndExpressionNode * logical_and_expression;
   struct InclusiveOrExpressionNode * inclusive_or_expression;
-  char * AND_OPt;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
   
 }LogicalAndExpressionNode;
 
@@ -483,7 +491,8 @@ typedef struct inclusive_or_expression_node
 {
   struct ExclusiveOrExpressionNode * exclusive_or_expression;
   struct InclusiveOrExpressionNode * inclusive_or_expression;
-  char * PIPEt;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
   
 }InclusiveOrExpressionNode;
 
@@ -491,7 +500,8 @@ typedef struct exclusive_or_expression_node
 {
   struct ExclusiveOrExpressionNode * exclusive_or_expression;
   struct AndExpressionNode * and_expression;
-  char * ARROWt;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
   
 }ExclusiveOrExpressionNode;
 
@@ -500,7 +510,8 @@ typedef struct and_expression_node
 
   struct EqualitiyExpressionNode * equality_expression;
   struct AndExpressionNode * and_expression;
-  char * ANDt;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
   
 }AndExpressionNode;
 
@@ -510,8 +521,8 @@ typedef struct equality_expression_node
   struct RelationalExpressionNode * relational_expression;
   struct EqualityExpressionNode * equality_expression; 
   struct AndExpressionNode * and_expression;
-  char * EQ_OPt;
-  char * NE_OPt;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
   
 }EqualityExpressionNode;
 
@@ -521,10 +532,9 @@ typedef struct relational_expression_node
 
   struct ShiftExpressionNode * shift_expression;
   struct RelationalExpressionNode * relational_expression;
-  char * LESSTHANt;
-  char * GREATERTHANt;
-  char * LE_OPt;
-  char * GE_OPt;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
+
   
 }RelationalExpressionNode;
 
@@ -533,8 +543,9 @@ typedef struct shift_expression_node
 
   struct AdditiveExpressionNode * additive_expression;
   struct ShiftExpressionNode * shift_expression;
-  char * LEFT_OPt;
-  char * RIGHT_OPt;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
+
   
 } ShiftExpressionNode;
 
@@ -544,8 +555,9 @@ typedef struct additive_expression_node
 
   struct AdditiveExpressionNode * additive_expression;
   struct MultiplicativeExpressionNode * multiplicative_expression;
-  char * PLUSt;
-  char * MINUSt;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
+
   
 } AdditiveExpressionNode;
 
@@ -555,10 +567,9 @@ typedef struct multiplicative_expression_node
 
   struct CastExpressionNode * cast_expression;
   struct MultiplicativeExpressionNode * multiplicative_expression;
-  char * MULTIPLYt;
-  char * DIVIDEt;
-  char * ANDt;
-  
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
+
 } MultiplicativeExpressionNode;
 
 
@@ -568,8 +579,9 @@ typedef struct cast_expression_node
   struct CastExpressionNode * cast_expression;
   struct UnaryExpressionNode * unary_expression;
   struct TypeNameNode * type_name;
-  char * LEFTPARENt;
-  char * RIGHTPARENt;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
+
   
 } CastExpressionNode;
 
@@ -581,11 +593,9 @@ typedef struct unary_expression_node
   struct UnaryOperatorNode * unary_operator;
   struct TypeNameNode * type_name;
   struct PostfixExpressionNode * postfix_expression;
-  char * DEC_OPt;
-  char * INC_OPt;
-  char * SIZEOFt;
-  char * LEFTPARENt;
-  char * RIGHTPARENt;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
+
   
 } UnaryExpressionNode;
 
@@ -593,14 +603,8 @@ typedef struct unary_operator_node
 {
 
   struct TypeNameNode * type_name;
-  char * ANDt;
-  char * POINTERt;
-  char * PLUSt;
-  char * MINUSt;
-  char * TILDAt;
-  char * EXCLAMATIONPOINTt;
-  char * LEFTPARENt;
-  char * RIGHTPARENt;
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
   
 } UnaryOperatorNode;
 
@@ -612,15 +616,11 @@ typedef struct postfix_expression_node
   struct PostfixExpressionNode * postfix_expression;
   struct ExpressionNode * expression;
   struct ArgumentExpressionListNode * argument_expression_list;
-  struct IdentifierNode * identifier;
-  char * LEFTPARENt;
-  char * RIGHTPARENt;
-  char * LEFTSQUAREPARENt;
-  char * RIGHTSQUAREPARENt;
-  char * PERIODt;
-  char * PTR_OPt;
-  char * DEC_OPt;
-  char * INC_OPt;
+
+
+
+  struct treeNode * identifier;
+  struct ConstantNode * constant;
   
 
 }PostfixExpressionNode;
@@ -659,7 +659,7 @@ typedef struct constant_node
 
 typedef struct string_node
 {
-  char * charConstantt;
+  char * charConstant;
   
 }StringNode;
 

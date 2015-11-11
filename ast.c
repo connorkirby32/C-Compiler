@@ -677,6 +677,6 @@ bool CheckAdditiveExpressionTypes(AdditiveExpressionNode * exp1, MultiplicativeE
   }else if(constant->float_flag && identifier->flags.char_flag){
         printf("Warning: Addition of type char and float, type conversion to occur\n");
   
-
+}
 }
 
