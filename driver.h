@@ -15,11 +15,14 @@ extern FILE *lexFile;
 extern FILE *parseFile;
 extern FILE *symbolTableFile;
 extern FILE *astFile;
+extern FILE * threeAddressCodeFile;
 
 //Debug flags
-extern int parseDebug;
-extern int lexDebug ;
-extern int symbolTableDebug;
+extern bool parseDebug;
+extern bool lexDebug ;
+extern bool symbolTableDebug;
+extern bool threeAddressCodeDebug;
+extern bool astDebug;
 
 //Debug info
 extern int rowNum;

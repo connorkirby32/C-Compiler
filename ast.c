@@ -1,5 +1,5 @@
 #include "driver.h"
-#include "ast.h"
+#include "nodes.h"
 #include <stdlib.h>
 
 void ReportAST(TranslationUnitNode * ast){
@@ -515,10 +515,10 @@ void PrintAdditiveExpressionNode(AdditiveExpressionNode * ast){
   
    if(ast->multiplicative_expression != NULL && ast->additive_expression != NULL){
     
-    PrintMultiplicativeExpressionNode(ast-> multiplicative_expression);
-    fprintf(astFile," [ + ] ");
     PrintAdditiveExpressionNode(ast->additive_expression);
-    CheckAdditiveExpressionTypes(ast->additive_expression, ast->multiplicative_expression);
+    fprintf(astFile," [ + ] ");
+    PrintMultiplicativeExpressionNode(ast-> multiplicative_expression);
+
   
   }
   

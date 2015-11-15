@@ -1,8 +1,9 @@
 #include "driver.h"
 #include "symTable.h"
 #include "symTable.c"
-#include "ast.h"
+#include "nodes.h"
 #include "ast.c"
+#include "threeAddressCode.c"
 
 
 //Global variables.....
@@ -14,12 +15,14 @@ FILE *lexFile = NULL;
 FILE *parseFile = NULL;
 FILE *symbolTableFile = NULL;
 FILE *astFile = NULL;
+FILE *threeAddressCodeFile = NULL;
 
 //Debug flags
 bool parseDebug = false;
 bool lexDebug = false;
 bool symbolTableDebug = false;
 bool astDebug = false;
+bool threeAddressCodeDebug = false;
 
 //Debug info
 int rowNum = 1;
@@ -42,9 +45,14 @@ flagContainer reset = {0};
 
 
 //AST
-AbstractSyntaxTreeNode * abstract_syntax_tree;
 TranslationUnitNode * translation_unit_node;
-int ast_id;
+
+
+//Three Address Code
+int register_count = 0; 
+int label_count = 0; 
+
+
 
 //AST Poiners
 StorageClassSpecifierNode * storage_class_specifier_node;
@@ -160,7 +168,7 @@ int main(int argc, char **argv)
   symbolTable = CreateTable(symbolTable);
   symbolTable = PushLevel(symbolTable,0);
   //Parse the command line for debugging options
-  while ((options = getopt (argc, argv, "-d[lsp] -a")) != -1){ 
+  while ((options = getopt (argc, argv, "-d[lsp] -a -q")) != -1){ 
     switch (options)
       {
       //Lex Debug
@@ -182,8 +190,12 @@ int main(int argc, char **argv)
       case 'a':
         astDebug = true;
         astFile = fopen("astInfo.lex", "w");
-
-      }
+        break;
+      case 'q':
+        threeAddressCodeDebug = true;
+        threeAddressCodeFile = fopen("threeAddressCode.txt", "w");
+        break;
+    }
       
    }       
 	//Set lex to read from the test_file
@@ -192,35 +204,37 @@ int main(int argc, char **argv)
 	//Parse test_file
   yyparse(); 
   
-
-  
 	//Close test_file
   fclose(test_file);
    
   //Close appropriate files based on flags  
   if(parseDebug)
-      fclose(parseFile);     
+    fclose(parseFile);     
   if(lexDebug)
-      fclose(lexFile);     
+    fclose(lexFile);     
   if(symbolTableDebug){
-      //Output symbol table before closing file
-      PrintTable(symbolTable);
-      symbolTable = DestroyTable(symbolTable);
-      fclose(symbolTableFile);     
+    //Output symbol table before closing file
+    PrintTable(symbolTable);
+    symbolTable = DestroyTable(symbolTable);
+    fclose(symbolTableFile);     
   }
   
   free(buffer);
   
-  
-    if(astDebug && translation_unit_node != NULL){
-      fprintf(astFile,"\\documentclass[border=10pt]{standalone}");
-      fprintf(astFile,"\\usepackage{qtree} \\begin{document} ");
-      fprintf(astFile,"\\Tree ");
-      ReportAST(translation_unit_node);
-      fprintf(astFile,"\\end{document} ");
-    }
+  if(astDebug && translation_unit_node != NULL){
+    fprintf(astFile,"\\documentclass[border=10pt]{standalone}");
+    fprintf(astFile,"\\usepackage{qtree} \\begin{document} ");
+    fprintf(astFile,"\\Tree ");
+    ReportAST(translation_unit_node);
+    fprintf(astFile,"\\end{document} ");
+  }
  
-       	  	
+  if(threeAddressCodeDebug && translation_unit_node != NULL){
+
+    GenerateThreeAddressCode(translation_unit_node);
+
+    	  	
+  }
 }
 
 

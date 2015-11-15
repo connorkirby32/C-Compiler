@@ -1,7 +1,7 @@
 %{
 #include "driver.h"
 #include "symTable.h"
-#include "ast.h"
+#include "nodes.h"
 #include <stdio.h>
 
 void yyerror(char *);
@@ -691,10 +691,14 @@ declarator
 		{if(parseDebug){
 			fprintf(parseFile,"declarator <- direct_declarator \n\n");
 			}
-			
+			lookUpMode = true;
 			 //AST
 			 declarator_node = (DeclaratorNode *)malloc(1*sizeof(DeclaratorNode));
 			 declarator_node -> direct_declarator = $1;
+
+			 DirectDeclaratorNode * direct_declarator;
+			 direct_declarator = $1;
+			 declarator_node -> identifier = direct_declarator->identifier;
 			 $$ = declarator_node;
 			
 		}
@@ -865,7 +869,8 @@ initializer
 			AssignmentExpressionNode * temp;
 			temp = $1;
 			initializer_node->identifier = temp->identifier;
-			 $$ = initializer_node;
+			initializer_node->constant = temp->constant;
+			$$ = initializer_node;
 
 		}
 	| '{' initializer_list '}'
@@ -1316,6 +1321,7 @@ assignment_expression
 			ConditionalExpressionNode * temp;
 			temp = $1;
 			assignment_expression_node->identifier = temp->identifier;
+			assignment_expression_node->constant = temp->constant;
 			$$ = assignment_expression_node;
 		}
 	| unary_expression assignment_operator assignment_expression
@@ -1397,6 +1403,7 @@ conditional_expression
 			LogicalOrExpressionNode * temp;
 			temp = $1;
 			conditional_expression_node->identifier = temp->identifier;
+			conditional_expression_node->constant = temp->constant;
 			 $$ = conditional_expression_node;
 		}
 	| logical_or_expression '?' expression ':' conditional_expression
@@ -1420,6 +1427,7 @@ constant_expression
 			ConditionalExpressionNode * temp;
 			temp = $1;
 			constant_expression_node->identifier = temp->identifier;
+			constant_expression_node->constant = temp->constant;
 			 $$ = constant_expression_node;
 			
 		}
@@ -1432,12 +1440,13 @@ logical_or_expression
 			}
 			
 			 //AST TODO ADD {}
-			 logical_or_expression_node = (LogicalOrExpressionNode *)malloc(1*sizeof(LogicalOrExpressionNode));
-			 logical_or_expression_node->logical_and_expression = $1;
+			logical_or_expression_node = (LogicalOrExpressionNode *)malloc(1*sizeof(LogicalOrExpressionNode));
+			logical_or_expression_node->logical_and_expression = $1;
 			LogicalAndExpressionNode * temp;
 			temp = $1;
 			logical_or_expression_node->identifier = temp->identifier;
-			 $$ = logical_or_expression_node;
+			logical_or_expression_node->constant = temp->constant;
+			$$ = logical_or_expression_node;
 		}
 	| logical_or_expression OR_OP logical_and_expression
 		{if(parseDebug){
@@ -1452,13 +1461,15 @@ logical_and_expression
 			fprintf(parseFile,"logical_and_expression <- inclusive_or_expression \n\n");
 			}
 			
-			 //AST TODO ADD {}
-			 logical_and_expression_node = (LogicalAndExpressionNode *)malloc(1*sizeof(LogicalAndExpressionNode));
-			 logical_and_expression_node->inclusive_or_expression = $1;
+			//AST TODO ADD {}
+			logical_and_expression_node = (LogicalAndExpressionNode *)malloc(1*sizeof(LogicalAndExpressionNode));
+			logical_and_expression_node->inclusive_or_expression = $1;
 			InclusiveOrExpressionNode * temp;
 			temp = $1;
 			logical_and_expression_node->identifier = temp->identifier;
-			 $$ = logical_and_expression_node;
+			logical_and_expression_node->constant = temp->constant;
+
+			$$ = logical_and_expression_node;
 		}
 	| logical_and_expression AND_OP inclusive_or_expression
 		{if(parseDebug){
@@ -1474,11 +1485,12 @@ inclusive_or_expression
 			}
 			
 			 //AST TODO ADD {}
-			 inclusive_or_expression_node = (LogicalAndExpressionNode *)malloc(1*sizeof(LogicalAndExpressionNode));
-			 inclusive_or_expression_node->exclusive_or_expression = $1;
+			inclusive_or_expression_node = (LogicalAndExpressionNode *)malloc(1*sizeof(LogicalAndExpressionNode));
+			inclusive_or_expression_node->exclusive_or_expression = $1;
 			ExclusiveOrExpressionNode * temp;
 			temp = $1;
 			inclusive_or_expression_node->identifier = temp->identifier;
+			inclusive_or_expression_node->constant = temp->constant;
 			 $$ = inclusive_or_expression_node;
 		}
 	| inclusive_or_expression '|' exclusive_or_expression
@@ -1498,6 +1510,7 @@ exclusive_or_expression
 			AndExpressionNode * temp;
 			temp = $1;
 			exclusive_or_expression_node->identifier = temp->identifier;
+			exclusive_or_expression_node->constant = temp->constant;
 			$$ = exclusive_or_expression_node ;
 
 		}
@@ -1520,7 +1533,9 @@ and_expression
 			EqualityExpressionNode * temp;
 			temp = $1;
 			and_expression_node->identifier = temp->identifier;
-			 $$ = and_expression_node;
+			and_expression_node->constant= temp->constant;
+
+			$$ = and_expression_node;
 		}
 	| and_expression '&' equality_expression
 		{if(parseDebug){
@@ -1534,14 +1549,14 @@ equality_expression
 		{if(parseDebug){
 			fprintf(parseFile,"equality_expression <- relational_expression \n\n");
 			}
-			
-						 //AST TODO ADD {}
-			 equality_expression_node = (EqualityExpressionNode *)malloc(1*sizeof(EqualityExpressionNode));
-			 equality_expression_node->relational_expression = $1;
+
+			equality_expression_node = (EqualityExpressionNode *)malloc(1*sizeof(EqualityExpressionNode));
+			equality_expression_node->relational_expression = $1;
 			RelationalExpressionNode * temp;
 			temp = $1;
 			equality_expression_node->identifier = temp->identifier;
-			 $$ = equality_expression_node;
+			equality_expression_node->constant = temp->constant;
+			$$ = equality_expression_node;
 		}
 	| equality_expression EQ_OP relational_expression
 		{if(parseDebug){
@@ -1565,6 +1580,7 @@ relational_expression
 			ShiftExpressionNode * temp;
 			temp = $1;
 			relational_expression_node->identifier = temp->identifier;
+			relational_expression_node->constant = temp->constant;
 			$$ = relational_expression_node;
 		}
 	| relational_expression '<' shift_expression
@@ -1604,6 +1620,7 @@ shift_expression
 			AdditiveExpressionNode * temp;
 			temp = $1;
 			shift_expression_node->identifier = temp->identifier;
+			shift_expression_node->constant = temp->constant;
 			$$ = shift_expression_node;
 		}
 	| shift_expression LEFT_OP additive_expression
@@ -1629,6 +1646,7 @@ additive_expression
 			MultiplicativeExpressionNode * temp;
 			temp = $1;
 			additive_expression_node->identifier = temp->identifier;
+			additive_expression_node->constant = temp->constant;
 			$$ = additive_expression_node;
 		}
 	| additive_expression '+' multiplicative_expression
@@ -1639,6 +1657,11 @@ additive_expression
 			additive_expression_node = (AdditiveExpressionNode *)malloc(1*sizeof(AdditiveExpressionNode));
 			additive_expression_node->multiplicative_expression = $3;
 			additive_expression_node->additive_expression = $1;
+
+			MultiplicativeExpressionNode * temp;
+			temp = $3;
+			additive_expression_node->identifier = temp->identifier;
+			additive_expression_node->constant = temp->constant;
 			$$ = additive_expression_node;
 		}
 	| additive_expression '-' multiplicative_expression
@@ -1658,6 +1681,7 @@ multiplicative_expression
 			CastExpressionNode * temp;
 			temp = $1;
 			multiplicative_expression_node->identifier = temp->identifier;
+			multiplicative_expression_node->constant = temp->constant;
 			$$ = multiplicative_expression_node;
 		}
 	| multiplicative_expression '*' cast_expression
@@ -1687,6 +1711,7 @@ cast_expression
 			UnaryExpressionNode * temp;
 			temp = $1;
 			cast_expression_node->identifier = temp->identifier;
+			cast_expression_node->constant = temp->constant;
 			$$ = cast_expression_node;
 		}
 	| '(' type_name ')' cast_expression
@@ -1707,6 +1732,7 @@ unary_expression
 		PostfixExpressionNode * temp;
 		temp = $1;
 		unary_expression_node->identifier = temp->identifier;
+		unary_expression_node->constant = temp->constant;
 		$$ = unary_expression_node;
 
 		}
@@ -1778,9 +1804,10 @@ postfix_expression
 
 			postfix_expression_node = (PostfixExpressionNode *)malloc(1*sizeof(PostfixExpressionNode));
 			postfix_expression_node->primary_expression = $1;
-			PrimaryExpressionNode * p;
-			p = $1;
-			postfix_expression_node->identifier = p->identifier;
+			PrimaryExpressionNode * temp;
+			temp = $1;
+			postfix_expression_node->identifier = temp->identifier;
+			postfix_expression_node->constant = temp->constant;
 			$$ = postfix_expression_node;
 		}
 	| postfix_expression '[' expression ']'
@@ -1832,7 +1859,7 @@ primary_expression
 			}
 			primary_expression_node = (PrimaryExpressionNode *)malloc(1*sizeof( PrimaryExpressionNode));
 			primary_expression_node->identifier = $1;
-			$$ = primary_expression_node;			
+			$$ = primary_expression_node;		
 
 		}
 	| constant
@@ -1842,7 +1869,8 @@ primary_expression
 			
 			primary_expression_node = (PrimaryExpressionNode *)malloc(1*sizeof( PrimaryExpressionNode));
 			primary_expression_node->constant = $1;
-			$$ = primary_expression_node;		
+			$$ = primary_expression_node;	
+
 		}
 	| string
 		{if(parseDebug){

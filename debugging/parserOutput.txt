@@ -17,8 +17,10 @@ declaration_specifiers <- type_specifier
 
 Insert Mode 
 
-identifier ->IDENTIFIER (a)
+identifier ->IDENTIFIER (h)
 direct_declarator <- identifier 
+
+declarator <- direct_declarator 
 
 CONSTANT <- INTEGER_CONSTANT 
 
@@ -52,13 +54,11 @@ logical_or_expression <- logical_and_expression
 
 conditional_expression <- logical_or_expression 
  
-constant_expression <- conditional_expression 
+assignment_expression <- conditional_expression 
 
-direct_declarator <- direct_declarator '[' constant_expression ']' 
+initializer <- assignment_expression 
 
-declarator <- direct_declarator 
-
-init_declarator <- declarator 
+init_declarator <- declarator '=' initializer 
 
 init_declarator_list <- init_declarator 
 
@@ -68,11 +68,44 @@ declaration_list <- declaration
 
 Look up is true 
 
-identifier ->IDENTIFIER (a)
+storage_class_specifier <- INT 
+
+declaration_specifiers <- type_specifier 
+
+Insert Mode 
+
+identifier ->IDENTIFIER (r)
+direct_declarator <- identifier 
+
+declarator <- direct_declarator 
+
+CONSTANT <- INTEGER_CONSTANT 
+
+primary_expression <- constant 
+
+postfix_expression <- primary_expression 
+
+unary_expression <- postfix_expression 
+
+cast_expression <- unary_expression 
+
+multiplicative_expression <- cast_expression 
+
+additive_expression <- multiplicative_expression 
+
+identifier ->IDENTIFIER (h)
 primary_expression <- identifier 
 
 postfix_expression <- primary_expression 
 
+unary_expression <- postfix_expression 
+
+cast_expression <- unary_expression 
+
+multiplicative_expression <- cast_expression 
+
+additive_expression <- additive_expression '+' multiplicative_expression 
+
 CONSTANT <- INTEGER_CONSTANT 
 
 primary_expression <- constant 
@@ -85,7 +118,21 @@ cast_expression <- unary_expression
 
 multiplicative_expression <- cast_expression 
 
-additive_expression <- multiplicative_expression 
+additive_expression <- additive_expression '+' multiplicative_expression 
+
+CONSTANT <- INTEGER_CONSTANT 
+
+primary_expression <- constant 
+
+postfix_expression <- primary_expression 
+
+unary_expression <- postfix_expression 
+
+cast_expression <- unary_expression 
+
+multiplicative_expression <- cast_expression 
+
+additive_expression <- additive_expression '+' multiplicative_expression 
 
 shift_expression <- additive_expression 
 
@@ -107,59 +154,19 @@ conditional_expression <- logical_or_expression
  
 assignment_expression <- conditional_expression 
 
-expression <- assignment_expression 
+initializer <- assignment_expression 
 
-postfix_expression <- postfix_expression '[' expression ']' 
+init_declarator <- declarator '=' initializer 
 
-unary_expression <- postfix_expression 
+init_declarator_list <- init_declarator 
 
-assignment_operator <- = 
+declaration <- declaration_specifiers init_declarator_list 
 
-CONSTANT <- INTEGER_CONSTANT 
+declaration_list <- declaration_list declaration 
 
-primary_expression <- constant 
+Look up is true 
 
-postfix_expression <- primary_expression 
-
-unary_expression <- postfix_expression 
-
-cast_expression <- unary_expression 
-
-multiplicative_expression <- cast_expression 
-
-additive_expression <- multiplicative_expression 
-
-shift_expression <- additive_expression 
-
-relational_expression <- shift_expression 
-
-equality_expression <- relational_expression 
-
-and_expression <- equality_expression 
-
-exclusive_or_expression <- and_expression 
-
-inclusive_or_expression <- exclusive_or_expression  
-
-logical_and_expression <- inclusive_or_expression 
-
-logical_or_expression <- logical_and_expression 
-
-conditional_expression <- logical_or_expression 
- 
-assignment_expression <- conditional_expression 
-
-assignment_expression <- unary_expression assignment_operator assignment_expression 
-
-expression <- assignment_expression 
-
-expression_statement <- expression ';' 
-
-statement <- expression_statement 
-
-statement_list <- statement  
-
-compound_statement <- '{' declaration_list statement_list '}'  
+compound_statement <- '{' declaration_list '}' 
 
 function_definition <- declaration_specifiers declarator compound_statement 
 
