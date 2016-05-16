@@ -1,8 +1,8 @@
 #Elementary C Compiler
 ##Connor Kirby, Ben Wendell and Daniel Sanchez
-##CS 460
-##Fall 2015
-##Fred Harris
+CS 460
+Fall 2015
+Fred Harris
 
 ___
 
