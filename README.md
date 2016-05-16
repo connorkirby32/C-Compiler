@@ -26,7 +26,7 @@ Code Generation - Python script that translates the three address code generated
 
 #Features
 
-* Please see test_cases inside bin to see the full extent of code that will be compiled using our compiler. 
+Please see test_cases inside bin to see the full extent of code that will be compiled using our compiler. 
 
 - Variable Decleration both local and global scope 
 - Basic Assignment
